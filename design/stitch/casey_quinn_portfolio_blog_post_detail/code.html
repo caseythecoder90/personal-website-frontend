@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Architecting Scalable Microservices with Java and Spring Boot | The Kinetic Luminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffb2b9",
+              "on-tertiary-fixed-variant": "#6e1354",
+              "surface": "#0e0e0e",
+              "primary-fixed": "#9396ff",
+              "surface-dim": "#0e0e0e",
+              "background": "#0e0e0e",
+              "secondary-dim": "#a28efc",
+              "surface-container-highest": "#262626",
+              "on-primary-fixed-variant": "#0e009d",
+              "surface-container-high": "#201f1f",
+              "surface-container": "#1a1919",
+              "on-primary": "#0f00a4",
+              "on-secondary-fixed": "#361c89",
+              "error": "#ff6e84",
+              "on-secondary-fixed-variant": "#533ea7",
+              "on-surface-variant": "#adaaaa",
+              "tertiary-fixed-dim": "#ef81c4",
+              "tertiary": "#ffa5d9",
+              "primary-fixed-dim": "#8387ff",
+              "on-primary-fixed": "#000000",
+              "secondary-fixed": "#d6cbff",
+              "surface-tint": "#a3a6ff",
+              "surface-variant": "#262626",
+              "surface-bright": "#2c2c2c",
+              "inverse-primary": "#494bd7",
+              "error-container": "#a70138",
+              "on-secondary": "#21006d",
+              "primary-dim": "#6063ee",
+              "on-tertiary-container": "#63054a",
+              "outline": "#777575",
+              "surface-container-lowest": "#000000",
+              "on-primary-container": "#0a0081",
+              "primary": "#a3a6ff",
+              "on-background": "#ffffff",
+              "on-secondary-container": "#d4c9ff",
+              "inverse-on-surface": "#565554",
+              "secondary-fixed-dim": "#c8bbff",
+              "on-tertiary-fixed": "#3b002b",
+              "primary-container": "#9396ff",
+              "secondary-container": "#49339d",
+              "tertiary-fixed": "#ff8ed2",
+              "on-tertiary": "#701455",
+              "error-dim": "#d73357",
+              "secondary": "#a28efc",
+              "outline-variant": "#494847",
+              "on-surface": "#ffffff",
+              "inverse-surface": "#fcf8f8",
+              "tertiary-dim": "#ef81c4",
+              "surface-container-low": "#131313",
+              "tertiary-container": "#ff8ed2",
+              "on-error": "#490013"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .prose h2 { font-family: 'Space Grotesk', sans-serif; color: #ffffff; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1.25rem; font-size: 1.875rem; letter-spacing: -0.02em; }
+        .prose p { font-family: 'Inter', sans-serif; color: #adaaaa; line-height: 1.75; margin-bottom: 1.5rem; font-size: 1.125rem; }
+        .prose code { background-color: #262626; color: #ffa5d9; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.9em; }
+        .glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-900/70 dark:bg-neutral-900/70 backdrop-blur-xl border-b border-white/15">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto font-['Space_Grotesk'] tracking-tight">
+<div class="text-xl font-bold tracking-tighter text-neutral-50 dark:text-neutral-50">
+                The Kinetic Luminal
+            </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300" href="#">Work</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300" href="#">Blog</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300" href="#">Certs</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300" href="#">Contact</a>
+<button class="bg-indigo-400 text-on-primary-fixed px-5 py-2 rounded-md font-bold active:scale-95 transition-transform">
+                    Resume
+                </button>
+</div>
+<button class="md:hidden text-on-background">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Back Link & Featured Header -->
+<header class="relative w-full overflow-hidden">
+<div class="max-w-7xl mx-auto px-6 pt-12 pb-6">
+<a class="inline-flex items-center gap-2 text-primary hover:text-secondary transition-colors mb-8 group" href="#">
+<span class="material-symbols-outlined transition-transform group-hover:-translate-x-1">arrow_back</span>
+<span class="font-medium">Back to blog</span>
+</a>
+</div>
+<!-- Featured Image Banner -->
+<div class="w-full h-[450px] relative">
+<img alt="Server racks with glowing lights" class="w-full h-full object-cover grayscale opacity-60" data-alt="Modern server room with glowing blue and violet lights on hardware racks, atmospheric cinematic lighting, dark technical aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1wVkFkroroMiH0XUlw36ogGBaBCm7vBeeaK0rZMiVt9fH8f8k5Az9W9GmbJupXQNg_UAFRPmVArO7YazEAijiMYYEJKp44-Gl-iYXuvZ27a5zm12IWBCNuHBD7v4aOUO6TP5HRaZyP2zND_xFi7hp93GgEjellvS81WIIMXXp-0oFitsLfRy0pakMnelkSZyagNSr0yUEZse1mayP0rhqXiv91U9eVNPjoB6wwgGhp6kqWySe9eWfwOrcRco5vZKeNX0BWmgP20k"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+</div>
+</header>
+<!-- Article Content -->
+<article class="max-w-7xl mx-auto px-6 -mt-32 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16">
+<!-- Left: Main Post Body -->
+<div class="lg:col-span-8">
+<div class="bg-surface-container-low p-8 md:p-12 rounded-xl border-t border-outline-variant/15">
+<!-- Title & Meta -->
+<div class="mb-10">
+<span class="inline-block px-3 py-1 bg-surface-container-highest text-tertiary rounded-full text-xs font-bold tracking-widest mb-4">SYSTEM DESIGN</span>
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-headline font-bold text-on-background leading-tight tracking-tighter mb-8">
+                            Architecting Scalable Microservices with Java and Spring Boot
+                        </h1>
+<div class="flex flex-wrap items-center gap-y-4 gap-x-8 text-on-surface-variant font-medium text-sm border-y border-outline-variant/10 py-6">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-dim flex items-center justify-center text-[10px] text-on-primary">CQ</div>
+<span>Casey Quinn</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>June 12, 2024</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>15 min read</span>
+</div>
+</div>
+</div>
+<!-- Markdown Content Shell -->
+<div class="prose max-w-none">
+<p>
+                            In the modern landscape of software engineering, the transition from monolithic architectures to <code>distributed systems</code> is no longer just a trend—it's a requirement for scalability. Microservices allow teams to deploy independently, scale specific components, and maintain high availability across global clusters.
+                        </p>
+<h2>The Distributed Foundation</h2>
+<p>
+                            Building a robust microservice requires more than just breaking apart a database. You must consider the <strong>CAP Theorem</strong>, eventual consistency, and how services discover each other in a dynamic cloud environment. With Java and Spring Boot, we leverage Spring Cloud to handle these complexities out of the box.
+                        </p>
+<!-- Code Block -->
+<div class="my-8 rounded-lg overflow-hidden bg-surface-container-lowest border border-outline-variant/20">
+<div class="flex items-center justify-between px-4 py-2 bg-surface-container-highest/50 border-b border-outline-variant/20">
+<span class="text-xs font-mono text-on-surface-variant uppercase tracking-wider">ProductService.java</span>
+<span class="text-xs text-primary/70">Java</span>
+</div>
+<pre class="p-6 overflow-x-auto"><code class="text-sm leading-relaxed text-indigo-200">@RestController
+@RequestMapping("/api/v1/products")
+public class ProductController {
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;ProductResponse&gt; getProduct(@PathVariable String id) {
+        return ResponseEntity.ok(productService.findById(id));
+    }
+}</code></pre>
+</div>
+<h2>Implementing Service Discovery</h2>
+<p>
+                            Without a central registry, your services are blind. Netflix Eureka or Consul act as the "phonebook" for your architecture. When <code>Service A</code> needs to talk to <code>Service B</code>, it queries the registry instead of hard-coding an IP address that might change during an auto-scaling event.
+                        </p>
+<p>
+                            Resilience is the final pillar. By implementing the Circuit Breaker pattern with Resilience4j, we ensure that a failure in one downstream dependency doesn't cascade and bring down the entire ecosystem.
+                        </p>
+</div>
+<!-- Tags -->
+<div class="mt-12 pt-8 border-t border-outline-variant/10 flex flex-wrap gap-3">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-xs font-mono">#Microservices</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-xs font-mono">#Java</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-xs font-mono">#SpringBoot</span>
+</div>
+<!-- Share Section -->
+<div class="mt-12 flex items-center justify-between bg-surface-container-high/30 p-6 rounded-lg">
+<span class="text-sm font-bold text-on-surface-variant uppercase tracking-widest">Share this post</span>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="p-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">link</span>
+</button>
+<button class="p-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">alternate_email</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Sidebar -->
+<aside class="lg:col-span-4 space-y-12">
+<!-- Related Posts -->
+<div>
+<h3 class="font-headline text-xl font-bold mb-6 flex items-center gap-2">
+<span class="w-1 h-6 bg-primary"></span>
+                        Related Posts
+                    </h3>
+<div class="space-y-6">
+<!-- Card 1 -->
+<div class="group bg-surface-container p-5 rounded-xl border border-transparent hover:border-primary/20 transition-all">
+<span class="text-[10px] font-bold text-tertiary-dim uppercase tracking-tighter">DEVOPS</span>
+<h4 class="font-headline font-semibold text-lg mt-2 group-hover:text-primary transition-colors">Kubernetes Patterns for High Traffic APIs</h4>
+<p class="text-sm text-on-surface-variant mt-2 line-clamp-2">Optimizing your cluster configuration for zero-downtime deployments.</p>
+<a class="inline-block mt-4 text-xs font-bold text-primary group-hover:underline" href="#">Read Article</a>
+</div>
+<!-- Card 2 -->
+<div class="group bg-surface-container p-5 rounded-xl border border-transparent hover:border-primary/20 transition-all">
+<span class="text-[10px] font-bold text-secondary-dim uppercase tracking-tighter">DATABASE</span>
+<h4 class="font-headline font-semibold text-lg mt-2 group-hover:text-primary transition-colors">NoSQL vs SQL: Choosing for Scale</h4>
+<p class="text-sm text-on-surface-variant mt-2 line-clamp-2">When to ditch relational integrity for distributed throughput.</p>
+<a class="inline-block mt-4 text-xs font-bold text-primary group-hover:underline" href="#">Read Article</a>
+</div>
+</div>
+</div>
+<!-- Newsletter / CTA -->
+<div class="bg-indigo-900/10 p-8 rounded-xl border border-primary/10">
+<h3 class="font-headline font-bold text-xl mb-3">Newsletter</h3>
+<p class="text-sm text-on-surface-variant mb-6 leading-relaxed">Get technical deep-dives and system design patterns delivered to your inbox monthly.</p>
+<input class="w-full bg-surface-container-lowest border-outline-variant/30 rounded-md mb-4 text-sm focus:ring-primary focus:border-primary" placeholder="email@example.com" type="email"/>
+<button class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-3 rounded-md font-bold text-sm shadow-[0_0_20px_rgba(163,166,255,0.2)]">Subscribe Now</button>
+</div>
+</aside>
+</article>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-neutral-950 dark:bg-neutral-950 mt-24">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-4 font-['Inter'] text-sm tracking-wide">
+<div class="text-neutral-500">
+                © 2024 The Kinetic Luminal. Built with Precision.
+            </div>
+<div class="flex gap-8">
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Github</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Twitter</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Email</a>
+</div>
+</div>
+</footer>
+</body></html>
