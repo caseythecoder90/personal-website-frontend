@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact | The Kinetic Luminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffb2b9",
+              "on-tertiary-fixed-variant": "#6e1354",
+              "surface": "#0e0e0e",
+              "primary-fixed": "#9396ff",
+              "surface-dim": "#0e0e0e",
+              "background": "#0e0e0e",
+              "secondary-dim": "#a28efc",
+              "surface-container-highest": "#262626",
+              "on-primary-fixed-variant": "#0e009d",
+              "surface-container-high": "#201f1f",
+              "surface-container": "#1a1919",
+              "on-primary": "#0f00a4",
+              "on-secondary-fixed": "#361c89",
+              "error": "#ff6e84",
+              "on-secondary-fixed-variant": "#533ea7",
+              "on-surface-variant": "#adaaaa",
+              "tertiary-fixed-dim": "#ef81c4",
+              "tertiary": "#ffa5d9",
+              "primary-fixed-dim": "#8387ff",
+              "on-primary-fixed": "#000000",
+              "secondary-fixed": "#d6cbff",
+              "surface-tint": "#a3a6ff",
+              "surface-variant": "#262626",
+              "surface-bright": "#2c2c2c",
+              "inverse-primary": "#494bd7",
+              "error-container": "#a70138",
+              "on-secondary": "#21006d",
+              "primary-dim": "#6063ee",
+              "on-tertiary-container": "#63054a",
+              "outline": "#777575",
+              "surface-container-lowest": "#000000",
+              "on-primary-container": "#0a0081",
+              "primary": "#a3a6ff",
+              "on-background": "#ffffff",
+              "on-secondary-container": "#d4c9ff",
+              "inverse-on-surface": "#565554",
+              "secondary-fixed-dim": "#c8bbff",
+              "on-tertiary-fixed": "#3b002b",
+              "primary-container": "#9396ff",
+              "secondary-container": "#49339d",
+              "tertiary-fixed": "#ff8ed2",
+              "on-tertiary": "#701455",
+              "error-dim": "#d73357",
+              "secondary": "#a28efc",
+              "outline-variant": "#494847",
+              "on-surface": "#ffffff",
+              "inverse-surface": "#fcf8f8",
+              "tertiary-dim": "#ef81c4",
+              "surface-container-low": "#131313",
+              "tertiary-container": "#ff8ed2",
+              "on-error": "#490013"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .ghost-border {
+            border: 1px solid rgba(73, 72, 71, 0.15);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #a3a6ff 0%, #6063ee 100%);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 15px rgba(163, 166, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-900/70 backdrop-blur-xl border-b border-white/15">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<a class="text-xl font-bold tracking-tighter text-neutral-50 font-['Space_Grotesk'] tracking-tight" href="#">The Kinetic Luminal</a>
+<div class="hidden md:flex items-center gap-8 font-['Space_Grotesk'] tracking-tight">
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Work</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Blog</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Certs</a>
+<a class="text-indigo-400 font-semibold hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Contact</a>
+</div>
+<button class="bg-indigo-400 text-on-primary-fixed px-5 py-2 rounded-md font-semibold font-['Space_Grotesk'] active:scale-95 transition-transform hover:bg-indigo-300">
+                Resume
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-24 min-h-screen max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+<!-- Left Side: Content & Identity -->
+<div class="lg:col-span-5 flex flex-col justify-start">
+<div class="space-y-8">
+<h1 class="font-headline text-5xl md:text-6xl font-bold tracking-tighter text-on-surface leading-tight">
+                        Get In <span class="text-primary italic">Touch</span>
+</h1>
+<p class="text-on-surface-variant text-lg leading-relaxed max-w-md">
+                        I am currently open to new collaborations, freelance opportunities, and interesting technical challenges. If you have a project in mind or just want to discuss the future of the web, feel free to reach out.
+                    </p>
+<div class="space-y-6 pt-4">
+<div class="flex flex-col gap-4">
+<a class="group flex items-center gap-4 text-on-surface-variant hover:text-primary transition-colors" href="mailto:hello@kineticluminal.com">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+<span class="font-medium tracking-tight">Email</span>
+</a>
+<a class="group flex items-center gap-4 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary">code</span>
+</div>
+<span class="font-medium tracking-tight">GitHub</span>
+</a>
+<a class="group flex items-center gap-4 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary">link</span>
+</div>
+<span class="font-medium tracking-tight">LinkedIn</span>
+</a>
+</div>
+</div>
+<div class="mt-12 rounded-xl overflow-hidden ghost-border aspect-video w-full bg-surface-container-low">
+<img alt="Office" class="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" data-alt="Modern minimal dark office space with soft atmospheric lighting and tech equipment on a desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpX7UISUuJVXpd2ZLK_jiEN_hcC0EeNMLoTZWovSdOjRi4_KAWWKFzrlWUDEBfUSMHj1f4zXoNS3vMj4_iFHlzFZi-5b9kIyodGrnQjPYnyZexdUxqRBEN3DOxDuaNAZSrvcc16ggNZ1mqPLhgMi0n9hQ_57eCGa28g45XNtSRT1a5xk01kSgTOUfSor2FVrFsOT5V_mzqfAd20aj9wjoEZ9I87RW8AT-GNLeFj0zv7idXOoN1LPSXfQ7PoY9hCjRI93GnCwj0CCg"/>
+</div>
+</div>
+</div>
+<!-- Right Side: Contact Form -->
+<div class="lg:col-span-7">
+<div class="bg-surface-container-low p-8 md:p-12 rounded-xl ghost-border">
+<form action="#" class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface-variant ml-1 font-label uppercase tracking-widest text-[10px]" for="full_name">Full Name</label>
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary rounded-md p-4 text-on-surface placeholder:text-outline/50 transition-all" id="full_name" name="full_name" placeholder="John Doe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface-variant ml-1 font-label uppercase tracking-widest text-[10px]" for="email">Email Address</label>
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary rounded-md p-4 text-on-surface placeholder:text-outline/50 transition-all" id="email" name="email" placeholder="john@example.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface-variant ml-1 font-label uppercase tracking-widest text-[10px]" for="subject">Subject Line</label>
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary rounded-md p-4 text-on-surface placeholder:text-outline/50 transition-all" id="subject" name="subject" placeholder="What is this about?" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface-variant ml-1 font-label uppercase tracking-widest text-[10px]" for="inquiry_type">Inquiry Type</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary rounded-md p-4 text-on-surface appearance-none cursor-pointer" id="inquiry_type" name="inquiry_type">
+<option value="General">General Inquiry</option>
+<option value="Job Opportunity">Job Opportunity</option>
+<option value="Collaboration">Collaboration</option>
+<option value="Freelance">Freelance</option>
+<option value="Feedback">Feedback</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface-variant ml-1 font-label uppercase tracking-widest text-[10px]" for="message">Message</label>
+<textarea class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary rounded-md p-4 text-on-surface placeholder:text-outline/50 transition-all resize-none" id="message" name="message" placeholder="Tell me more about your project..." rows="5"></textarea>
+</div>
+<div class="pt-4 flex flex-col sm:flex-row items-center gap-6">
+<button class="w-full sm:w-auto primary-gradient text-on-primary font-bold px-10 py-4 rounded-md btn-glow active:scale-95 transition-all font-headline tracking-tight" type="submit">
+                                Send Message
+                            </button>
+<p class="text-on-surface-variant text-xs italic">
+                                I usually respond within 24-48 hours.
+                            </p>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-neutral-950 dark:bg-neutral-950 w-full py-12">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-4 font-['Inter'] text-sm tracking-wide">
+<p class="text-neutral-500">© 2024 The Kinetic Luminal. Built with Precision.</p>
+<div class="flex items-center gap-8">
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Github</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Twitter</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Email</a>
+</div>
+</div>
+</footer>
+</body></html>

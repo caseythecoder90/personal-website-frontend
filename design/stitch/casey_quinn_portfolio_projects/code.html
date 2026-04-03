@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Projects | The Kinetic Luminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#701455",
+                        "error-dim": "#d73357",
+                        "on-tertiary-container": "#63054a",
+                        "on-primary": "#0f00a4",
+                        "secondary-dim": "#a28efc",
+                        "primary": "#a3a6ff",
+                        "error-container": "#a70138",
+                        "on-error": "#490013",
+                        "surface-tint": "#a3a6ff",
+                        "surface-container-lowest": "#000000",
+                        "secondary-container": "#49339d",
+                        "surface": "#0e0e0e",
+                        "secondary-fixed-dim": "#c8bbff",
+                        "inverse-primary": "#494bd7",
+                        "tertiary-dim": "#ef81c4",
+                        "surface-bright": "#2c2c2c",
+                        "primary-fixed-dim": "#8387ff",
+                        "outline-variant": "#494847",
+                        "error": "#ff6e84",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary-container": "#d4c9ff",
+                        "on-error-container": "#ffb2b9",
+                        "on-tertiary-fixed-variant": "#6e1354",
+                        "on-secondary-fixed": "#361c89",
+                        "surface-dim": "#0e0e0e",
+                        "tertiary": "#ffa5d9",
+                        "surface-container-high": "#201f1f",
+                        "on-background": "#ffffff",
+                        "on-secondary": "#21006d",
+                        "inverse-surface": "#fcf8f8",
+                        "tertiary-fixed-dim": "#ef81c4",
+                        "inverse-on-surface": "#565554",
+                        "secondary-fixed": "#d6cbff",
+                        "on-secondary-fixed-variant": "#533ea7",
+                        "on-primary-container": "#0a0081",
+                        "surface-container-highest": "#262626",
+                        "secondary": "#a28efc",
+                        "on-surface-variant": "#adaaaa",
+                        "primary-dim": "#6063ee",
+                        "tertiary-container": "#ff8ed2",
+                        "primary-fixed": "#9396ff",
+                        "primary-container": "#9396ff",
+                        "outline": "#777575",
+                        "on-tertiary-fixed": "#3b002b",
+                        "tertiary-fixed": "#ff8ed2",
+                        "background": "#0e0e0e",
+                        "on-primary-fixed-variant": "#0e009d",
+                        "surface-container-low": "#131313",
+                        "surface-container": "#1a1919",
+                        "on-surface": "#ffffff",
+                        "surface-variant": "#262626"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+        }
+        .project-card-glow:hover {
+            box-shadow: 0 -1px 0 0 #a3a6ff;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #262626;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body custom-scrollbar">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-900/70 backdrop-blur-md border-b border-white/15">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto font-['Space_Grotesk'] tracking-tight">
+<span class="text-xl font-bold tracking-tighter text-white">The Kinetic Luminal</span>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-neutral-400 hover:text-white transition-colors" href="#">Home</a>
+<a class="text-indigo-400 font-bold border-b-2 border-indigo-400 pb-1" href="#">Projects</a>
+<a class="text-neutral-400 hover:text-white transition-colors" href="#">Blog</a>
+<a class="text-neutral-400 hover:text-white transition-colors" href="#">Certifications</a>
+<a class="text-neutral-400 hover:text-white transition-colors" href="#">Contact</a>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-dim text-on-primary px-6 py-2 rounded-md font-bold scale-95 active:scale-90 transition-transform shadow-[0_0_10px_rgba(163,166,255,0.3)]">
+                Hire Me
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Hero Header -->
+<header class="mb-16 md:ml-[15%]">
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-4">
+                Projects<span class="text-primary">.</span>
+</h1>
+<p class="font-body text-on-surface-variant text-lg max-w-2xl leading-relaxed">
+                A curated selection of architectural engineering and digital solutions. Exploring the intersection of high-performance code and atmospheric design systems.
+            </p>
+</header>
+<!-- Filter Bar -->
+<section class="mb-12 flex flex-wrap items-center gap-3">
+<span class="font-label text-xs uppercase tracking-widest text-outline mr-2">Category:</span>
+<button class="px-5 py-2 rounded-full font-label text-sm bg-primary text-on-primary font-semibold transition-all">All Projects</button>
+<button class="px-5 py-2 rounded-full font-label text-sm bg-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all">Languages</button>
+<button class="px-5 py-2 rounded-full font-label text-sm bg-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all">Frameworks</button>
+<button class="px-5 py-2 rounded-full font-label text-sm bg-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all">Databases</button>
+<button class="px-5 py-2 rounded-full font-label text-sm bg-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all">DevOps</button>
+<button class="px-5 py-2 rounded-full font-label text-sm bg-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all">Cloud</button>
+</section>
+<!-- Projects Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Project Card 1 -->
+<article class="group bg-surface-container-low p-8 rounded-xl transition-all duration-300 hover:bg-surface-container-highest project-card-glow relative overflow-hidden">
+<div class="aspect-video mb-8 overflow-hidden rounded-lg bg-surface-container-highest">
+<img alt="Project Alpha" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" data-alt="Modern server room with glowing blue neon lights and high-tech minimalist hardware details in a dark atmospheric setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvRqbDn6OCwwyMW0EsMMikYnHY5Frio3wV20xw6UNHuX_tcctohPgTQ6KgBPEJdbvFLJZyFt1O0ORLeVu_LI8E4Th1qmZlczVceY_AGehmgxyg0VMVlhtrshG4ZqnhwoKP5XwPj9LkpbtvoscVAG3m2_ihJHb3se5boGRp9K8mttr_Rm8RzNUEOLudJ2HPuf8aXJkTCeVaSysSwFBpj8aaRcA-FwAGNl8_G7P0WrXjokYVCS6nZeBuyUF06YVb9eTogOSgCkx6v_A"/>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-tertiary/10 text-tertiary outline outline-1 outline-tertiary/20">COMPLETED</span>
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-primary/10 text-primary outline outline-1 outline-primary/20 uppercase">Advanced Level</span>
+</div>
+<h3 class="font-headline text-3xl font-bold text-on-surface mb-3 tracking-tight">Luminal Neural Engine</h3>
+<p class="font-body text-on-surface-variant mb-6 leading-relaxed">
+                    A proprietary deep learning framework optimized for real-time edge computing. Built with Rust for maximum memory safety and speed performance in high-concurrency environments.
+                </p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Rust</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">CUDA</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">TensorFlow</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">WASM</span>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-primary font-semibold flex items-center gap-1 group/link" href="#">
+                        View Case Study 
+                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Project Card 2 -->
+<article class="group bg-surface-container-low p-8 rounded-xl transition-all duration-300 hover:bg-surface-container-highest project-card-glow relative overflow-hidden">
+<div class="aspect-video mb-8 overflow-hidden rounded-lg bg-surface-container-highest">
+<img alt="Project Beta" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" data-alt="Abstract 3D data visualization mapping nodes and connections in a dark void with soft purple and indigo ambient glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClWIL5Upze_4wPrjKSCfEip_XgUfG8bXGG-jEOx2iQc-1qPCVGdTxMKwb0fwlvcwPxdWS0byqu8wqOxzNF71BdVWPs-cGF7jK6JpE4eGJt_vfZg4TeJ4zqE3WfkS-tPDqrdP2n72WGz8NhH3vQEPzwONHGTx-r4eqTNUK7FcXBSKGkq4Nee9x4Oz2Pkci2N1il90y5B9BTBJekOiLGxUQW8IqNolYj1SCDgatRx-sIyBVACjVuSJCY_y6k0Gx04KkJreWQhA91LJ4"/>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-secondary/10 text-secondary outline outline-1 outline-secondary/20">IN_PROGRESS</span>
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-primary/10 text-primary outline outline-1 outline-primary/20 uppercase">Intermediate</span>
+</div>
+<h3 class="font-headline text-3xl font-bold text-on-surface mb-3 tracking-tight">Ethereal OS Shell</h3>
+<p class="font-body text-on-surface-variant mb-6 leading-relaxed">
+                    A desktop-in-the-browser experience focusing on ultra-low latency and obsidian-style aesthetics. Implementing a custom window management system using React and Framer Motion.
+                </p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">TypeScript</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">React</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Tailwind</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Vite</span>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-primary font-semibold flex items-center gap-1 group/link" href="#">
+                        View Repository 
+                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Project Card 3 -->
+<article class="group bg-surface-container-low p-8 rounded-xl transition-all duration-300 hover:bg-surface-container-highest project-card-glow relative overflow-hidden">
+<div class="aspect-video mb-8 overflow-hidden rounded-lg bg-surface-container-highest">
+<img alt="Project Gamma" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" data-alt="Cinematic shot of a sleek futuristic workspace with multiple curved monitors showing complex lines of code and dark interface design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfiFdg-BX-gWWGPe-5AWjBefImDXbVDUkvvISEkypw_2_5Cj3N9x1V_ZzNS_WGqlcY1b96vdSZoHyH1r-dg47iTR-Z0och6OuNQLn1BeD8cxtCCiuvAxLHk0MHWoRz2Hm6aNW6VgkbBb-V8HbSG5-w1Z4giYqF8KTETQZn5JHt7u4P-Uih9-RI32hI5MtPpRe86Q4KD7-TG3NdT-R5yMRR164NZjmGkHz98FFUQ7PY27TXPFfyiD9qSIvlXmDNTHKgZx66zjEYqhs"/>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-outline-variant/20 text-outline-variant outline outline-1 outline-outline-variant/30">MAINTAINED</span>
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-primary/10 text-primary outline outline-1 outline-primary/20 uppercase">Advanced Level</span>
+</div>
+<h3 class="font-headline text-3xl font-bold text-on-surface mb-3 tracking-tight">Kinetics Cloud Infra</h3>
+<p class="font-body text-on-surface-variant mb-6 leading-relaxed">
+                    Automated multi-region cloud deployment pipeline for scalable microservices. Utilizing Infrastructure as Code (IaC) to maintain 99.99% uptime across decentralized node clusters.
+                </p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Terraform</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Kubernetes</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">AWS</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Docker</span>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-primary font-semibold flex items-center gap-1 group/link" href="#">
+                        Infrastructure Specs 
+                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Project Card 4 (Bento Variation) -->
+<article class="group bg-surface-container-low p-8 rounded-xl transition-all duration-300 hover:bg-surface-container-highest project-card-glow relative overflow-hidden">
+<div class="aspect-video mb-8 overflow-hidden rounded-lg bg-surface-container-highest">
+<img alt="Project Delta" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" data-alt="Clean minimal shot of obsidian slabs stacked with soft side lighting highlighting sharp edges and deep dark texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFVOfwtP5CNGQJLrEUtCP_B_qKTSpKeBav-VrArKLgkeq6J1Ba-v0BY96aiKkio9PZaFH_vsnUrC1_p2UfMYiQ4rQ0igCF9X5aKPyoLHDevotkJ6b2r5ZwK5Ta6-tuy9BAcvMBdOjPmw4qIUYIv8tlaY23KrDsc1gJ2BeJ4ORiVqMTj6oqJsxJirN_1izdLxIAr3orNmlMHm_ARQY-ZKiVYyqRUo99Gt9e9nbVaON2pbKcsMOqGT0osFnbIXy31p7_mHwD2FCjrH8"/>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-tertiary/10 text-tertiary outline outline-1 outline-tertiary/20">COMPLETED</span>
+<span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest bg-primary/10 text-primary outline outline-1 outline-primary/20 uppercase">Pro Specialist</span>
+</div>
+<h3 class="font-headline text-3xl font-bold text-on-surface mb-3 tracking-tight">Forge Database Engine</h3>
+<p class="font-body text-on-surface-variant mb-6 leading-relaxed">
+                    A vector-first graph database designed for ultra-fast semantic search and relationship mapping in LLM-powered applications. Benchmarked against leading industry standards.
+                </p>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Go</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">gRPC</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">PostgreSQL</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Redis</span>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-primary font-semibold flex items-center gap-1 group/link" href="#">
+                        Read Whitepaper 
+                        <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+<!-- Load More Section -->
+<div class="mt-24 flex flex-col items-center gap-6">
+<div class="w-24 h-[1px] bg-outline-variant/30"></div>
+<button class="group px-12 py-4 rounded-md border border-outline-variant/30 hover:border-primary/50 text-on-surface font-headline font-bold tracking-widest uppercase transition-all duration-300 hover:bg-surface-container-highest flex items-center gap-4">
+                Load More Projects
+                <span class="material-symbols-outlined group-hover:translate-y-1 transition-transform">expand_more</span>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-neutral-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto font-['Inter'] text-sm tracking-wide">
+<div class="mb-8 md:mb-0">
+<span class="text-lg font-bold text-white block mb-2">The Kinetic Luminal</span>
+<p class="text-neutral-500">© 2024 The Kinetic Luminal. Crafted with precision.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-neutral-500 hover:text-indigo-300 underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="#">GitHub</a>
+<a class="text-neutral-500 hover:text-indigo-300 underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+<a class="text-neutral-500 hover:text-indigo-300 underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="#">Twitter</a>
+<a class="text-neutral-500 hover:text-indigo-300 underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="#">Email</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Certifications | The Kinetic Luminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffb2b9",
+              "on-tertiary-fixed-variant": "#6e1354",
+              "surface": "#0e0e0e",
+              "primary-fixed": "#9396ff",
+              "surface-dim": "#0e0e0e",
+              "background": "#0e0e0e",
+              "secondary-dim": "#a28efc",
+              "surface-container-highest": "#262626",
+              "on-primary-fixed-variant": "#0e009d",
+              "surface-container-high": "#201f1f",
+              "surface-container": "#1a1919",
+              "on-primary": "#0f00a4",
+              "on-secondary-fixed": "#361c89",
+              "error": "#ff6e84",
+              "on-secondary-fixed-variant": "#533ea7",
+              "on-surface-variant": "#adaaaa",
+              "tertiary-fixed-dim": "#ef81c4",
+              "tertiary": "#ffa5d9",
+              "primary-fixed-dim": "#8387ff",
+              "on-primary-fixed": "#000000",
+              "secondary-fixed": "#d6cbff",
+              "surface-tint": "#a3a6ff",
+              "surface-variant": "#262626",
+              "surface-bright": "#2c2c2c",
+              "inverse-primary": "#494bd7",
+              "error-container": "#a70138",
+              "on-secondary": "#21006d",
+              "primary-dim": "#6063ee",
+              "on-tertiary-container": "#63054a",
+              "outline": "#777575",
+              "surface-container-lowest": "#000000",
+              "on-primary-container": "#0a0081",
+              "primary": "#a3a6ff",
+              "on-background": "#ffffff",
+              "on-secondary-container": "#d4c9ff",
+              "inverse-on-surface": "#565554",
+              "secondary-fixed-dim": "#c8bbff",
+              "on-tertiary-fixed": "#3b002b",
+              "primary-container": "#9396ff",
+              "secondary-container": "#49339d",
+              "tertiary-fixed": "#ff8ed2",
+              "on-tertiary": "#701455",
+              "error-dim": "#d73357",
+              "secondary": "#a28efc",
+              "outline-variant": "#494847",
+              "on-surface": "#ffffff",
+              "inverse-surface": "#fcf8f8",
+              "tertiary-dim": "#ef81c4",
+              "surface-container-low": "#131313",
+              "tertiary-container": "#ff8ed2",
+              "on-error": "#490013"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0e0e0e;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-900/70 dark:bg-neutral-900/70 backdrop-blur-xl border-b border-white/15">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto font-['Space_Grotesk'] tracking-tight">
+<div class="text-xl font-bold tracking-tighter text-neutral-50 dark:text-neutral-50">
+                The Kinetic Luminal
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Work</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Blog</a>
+<a class="text-indigo-400 font-semibold hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Certs</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors duration-300 active:scale-95 transition-transform" href="#">Contact</a>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-dim text-on-primary px-5 py-2 rounded-md font-medium text-sm hover:opacity-90 active:scale-95 transition-all shadow-[0_0_10px_rgba(163,166,255,0.2)]">
+                Resume
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+<!-- Hero Section -->
+<header class="mb-20 ml-[5%]">
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter mb-4">
+                Certifications
+            </h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-2xl font-body">
+                Validating technical expertise and continuous learning.
+            </p>
+</header>
+<!-- Filters -->
+<div class="flex items-center space-x-2 mb-12 ml-[5%] overflow-x-auto pb-4 no-scrollbar">
+<button class="px-6 py-2 rounded-full bg-primary-container text-on-primary-container font-medium text-sm transition-all">
+                All
+            </button>
+<button class="px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-medium text-sm transition-all border border-transparent hover:border-outline-variant/30">
+                Earned
+            </button>
+<button class="px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-medium text-sm transition-all border border-transparent hover:border-outline-variant/30">
+                In Progress
+            </button>
+</div>
+<!-- Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Featured Card: AWS Solutions Architect -->
+<div class="lg:col-span-2 group relative bg-surface-container-low p-10 rounded-xl transition-all duration-500 hover:bg-surface-container-high border border-primary/20 shadow-[0_0_40px_rgba(163,166,255,0.05)] overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl" style="font-variation-settings: 'FILL' 1;">cloud</span>
+</div>
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex justify-between items-start mb-8">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                EARNED
+                            </span>
+<span class="text-on-surface-variant text-sm font-label tracking-wide">Issued: Oct 2023</span>
+</div>
+<span class="material-symbols-outlined text-primary">verified</span>
+</div>
+<h3 class="font-headline text-3xl font-bold mb-4 group-hover:text-primary transition-colors">
+                        AWS Certified Solutions Architect
+                    </h3>
+<p class="text-on-surface-variant mb-8 max-w-lg font-body leading-relaxed">
+                        Validation of technical expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS.
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Cloud</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Infrastructure</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Security</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Architecture</span>
+</div>
+</div>
+</div>
+<!-- Google Cloud Card -->
+<div class="group bg-surface-container-low p-10 rounded-xl transition-all duration-500 hover:bg-surface-container-high border border-outline-variant/10">
+<div class="flex flex-col h-full">
+<div class="flex justify-between items-start mb-8">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                IN PROGRESS
+                            </span>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        Google Cloud Professional Data Engineer
+                    </h3>
+<p class="text-on-surface-variant text-sm mb-8 font-body">
+                        Expected completion: Q1 2024. Focusing on machine learning and big data pipelines.
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Big Data</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">ML</span>
+</div>
+</div>
+</div>
+<!-- Oracle Card -->
+<div class="group bg-surface-container-low p-10 rounded-xl transition-all duration-500 hover:bg-surface-container-high border border-outline-variant/10">
+<div class="flex flex-col h-full">
+<div class="flex justify-between items-start mb-8">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                EARNED
+                            </span>
+<span class="text-on-surface-variant text-sm font-label tracking-wide">Jan 2023</span>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        Oracle Certified Professional, Java SE 17
+                    </h3>
+<p class="text-on-surface-variant text-sm mb-8 font-body">
+                        Deep dive into modern Java features, modularity, and advanced concurrency.
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Backend</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Java</span>
+</div>
+</div>
+</div>
+<!-- Azure Card -->
+<div class="group bg-surface-container-low p-10 rounded-xl transition-all duration-500 hover:bg-surface-container-high border border-outline-variant/10">
+<div class="flex flex-col h-full">
+<div class="flex justify-between items-start mb-8">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold bg-neutral-500/10 text-neutral-400 border border-neutral-500/20">
+                                EXPIRED
+                            </span>
+<span class="text-on-surface-variant text-sm font-label tracking-wide">2021</span>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        Azure Fundamentals
+                    </h3>
+<p class="text-on-surface-variant text-sm mb-8 font-body">
+                        Initial foray into cloud services and hybrid cloud architecture.
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">Cloud</span>
+</div>
+</div>
+</div>
+<!-- HashiCorp Card -->
+<div class="group bg-surface-container-low p-10 rounded-xl transition-all duration-500 hover:bg-surface-container-high border border-outline-variant/10">
+<div class="flex flex-col h-full">
+<div class="flex justify-between items-start mb-8">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                EARNED
+                            </span>
+<span class="text-on-surface-variant text-sm font-label tracking-wide">Nov 2023</span>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        HashiCorp Certified: Terraform Associate
+                    </h3>
+<p class="text-on-surface-variant text-sm mb-8 font-body">
+                        Infrastructure as Code mastery, specializing in multi-cloud provisioning and state management.
+                    </p>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">IaC</span>
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-label">DevOps</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-neutral-950 dark:bg-neutral-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-4 font-['Inter'] text-sm tracking-wide">
+<div class="text-neutral-500">
+                © 2024 The Kinetic Luminal. Built with Precision.
+            </div>
+<div class="flex items-center space-x-6">
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Github</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Twitter</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors opacity-80 hover:opacity-100" href="#">Email</a>
+</div>
+</div>
+</footer>
+</body></html>

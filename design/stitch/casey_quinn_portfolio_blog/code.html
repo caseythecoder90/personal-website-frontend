@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights &amp; Technical Notes | Casey Quinn Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#adaaaa",
+                        "secondary": "#a28efc",
+                        "surface-container-low": "#131313",
+                        "on-secondary": "#21006d",
+                        "tertiary-dim": "#ef81c4",
+                        "surface-container": "#1a1919",
+                        "on-tertiary-fixed": "#3b002b",
+                        "on-tertiary-container": "#63054a",
+                        "on-tertiary": "#701455",
+                        "surface-tint": "#a3a6ff",
+                        "primary": "#a3a6ff",
+                        "background": "#0e0e0e",
+                        "outline": "#777575",
+                        "secondary-container": "#49339d",
+                        "tertiary-fixed": "#ff8ed2",
+                        "primary-fixed": "#9396ff",
+                        "surface-variant": "#262626",
+                        "surface-bright": "#2c2c2c",
+                        "on-surface": "#ffffff",
+                        "error-dim": "#d73357",
+                        "on-secondary-fixed-variant": "#533ea7",
+                        "surface-dim": "#0e0e0e",
+                        "inverse-primary": "#494bd7",
+                        "error-container": "#a70138",
+                        "on-primary-fixed": "#000000",
+                        "error": "#ff6e84",
+                        "on-primary": "#0f00a4",
+                        "primary-container": "#9396ff",
+                        "on-primary-container": "#0a0081",
+                        "primary-dim": "#6063ee",
+                        "primary-fixed-dim": "#8387ff",
+                        "surface-container-lowest": "#000000",
+                        "on-primary-fixed-variant": "#0e009d",
+                        "outline-variant": "#494847",
+                        "secondary-fixed": "#d6cbff",
+                        "surface-container-highest": "#262626",
+                        "on-error": "#490013",
+                        "tertiary-container": "#ff8ed2",
+                        "secondary-fixed-dim": "#c8bbff",
+                        "on-secondary-fixed": "#361c89",
+                        "on-secondary-container": "#d4c9ff",
+                        "surface-container-high": "#201f1f",
+                        "tertiary-fixed-dim": "#ef81c4",
+                        "on-background": "#ffffff",
+                        "surface": "#0e0e0e",
+                        "inverse-on-surface": "#565554",
+                        "inverse-surface": "#fcf8f8",
+                        "tertiary": "#ffa5d9",
+                        "on-tertiary-fixed-variant": "#6e1354",
+                        "secondary-dim": "#a28efc",
+                        "on-error-container": "#ffb2b9"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ghost-border {
+            border: 1px solid rgba(73, 72, 71, 0.15);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #a3a6ff, #6063ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #a3a6ff, #6063ee);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-900/70 backdrop-blur-xl border-b border-white/15 flex justify-between items-center px-8 h-16 max-w-full font-['Space_Grotesk'] tracking-tight">
+<div class="text-xl font-bold tracking-tighter text-indigo-400">The Kinetic Luminal</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors" href="#">Projects</a>
+<a class="text-indigo-400 font-bold border-b-2 border-indigo-400 pb-1" href="#">Blog</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors" href="#">About</a>
+<a class="text-neutral-400 hover:text-indigo-300 transition-colors" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container-lowest px-3 py-1.5 rounded-md border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface-variant text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface" placeholder="Search insights..." type="text"/>
+</div>
+<button class="btn-gradient px-5 py-1.5 rounded-md text-on-primary text-sm font-medium hover:opacity-90 active:scale-95 transition-all duration-200 shadow-[0_0_15px_rgba(163,166,255,0.2)]">
+                Hire Me
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="mb-16 ml-[5%]">
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-background mb-4">
+                Insights &amp; <span class="text-gradient">Technical Notes</span>
+</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-2xl leading-relaxed">
+                Exploring the architecture of high-performance systems and modern engineering practices.
+            </p>
+</header>
+<!-- Filters Section -->
+<section class="mb-12 space-y-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<!-- Category Pills -->
+<div class="flex flex-wrap gap-3">
+<button class="bg-primary text-on-primary-container px-6 py-2 rounded-full font-medium text-sm transition-all hover:brightness-110">All Posts</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-6 py-2 rounded-full font-medium text-sm transition-all hover:text-primary">System Design</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-6 py-2 rounded-full font-medium text-sm transition-all hover:text-primary">Rust</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-6 py-2 rounded-full font-medium text-sm transition-all hover:text-primary">DevOps</button>
+<button class="bg-surface-container-highest text-on-surface-variant px-6 py-2 rounded-full font-medium text-sm transition-all hover:text-primary">AI/ML</button>
+</div>
+<!-- Keyword Search Mobile/Fallback -->
+<div class="md:hidden flex items-center bg-surface-container-lowest px-4 py-3 rounded-xl border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full" placeholder="Search keywords..." type="text"/>
+</div>
+</div>
+<!-- Tag Chips -->
+<div class="flex flex-wrap gap-2 items-center">
+<span class="text-on-surface-variant text-xs font-bold tracking-widest uppercase mr-2">Quick Filter:</span>
+<button class="bg-surface-variant/50 text-on-surface-variant px-3 py-1 rounded-full text-xs font-medium border border-outline-variant/10 hover:border-primary/50 transition-colors">#WASM</button>
+<button class="bg-surface-variant/50 text-on-surface-variant px-3 py-1 rounded-full text-xs font-medium border border-outline-variant/10 hover:border-primary/50 transition-colors">#Scalability</button>
+<button class="bg-surface-variant/50 text-on-surface-variant px-3 py-1 rounded-full text-xs font-medium border border-outline-variant/10 hover:border-primary/50 transition-colors">#Kubernetes</button>
+<button class="bg-surface-variant/50 text-on-surface-variant px-3 py-1 rounded-full text-xs font-medium border border-outline-variant/10 hover:border-primary/50 transition-colors">#Backend</button>
+</div>
+</section>
+<!-- Blog Posts List -->
+<div class="space-y-12">
+<!-- Post Card 1 -->
+<article class="group bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-highest transition-all duration-500 relative flex flex-col md:flex-row gap-8 p-6 md:p-10 border-l-2 border-transparent hover:border-primary">
+<div class="w-full md:w-1/3 aspect-[16/10] overflow-hidden rounded-lg">
+<img alt="Rust code on a screen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="close-up of abstract neon blue code syntax on a dark screen with shallow depth of field and bokeh lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdlL3jXefAUuWVJtkZCz8Fl8x9oS-kjuayj9oo-yxlOIghE3HYy2D_yQmXZcSB7hVguLhUzV9m9mKKBQjB1LiqzIm2FwTDddbbv1voygGQuoLsm4hadNrS1FsuVs1ELN0Xo8INTcCokRDwsj_wEc2rLsFrMXfflY_5FhIK7wTLdh-dAsGu6nMOmFRPjXOuXaH91_oe17lcXES6n9P4ESWtNKEROx5FMwrY79tMJE7oTWaSelmnhy3rmMP2Z1WY25Nw_m2-zcOjVTQ"/>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex items-center gap-4 mb-4">
+<span class="text-tertiary bg-tertiary/10 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">Rust</span>
+<div class="flex items-center text-on-surface-variant text-xs gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+<span>May 12, 2024</span>
+</div>
+<div class="flex items-center text-on-surface-variant text-xs gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span>8 min read</span>
+</div>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl font-bold text-on-surface mb-4 group-hover:text-primary transition-colors">
+                        Optimizing Rust for Edge Computing
+                    </h2>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                        An in-depth look at reducing binary sizes and memory footprints for WebAssembly targets in resource-constrained environments. We explore cranelift vs llvm and custom allocators.
+                    </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase">#WASM</span>
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase">#Performance</span>
+</div>
+</div>
+</article>
+<!-- Post Card 2 -->
+<article class="group bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-highest transition-all duration-500 relative flex flex-col md:flex-row gap-8 p-6 md:p-10 border-l-2 border-transparent hover:border-primary">
+<div class="w-full md:w-1/3 aspect-[16/10] overflow-hidden rounded-lg">
+<img alt="Server racks" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="geometric view of server racks in a dark data center with glowing purple status lights and atmospheric haze" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQsbwIu4dCANy8l2zhNHzEi2XCBJ6syztNrJkh1GVuQX2gDHToaTCF2zqCPp2RRsUBOpcLQVOrTTfwvOlRidlmrC5hHlqOUk4H71wDxWASqJI1Tw2BCmS_YnFHkUglr18Nr-yzbr-Llg-KVVUTjaX6YUn8SA8A--nC91Scr38FKTIoOl6eAmTlFVbAk55AKTXlUJl2x8AM-cz32AHKzRkf_4EuF8rw4xX-e-NpiDYkt10sV5928HkptFjw0wIXc6nfnKXa7j4X_qY"/>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex items-center gap-4 mb-4">
+<span class="text-secondary bg-secondary/10 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">System Design</span>
+<div class="flex items-center text-on-surface-variant text-xs gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+<span>April 28, 2024</span>
+</div>
+<div class="flex items-center text-on-surface-variant text-xs gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span>12 min read</span>
+</div>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl font-bold text-on-surface mb-4 group-hover:text-primary transition-colors">
+                        Scaling Beyond Millions: The Proxy Pattern
+                    </h2>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                        Architecture decisions for high-availability systems. How we implemented a multi-layered proxy strategy to handle unpredictable traffic spikes without increasing latency.
+                    </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase">#Scalability</span>
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase">#Architecture</span>
+</div>
+</div>
+</article>
+<!-- Post Card 3 -->
+<article class="group bg-surface-container-low rounded-xl overflow-hidden hover:bg-surface-container-highest transition-all duration-500 relative flex flex-col md:flex-row gap-8 p-6 md:p-10 border-l-2 border-transparent hover:border-primary">
+<div class="w-full md:w-1/3 aspect-[16/10] overflow-hidden rounded-lg">
+<img alt="Neural network visualization" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="abstract digital connection lines and dots forming a neural network pattern on a deep black background with soft violet glow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv1wK3_0cJjxdaRqNwyRjSvkBouHmZWklY2q-IC0X491G2RGiwxFmmfLg10WUjOqdABi3prhruibn8NScZJB_oZQGWaaWRpNxgx3SUPvLXYK8MdYLkhbYPwho4mtAjsVizRo6KTKmY4kbfljb-MwhYpIagKI8GGudad2NtjuzpK2sdzmvJFQiQYxtZWmz1a9nR7FBdXojdyRmPqJM6sj_6Oisq6JNkJpaXTNezn5W9uXZo8hpcbuGjaGm52ACVFQebG-zaNEfwLbQ"/>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex items-center gap-4 mb-4">
+<span class="text-tertiary bg-tertiary/10 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">AI/ML</span>
+<div class="flex items-center text-on-surface-variant text-xs gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+<span>March 15, 2024</span>
+</div>
+<div class="flex items-center text-on-surface-variant text-xs gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span>15 min read</span>
+</div>
+</div>
+<h2 class="font-headline text-2xl md:text-3xl font-bold text-on-surface mb-4 group-hover:text-primary transition-colors">
+                        Deploying LLMs at the Edge with K8s
+                    </h2>
+<p class="text-on-surface-variant leading-relaxed mb-6">
+                        The intersection of devops and AI. A step-by-step guide to orchestrating quantized models using lightweight Kubernetes clusters and hardware acceleration.
+                    </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase">#Kubernetes</span>
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase">#PyTorch</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination -->
+<nav class="mt-24 flex justify-center items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-md bg-surface-container-highest text-on-surface-variant hover:text-primary transition-colors disabled:opacity-30">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-md bg-primary text-on-primary font-bold text-sm">1</button>
+<button class="w-10 h-10 rounded-md bg-surface-container-low text-on-surface-variant hover:bg-surface-container-highest transition-colors font-medium text-sm">2</button>
+<button class="w-10 h-10 rounded-md bg-surface-container-low text-on-surface-variant hover:bg-surface-container-highest transition-colors font-medium text-sm">3</button>
+<span class="text-on-surface-variant px-2">...</span>
+<button class="w-10 h-10 rounded-md bg-surface-container-low text-on-surface-variant hover:bg-surface-container-highest transition-colors font-medium text-sm">8</button>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-md bg-surface-container-highest text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</nav>
+</main>
+<!-- Footer -->
+<footer class="bg-neutral-950 w-full py-12 flex flex-col md:flex-row justify-between items-center px-12 border-t border-white/5 font-['Inter'] text-sm tracking-wide">
+<div class="text-neutral-500 mb-6 md:mb-0">
+            © 2024 The Kinetic Luminal. Crafted with precision.
+        </div>
+<div class="flex gap-8">
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors ease-in-out duration-200" href="#">GitHub</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors ease-in-out duration-200" href="#">LinkedIn</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors ease-in-out duration-200" href="#">Twitter</a>
+<a class="text-neutral-500 hover:text-indigo-300 transition-colors ease-in-out duration-200" href="#">RSS</a>
+</div>
+</footer>
+</body></html>
