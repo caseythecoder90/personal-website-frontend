@@ -1,1 +1,2 @@
-// Custom hooks will be exported from here
+export { useScrollToTop } from './useScrollToTop';
+export { usePageTitle } from './usePageTitle';
