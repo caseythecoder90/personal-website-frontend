@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 .env
+.vite
+design/stitch.zip
 
 # Editor directories and files
 .vscode/*
