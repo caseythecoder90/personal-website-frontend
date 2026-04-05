@@ -43,7 +43,7 @@ export function CertificationCard({ certification }: CertificationCardProps) {
 
         {/* Tech pills */}
         <div className="mt-auto flex flex-wrap gap-2">
-          {certification.technologies.map((tech) => (
+          {(certification.technologies ?? []).map((tech) => (
             <TechPill key={tech.id} name={tech.name} />
           ))}
         </div>

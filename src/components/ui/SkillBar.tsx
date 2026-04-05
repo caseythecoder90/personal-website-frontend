@@ -5,14 +5,16 @@ interface SkillBarProps {
 
 export function SkillBar({ name, percentage }: SkillBarProps) {
   return (
-    <div className="space-y-3">
-      <div className="flex justify-between items-center text-sm font-bold tracking-wider uppercase">
-        <span>{name}</span>
-        <span className="text-on-surface-variant">{percentage}%</span>
+    <div className="group space-y-4">
+      <div className="flex justify-between items-end">
+        <h4 className="text-lg font-bold text-white tracking-widest uppercase">
+          {name}
+        </h4>
+        <span className="text-secondary font-bold font-headline text-xl">{percentage}%</span>
       </div>
-      <div className="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+      <div className="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-primary-dim to-primary transition-all duration-700"
+          className="h-full bg-gradient-to-r from-primary-dim to-primary rounded-full transition-all duration-1000"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -52,34 +54,47 @@ export function SkillBar({ name, percentage }: SkillBarProps) {
  *   correct approach.
  *
  * TAILWIND BREAKDOWN:
- *   Label row: "flex justify-between items-center text-sm font-bold tracking-wider uppercase"
+ *   Label row: "flex justify-between items-end"
  *   ┌─────────────────────────┬──────────────────────────────────┬──────────────────────────────────┐
  *   │ flex justify-between     │ display: flex; justify-content:  │ Name on left, % on right         │
  *   │                          │ space-between                    │                                  │
- *   │ items-center             │ align-items: center              │ Vertically centered              │
- *   │ text-sm                  │ font-size: 14px                  │ Small label text                 │
+ *   │ items-end                │ align-items: flex-end            │ Align to bottom (baseline of     │
+ *   │                          │                                  │ different-sized text)             │
+ *   └─────────────────────────┴──────────────────────────────────┴──────────────────────────────────┘
+ *
+ *   Name: "text-lg font-bold text-white tracking-widest uppercase"
+ *   ┌─────────────────────────┬──────────────────────────────────┬──────────────────────────────────┐
+ *   │ text-lg                  │ font-size: 18px                  │ Larger than before (was 14px)    │
  *   │ font-bold                │ font-weight: 700                 │ Bold                             │
- *   │ tracking-wider           │ letter-spacing: 0.05em           │ Spread letters                   │
+ *   │ tracking-widest          │ letter-spacing: 0.1em            │ Very wide spacing                │
  *   │ uppercase                │ text-transform: uppercase        │ "java" → "JAVA"                 │
  *   └─────────────────────────┴──────────────────────────────────┴──────────────────────────────────┘
  *
- *   Bar track: "h-1 bg-surface-container-highest rounded-full overflow-hidden"
+ *   Percentage: "text-secondary font-bold font-headline text-xl"
  *   ┌─────────────────────────┬──────────────────────────────────┬──────────────────────────────────┐
- *   │ h-1                      │ height: 4px                      │ Thin bar                         │
- *   │ bg-surface-container-    │ background: #262626              │ Dark gray track                  │
- *   │ highest                  │                                  │                                  │
+ *   │ text-secondary           │ color: #a28efc                   │ Purple accent (was gray)         │
+ *   │ font-headline            │ font-family: Space Grotesk       │ Display font for emphasis        │
+ *   │ text-xl                  │ font-size: 20px                  │ Larger percentage number         │
+ *   │ font-bold                │ font-weight: 700                 │ Bold                             │
+ *   └─────────────────────────┴──────────────────────────────────┴──────────────────────────────────┘
+ *
+ *   Bar track: "h-1.5 w-full bg-surface-variant rounded-full overflow-hidden"
+ *   ┌─────────────────────────┬──────────────────────────────────┬──────────────────────────────────┐
+ *   │ h-1.5                    │ height: 6px                      │ Thicker bar (was 4px)            │
+ *   │ bg-surface-variant       │ background: #262626              │ Dark gray track                  │
  *   │ rounded-full             │ border-radius: 9999px            │ Fully rounded ends               │
  *   │ overflow-hidden          │ overflow: hidden                 │ Clips the fill bar to the track  │
  *   └─────────────────────────┴──────────────────────────────────┴──────────────────────────────────┘
  *
- *   Bar fill: "h-full bg-gradient-to-r from-primary-dim to-primary"
+ *   Bar fill: "h-full bg-gradient-to-r from-primary-dim to-primary rounded-full transition-all duration-1000"
  *   ┌─────────────────────────┬──────────────────────────────────┬──────────────────────────────────┐
- *   │ h-full                   │ height: 100%                     │ Same height as track (4px)       │
+ *   │ h-full                   │ height: 100%                     │ Same height as track (6px)       │
  *   │ bg-gradient-to-r         │ linear-gradient(to right, ...)   │ Gradient left to right           │
  *   │ from-primary-dim         │ from #6063ee                     │ Deep indigo on left              │
  *   │ to-primary               │ to #a3a6ff                       │ Light indigo on right            │
- *   │ transition-all           │ transition: all 700ms            │ Animate width changes            │
- *   │ duration-700             │                                  │ (smooth fill on load)            │
+ *   │ rounded-full             │ border-radius: 9999px            │ Rounded fill cap                 │
+ *   │ transition-all           │ transition: all 1000ms           │ Smooth 1s fill animation         │
+ *   │ duration-1000            │                                  │                                  │
  *   └─────────────────────────┴──────────────────────────────────┴──────────────────────────────────┘
  *
  * ============================================================================
