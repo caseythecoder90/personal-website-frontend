@@ -6,8 +6,9 @@ interface BlogPostCardProps {
 }
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
-  const primaryImage = post.images.find((img) => img.isPrimary) ?? post.images[0];
-  const primaryCategory = post.categories[0];
+  const images = post.images ?? [];
+  const primaryImage = images.find((img) => img.isPrimary) ?? images[0];
+  const primaryCategory = (post.categories ?? [])[0];
   const publishDate = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
     : null;
@@ -63,7 +64,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mt-auto">
-          {post.tags.map((tag) => (
+          {(post.tags ?? []).map((tag) => (
             <TechPill key={tag.id} name={`#${tag.name}`} />
           ))}
         </div>

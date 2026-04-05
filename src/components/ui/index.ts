@@ -7,5 +7,6 @@ export { SkillBar } from './SkillBar';
 export { ProjectCard } from './ProjectCard';
 export { BlogPostCard } from './BlogPostCard';
 export { CertificationCard } from './CertificationCard';
+export { TechnologyShowcase } from './TechnologyShowcase';
 export { LoadingSpinner } from './LoadingSpinner';
 export { ErrorDisplay } from './ErrorDisplay';

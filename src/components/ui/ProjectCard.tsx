@@ -7,7 +7,8 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const primaryImage = project.images.find((img) => img.isPrimary) ?? project.images[0];
+  const images = project.images ?? [];
+  const primaryImage = images.find((img) => img.isPrimary) ?? images[0];
 
   return (
     <article className="group bg-surface-container-low p-8 rounded-xl transition-all duration-300 hover:bg-surface-container-highest hover:shadow-[0_1px_0_0_rgba(163,166,255,0.4)_inset] relative overflow-hidden">
@@ -50,7 +51,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Tech pills */}
       <div className="flex flex-wrap gap-2 mb-8">
-        {project.technologies.map((tech) => (
+        {(project.technologies ?? []).map((tech) => (
           <TechPill key={tech.id} name={tech.name} />
         ))}
       </div>
