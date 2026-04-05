@@ -1,17 +1,16 @@
-import type { ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { useScrollToTop } from '@/hooks';
 
-interface LayoutProps {
-  children: ReactNode;
-}
+export function Layout() {
+  useScrollToTop();
 
-export function Layout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <Navbar />
       <main className="flex-1 pt-16">
-        {children}
+        <Outlet />
       </main>
       <Footer />
     </div>
@@ -28,22 +27,19 @@ export function Layout({ children }: LayoutProps) {
  *   in the middle, Footer on the bottom. This is the "shell" of the app.
  *
  * PROPS:
- *   children: ReactNode
- *     - The page content to render between the Navbar and Footer.
- *     - In React, `children` is a special prop — it represents whatever JSX
- *       you put BETWEEN the opening and closing tags of a component:
- *         <Layout>
- *           <h1>This is the children</h1>   ← this gets passed as `children`
- *         </Layout>
- *     - `ReactNode` is the TypeScript type that means "anything React can render"
- *       (strings, numbers, JSX elements, arrays of elements, null, etc.)
- *     - Java analogy: like a method parameter of type `Object` — accepts anything.
+ *   None — Layout no longer accepts children directly. Instead, React Router's
+ *   <Outlet /> renders the matched child route automatically.
+ *
+ *   PREVIOUSLY (Issue #1): Layout accepted `children: ReactNode` and you
+ *   wrapped pages manually: <Layout><HomePage /></Layout>
+ *   NOW (Issue #4): Layout is a "layout route" — React Router renders the
+ *   matched child route into <Outlet /> automatically.
  *
  * HTML STRUCTURE:
  *   <div>              ← outer wrapper (the full page container)
  *     <Navbar />       ← fixed to viewport top (rendered by Navbar component)
  *     <main>           ← semantic HTML tag for primary content area
- *       {children}     ← the actual page content injected here
+ *       <Outlet />     ← React Router renders the matched child route here
  *     </main>
  *     <Footer />       ← sits at the bottom
  *   </div>
@@ -90,6 +86,24 @@ export function Layout({ children }: LayoutProps) {
  *   - Navbar and Footer have fixed heights (they don't grow)
  *   - <main> has flex-1, so it expands to absorb all leftover space
  *   - Result: Footer is always at the bottom, whether content is short or long
+ *
+ * REACT ROUTER CONCEPTS (added in Issue #4):
+ *
+ *   <Outlet />
+ *     - React Router's placeholder component — it renders whatever child
+ *       route matches the current URL.
+ *     - Java analogy: like a Thymeleaf layout template with th:fragment —
+ *       the layout defines the shell (header, footer), and each page fills
+ *       the content area.
+ *     - In App.tsx, Layout is set up as a parent route with child routes
+ *       nested inside it. React Router renders those children at <Outlet />.
+ *
+ *   useScrollToTop()
+ *     - Custom hook that scrolls to the top of the page on every route change.
+ *     - Without this, navigating from a long page would keep the scroll
+ *       position — you'd land in the middle of the new page.
+ *     - It uses useLocation() to detect route changes and useEffect() to
+ *       trigger the scroll.
  *
  * ============================================================================
  */
