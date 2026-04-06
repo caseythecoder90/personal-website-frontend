@@ -68,9 +68,9 @@ export function HomePage() {
             </p>
           </div>
           <p className="text-on-surface-variant text-lg max-w-xl leading-relaxed">
-            Architecting high-performance, enterprise-grade applications with
-            Java and Spring Boot. Specialized in building scalable distributed
-            systems that prioritize security, reliability, and technical excellence.
+            Architect at heart, full-stack by practice. Building secure,
+            scalable systems from infrastructure to interface — with craft
+            and intention at every layer.
           </p>
           <div className="flex flex-wrap gap-4 pt-4">
             <Button href="/projects" size="lg">View Projects</Button>

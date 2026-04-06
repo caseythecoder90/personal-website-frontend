@@ -14,15 +14,15 @@ export interface ValidationError {
   message: string;
 }
 
-/** Spring Page response for paginated endpoints. */
+/** Spring Boot 3.x Page response — uses a nested `page` object. */
 export interface PageResponse<T> {
   content: T[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
-  first: boolean;
-  last: boolean;
+  page: {
+    size: number;
+    number: number;
+    totalElements: number;
+    totalPages: number;
+  };
 }
 
 /** Query parameters for paginated API calls. */
