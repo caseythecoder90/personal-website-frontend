@@ -75,9 +75,8 @@ export function ProjectsPage() {
           Projects<span className="text-primary">.</span>
         </h1>
         <p className="font-body text-on-surface-variant text-lg max-w-2xl leading-relaxed">
-          A curated selection of architectural engineering and digital solutions.
-          Exploring the intersection of high-performance code and atmospheric
-          design systems.
+          Real-world projects spanning backend systems, cloud infrastructure,
+          and full-stack applications — built with intention and technical depth.
         </p>
       </header>
 
