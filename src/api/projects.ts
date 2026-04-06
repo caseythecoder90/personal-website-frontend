@@ -21,20 +21,14 @@ export const projectApi = {
   getAll: () =>
     apiGet<ProjectResponse[]>('/projects'),
 
-  getPaginated: (params?: PaginationParams) =>
+  getPaginated: (params?: PaginationParams & { published?: boolean }) =>
     apiGet<PageResponse<ProjectResponse>>('/projects/paginated', params as Record<string, unknown>),
 
   getById: (id: number) =>
     apiGet<ProjectResponse>(`/projects/${id}`),
 
-  getBySlug: (slug: string) =>
-    apiGet<ProjectResponse>(`/projects/slug/${slug}`),
-
   getByTechnology: (tech: string) =>
     apiGet<ProjectResponse[]>(`/projects/technology/${tech}`),
-
-  getPublished: () =>
-    apiGet<ProjectResponse[]>('/projects/published'),
 
   getFeatured: () =>
     apiGet<ProjectResponse[]>('/projects/featured'),
