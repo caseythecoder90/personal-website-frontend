@@ -8,5 +8,7 @@ export { ProjectCard } from './ProjectCard';
 export { BlogPostCard } from './BlogPostCard';
 export { CertificationCard } from './CertificationCard';
 export { TechnologyShowcase } from './TechnologyShowcase';
+export { ProjectLinks } from './ProjectLinks';
+export { ProjectGallery } from './ProjectGallery';
 export { LoadingSpinner } from './LoadingSpinner';
 export { ErrorDisplay } from './ErrorDisplay';

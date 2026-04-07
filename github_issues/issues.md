@@ -192,7 +192,7 @@ Build the projects listing page with category-based filtering.
 Build the individual project detail page.
 
 **Tasks:**
-- [ ] Fetch project by slug: `GET /api/v1/projects/slug/:slug`
+- [ ] Fetch project by slug: `GET /api/v1/projects/slug/{slug}`
 - [ ] Hero image section (primary project image)
 - [ ] Project metadata: status badge, difficulty, type, dates, estimated hours
 - [ ] Full description rendered as formatted text

@@ -122,13 +122,14 @@ POST /auth/login  { username, password } -> AuthResponse
 GET    /projects                                          -> Response<List<ProjectResponse>>
 GET    /projects/paginated?page&size&sort&published       -> Response<Page<ProjectResponse>>
 GET    /projects/{id}                                     -> Response<ProjectResponse>
+GET    /projects/slug/{slug}                              -> Response<ProjectResponse>
 GET    /projects/technology/{tech}                        -> Response<List<ProjectResponse>>
 GET    /projects/featured                                 -> Response<List<ProjectResponse>>
 POST   /projects                                          -> Response<ProjectResponse>        [ADMIN]
 PUT    /projects/{id}                                     -> Response<ProjectResponse>        [ADMIN]
 DELETE /projects/{id}                                     -> Response<Void>                   [ADMIN]
 ```
-Note: Use `?published=true` on the paginated endpoint for public-facing pages. There is no `/projects/slug/{slug}` or `/projects/published` endpoint.
+Note: Use `?published=true` on the paginated endpoint for public-facing pages. There is no `/projects/published` endpoint.
 
 ### Project Images
 ```

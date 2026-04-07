@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { usePageTitle } from '@/hooks';
 import { projectApi } from '@/api/projects';
 import { ProjectCard, LoadingSpinner, ErrorDisplay } from '@/components/ui';
-import type { ProjectResponse, TechnologyCategory } from '@/types';
+import type { ProjectResponse, TechnologyResponse, TechnologyCategory } from '@/types';
 
 /** Filter categories shown in the filter bar, mapped to TechnologyCategory values. */
 const CATEGORY_FILTERS: { label: string; value: TechnologyCategory | null }[] = [
@@ -59,9 +59,9 @@ export function ProjectsPage() {
   }, [fetchPage]);
 
   // ---- Derived: client-side category filter on loaded projects ----
-  const displayed = activeCategory
-    ? projects.filter((p) =>
-        (p.technologies ?? []).some((t) => t.category === activeCategory),
+  const displayed: ProjectResponse[] = activeCategory
+    ? projects.filter((p: ProjectResponse): boolean =>
+        (p.technologies ?? []).some((t: TechnologyResponse): boolean => t.category === activeCategory),
       )
     : projects;
 
