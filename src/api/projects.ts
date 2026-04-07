@@ -27,6 +27,9 @@ export const projectApi = {
   getById: (id: number) =>
     apiGet<ProjectResponse>(`/projects/${id}`),
 
+  getBySlug: (slug: string) =>
+    apiGet<ProjectResponse>(`/projects/slug/${slug}`),
+
   getByTechnology: (tech: string) =>
     apiGet<ProjectResponse[]>(`/projects/technology/${tech}`),
 
