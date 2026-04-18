@@ -212,12 +212,12 @@ Build the individual project detail page.
 
 ---
 
-## Issue #8: Blog listing and blog post detail pages
+## Issue #8: Blog listing page with filtering and search
 
 **Labels:** `feature`
 
 **Description:**
-Build the blog listing page with category/tag filtering and the individual post detail page.
+Build the blog listing page with paginated posts, category/tag filters, and keyword search. Cards link to the detail page (built in Issue #9).
 
 **Tasks:**
 - [ ] Blog listing page calling `GET /api/v1/blog/posts/published/paginated`
@@ -226,23 +226,51 @@ Build the blog listing page with category/tag filtering and the individual post 
 - [ ] Filter by category: `GET /api/v1/blog/posts/category/:slug`
 - [ ] Filter by tag: `GET /api/v1/blog/posts/tag/:slug`
 - [ ] Search: `GET /api/v1/blog/posts/search?q=`
-- [ ] Blog post detail page by slug: `GET /api/v1/blog/posts/slug/:slug`
-- [ ] Markdown content rendering (install `react-markdown` + `react-syntax-highlighter`)
-- [ ] Post metadata: date, category, tags, reading time
-- [ ] Related posts section
-- [ ] Pagination on listing page
+- [ ] Pagination (Load More or numbered pages, matching Projects page pattern)
+- [ ] Card click navigates to `/blog/:slug`
+- [ ] Loading and empty states
+- [ ] Responsive layout matching Stitch mockup
 
-**Branch:** `feature/blog`
+**Branch:** `feature/blog-listing`
 
 **Acceptance Criteria:**
 - Published blog posts display with pagination
 - Category and tag filtering works
-- Individual posts render markdown with code syntax highlighting
 - Search filters posts by keyword
+- Clicking a card navigates to `/blog/:slug` (may 404 until #9 lands)
 
 ---
 
-## Issue #9: Certifications page
+## Issue #9: Blog post detail page with markdown rendering
+
+**Labels:** `feature`
+
+**Description:**
+Build the individual blog post detail page, including markdown content rendering with code syntax highlighting.
+
+**Tasks:**
+- [ ] Install dependencies: `react-markdown`, `react-syntax-highlighter`, `remark-gfm`
+- [ ] Fetch post by slug: `GET /api/v1/blog/posts/slug/:slug` (backend increments views)
+- [ ] Render markdown content with GitHub-flavored markdown (tables, strikethrough, task lists)
+- [ ] Syntax-highlighted code blocks matching the dark editorial theme
+- [ ] Post metadata: published date, reading time, category badges, tag pills
+- [ ] Featured image (primary blog post image) as hero
+- [ ] Related posts section (same category or shared tags)
+- [ ] 404 handling for invalid slugs
+- [ ] Back to blog navigation
+
+**Branch:** `feature/blog-detail`
+
+**Acceptance Criteria:**
+- Page loads correct post by URL slug
+- Markdown renders cleanly with headings, lists, links, images
+- Code blocks have syntax highlighting matching the dark theme
+- Metadata and related posts display correctly
+- Invalid slug shows 404 state
+
+---
+
+## Issue #10: Certifications page
 
 **Labels:** `feature`
 
@@ -267,7 +295,7 @@ Build the certifications showcase page with status filtering.
 
 ---
 
-## Issue #10: Contact page with form submission
+## Issue #11: Contact page with form submission
 
 **Labels:** `feature`
 
@@ -295,7 +323,7 @@ Build the contact page with a working form that submits to the backend.
 
 ---
 
-## Issue #11: Resume download integration
+## Issue #12: Resume download integration
 
 **Labels:** `feature`
 
@@ -317,7 +345,7 @@ Integrate resume download functionality.
 
 ---
 
-## Issue #12: SEO, meta tags, and performance optimization
+## Issue #13: SEO, meta tags, and performance optimization
 
 **Labels:** `enhancement`
 
@@ -343,7 +371,7 @@ Add SEO fundamentals, proper meta tags, Open Graph data, and performance optimiz
 
 ---
 
-## Issue #13: Deployment setup — Docker, Nginx, CI/CD
+## Issue #14: Deployment setup — Docker, Nginx, CI/CD
 
 **Labels:** `setup`, `enhancement`
 
