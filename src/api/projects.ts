@@ -36,6 +36,9 @@ export const projectApi = {
   getFeatured: () =>
     apiGet<ProjectResponse[]>('/projects/featured'),
 
+  incrementViews: (id: number) =>
+    apiPut<void>(`/projects/${id}/views`),
+
   // --------------------------------------------------------------------------
   // Projects — Admin
   // --------------------------------------------------------------------------

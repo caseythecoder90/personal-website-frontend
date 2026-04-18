@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { usePageTitle } from '@/hooks';
 import { projectApi } from '@/api/projects';
@@ -22,6 +22,7 @@ export function ProjectDetailPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [notFound, setNotFound] = useState<boolean>(false);
+  const viewCounted = useRef(false);
 
   usePageTitle(project?.name ?? 'Project');
 
@@ -34,7 +35,13 @@ export function ProjectDetailPage() {
 
     projectApi
       .getBySlug(slug)
-      .then((data: ProjectResponse) => setProject(data))
+      .then((data: ProjectResponse) => {
+        setProject(data);
+        if (!viewCounted.current) {
+          viewCounted.current = true;
+          projectApi.incrementViews(data.id).catch(() => {});
+        }
+      })
       .catch((err) => {
         if (err?.response?.status === 404) {
           setNotFound(true);
