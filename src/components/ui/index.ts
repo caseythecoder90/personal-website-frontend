@@ -15,3 +15,4 @@ export { ErrorDisplay } from './ErrorDisplay';
 export { Pagination } from './Pagination';
 export { CategoryTab } from './CategoryTab';
 export { TagChip } from './TagChip';
+export { SearchInput } from './SearchInput';

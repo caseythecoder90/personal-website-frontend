@@ -8,6 +8,7 @@ import {
   Pagination,
   CategoryTab,
   TagChip,
+  SearchInput,
 } from '@/components/ui';
 import type {
   BlogPostResponse,
@@ -16,15 +17,23 @@ import type {
 } from '@/types';
 
 const PAGE_SIZE = 5;
+const SEARCH_DEBOUNCE_MS = 300;
 
 export function BlogPage() {
   usePageTitle('Blog');
 
   // ---- Filter state ----
-  // At most one of these is non-null at a time (one-filter-at-a-time rule).
+  // At most one of category/tag/search is "active" at a time (one-filter rule).
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [page, setPage] = useState(0);
+
+  // ---- Search state ----
+  // `searchInput` updates on every keystroke (live UI).
+  // `debouncedSearch` lags behind by SEARCH_DEBOUNCE_MS and is what the fetch
+  // effect reads — so we don't hit the API on every keystroke.
+  const [searchInput, setSearchInput] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
 
   // ---- Data state ----
   const [posts, setPosts] = useState<BlogPostResponse[]>([]);
@@ -38,6 +47,18 @@ export function BlogPage() {
   // ---- Filter-bar data (categories + popular tags) ----
   const [categories, setCategories] = useState<BlogCategoryResponse[]>([]);
   const [popularTags, setPopularTags] = useState<BlogTagResponse[]>([]);
+
+  // ---- Debounce searchInput → debouncedSearch ----
+  // Every keystroke schedules a setter 300ms out. The cleanup cancels the
+  // pending timer before it can fire, so only the LAST keystroke in a burst
+  // actually updates debouncedSearch (which is what the fetch depends on).
+  useEffect(() => {
+    const timerId = setTimeout(
+      () => setDebouncedSearch(searchInput.trim()),
+      SEARCH_DEBOUNCE_MS,
+    );
+    return () => clearTimeout(timerId);
+  }, [searchInput]);
 
   // Load categories + popular tags once on mount. Parallel via Promise.all.
   // Non-blocking: if they fail, the filter bar just hides — posts still load.
@@ -62,7 +83,16 @@ export function BlogPage() {
     setLoading(true);
     setError(null);
 
-    const request = activeCategory
+    // Branch priority: search > category > tag > paginated (default).
+    // Mutual exclusion is enforced in the click handlers, so at most one of
+    // debouncedSearch / activeCategory / activeTag is non-empty.
+    const request = debouncedSearch
+      ? blogApi.posts.search(debouncedSearch).then((list) => ({
+          content: list,
+          totalPages: 0,
+          pageNumber: 0,
+        }))
+      : activeCategory
       ? blogApi.posts.getByCategory(activeCategory).then((list) => ({
           content: list,
           totalPages: 0,
@@ -91,8 +121,10 @@ export function BlogPage() {
         if (cancelled) return;
         setPosts(result.content);
         setTotalPages(result.totalPages);
-        // Only update page when paginated (filters don't paginate)
-        if (!activeCategory && !activeTag) setPage(result.pageNumber);
+        // Only sync page when paginated (filters and search don't paginate).
+        if (!debouncedSearch && !activeCategory && !activeTag) {
+          setPage(result.pageNumber);
+        }
       })
       .catch(() => {
         if (cancelled) return;
@@ -107,12 +139,15 @@ export function BlogPage() {
     return () => {
       cancelled = true;
     };
-  }, [activeCategory, activeTag, page, retryNonce]);
+  }, [debouncedSearch, activeCategory, activeTag, page, retryNonce]);
 
   // ---- Filter click handlers ----
+  // Any filter action clears the others to keep the one-filter-at-a-time rule.
   const handleSelectCategory = (slug: string | null) => {
     setActiveCategory(slug);
     setActiveTag(null);
+    setSearchInput('');
+    setDebouncedSearch('');
     setPage(0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -120,8 +155,21 @@ export function BlogPage() {
   const handleSelectTag = (slug: string) => {
     setActiveTag((current) => (current === slug ? null : slug));
     setActiveCategory(null);
+    setSearchInput('');
+    setDebouncedSearch('');
     setPage(0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSearchChange = (next: string) => {
+    setSearchInput(next);
+    // Clear category/tag the moment the user starts typing. debouncedSearch
+    // will update 300ms after they stop, which is what triggers the fetch.
+    if (next.length > 0) {
+      setActiveCategory(null);
+      setActiveTag(null);
+      setPage(0);
+    }
   };
 
   const handlePageChange = (next: number) => {
@@ -129,7 +177,8 @@ export function BlogPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const hasActiveFilter = activeCategory !== null || activeTag !== null;
+  const hasActiveFilter =
+    activeCategory !== null || activeTag !== null || debouncedSearch.length > 0;
 
   return (
     <main className="pt-16 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
@@ -146,10 +195,19 @@ export function BlogPage() {
       </header>
 
       {/* ==============================================================
-          FILTER BAR — categories (primary) + popular tags (secondary)
+          FILTER BAR — search + categories (primary) + popular tags (secondary)
           ============================================================== */}
-      {(categories.length > 0 || popularTags.length > 0) && (
-        <section className="mb-12 space-y-6">
+      <section className="mb-12 space-y-6">
+        {/* Search input */}
+        <SearchInput
+          value={searchInput}
+          onChange={handleSearchChange}
+          placeholder="Search posts by title, content, or excerpt..."
+          ariaLabel="Search blog posts"
+        />
+
+        {(categories.length > 0 || popularTags.length > 0) && (
+          <>
           {/* Category tabs */}
           {categories.length > 0 && (
             <div className="flex flex-wrap items-center gap-3">
@@ -185,8 +243,9 @@ export function BlogPage() {
               ))}
             </div>
           )}
-        </section>
-      )}
+          </>
+        )}
+      </section>
 
       {/* ==============================================================
           POST LIST
@@ -197,7 +256,9 @@ export function BlogPage() {
         <>
           {posts.length === 0 ? (
             <p className="text-on-surface-variant text-center py-16 text-lg">
-              {hasActiveFilter
+              {debouncedSearch
+                ? `No posts match "${debouncedSearch}".`
+                : hasActiveFilter
                 ? 'No posts match this filter.'
                 : 'No posts published yet.'}
             </p>
