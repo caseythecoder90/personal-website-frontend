@@ -1,54 +1,142 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { usePageTitle } from '@/hooks';
 import { blogApi } from '@/api/blog';
-import { BlogPostCard, LoadingSpinner, ErrorDisplay } from '@/components/ui';
-import type { BlogPostResponse } from '@/types';
+import {
+  BlogPostCard,
+  LoadingSpinner,
+  ErrorDisplay,
+  Pagination,
+  CategoryTab,
+  TagChip,
+} from '@/components/ui';
+import type {
+  BlogPostResponse,
+  BlogCategoryResponse,
+  BlogTagResponse,
+} from '@/types';
 
 const PAGE_SIZE = 5;
 
 export function BlogPage() {
   usePageTitle('Blog');
 
+  // ---- Filter state ----
+  // At most one of these is non-null at a time (one-filter-at-a-time rule).
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+
   // ---- Data state ----
   const [posts, setPosts] = useState<BlogPostResponse[]>([]);
-  const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // Nonce bumped by the retry button — the fetch effect depends on it, so
+  // changing it re-runs the effect even when no filter/page state changed.
+  const [retryNonce, setRetryNonce] = useState(0);
 
-  // ---- Fetch a page of published posts ----
-  const fetchPage = useCallback((pageNum: number) => {
+  // ---- Filter-bar data (categories + popular tags) ----
+  const [categories, setCategories] = useState<BlogCategoryResponse[]>([]);
+  const [popularTags, setPopularTags] = useState<BlogTagResponse[]>([]);
+
+  // Load categories + popular tags once on mount. Parallel via Promise.all.
+  // Non-blocking: if they fail, the filter bar just hides — posts still load.
+  useEffect(() => {
+    Promise.all([blogApi.categories.getAll(), blogApi.tags.getPopular()])
+      .then(([cats, tags]) => {
+        setCategories(cats);
+        setPopularTags(tags);
+      })
+      .catch(() => {
+        /* filter bar stays empty */
+      });
+  }, []);
+
+  // ---- Main post fetch: re-runs when filters or page change ----
+  // The `cancelled` flag is our stale-response guard. If this effect re-runs
+  // before the in-flight request resolves (e.g. user clicks filter B while
+  // filter A's request is still loading), the cleanup below flips the flag
+  // and the stale .then() becomes a no-op.
+  useEffect(() => {
+    let cancelled = false;
     setLoading(true);
     setError(null);
 
-    blogApi.posts
-      .getPublishedPaginated({ page: pageNum, size: PAGE_SIZE, sort: 'publishedAt,desc' })
-      .then((data) => {
-        setPosts(data.content);
-        setPage(data.page.number);
-        setTotalPages(data.page.totalPages);
+    const request = activeCategory
+      ? blogApi.posts.getByCategory(activeCategory).then((list) => ({
+          content: list,
+          totalPages: 0,
+          pageNumber: 0,
+        }))
+      : activeTag
+      ? blogApi.posts.getByTag(activeTag).then((list) => ({
+          content: list,
+          totalPages: 0,
+          pageNumber: 0,
+        }))
+      : blogApi.posts
+          .getPublishedPaginated({
+            page,
+            size: PAGE_SIZE,
+            sort: 'publishedAt,desc',
+          })
+          .then((pageData) => ({
+            content: pageData.content,
+            totalPages: pageData.page.totalPages,
+            pageNumber: pageData.page.number,
+          }));
+
+    request
+      .then((result) => {
+        if (cancelled) return;
+        setPosts(result.content);
+        setTotalPages(result.totalPages);
+        // Only update page when paginated (filters don't paginate)
+        if (!activeCategory && !activeTag) setPage(result.pageNumber);
       })
-      .catch(() => setError('Failed to load blog posts.'))
-      .finally(() => setLoading(false));
-  }, []);
+      .catch(() => {
+        if (cancelled) return;
+        setError('Failed to load blog posts.');
+      })
+      .finally(() => {
+        if (cancelled) return;
+        setLoading(false);
+      });
 
-  // ---- Initial fetch ----
-  useEffect(() => {
-    fetchPage(0);
-  }, [fetchPage]);
+    // Cleanup runs before next effect execution, or on unmount.
+    return () => {
+      cancelled = true;
+    };
+  }, [activeCategory, activeTag, page, retryNonce]);
 
-  // ---- Change page and scroll to top of list ----
-  const handlePageChange = (next: number) => {
-    fetchPage(next);
+  // ---- Filter click handlers ----
+  const handleSelectCategory = (slug: string | null) => {
+    setActiveCategory(slug);
+    setActiveTag(null);
+    setPage(0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const handleSelectTag = (slug: string) => {
+    setActiveTag((current) => (current === slug ? null : slug));
+    setActiveCategory(null);
+    setPage(0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePageChange = (next: number) => {
+    setPage(next);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const hasActiveFilter = activeCategory !== null || activeTag !== null;
 
   return (
     <main className="pt-16 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
       {/* ==============================================================
           HERO HEADER
           ============================================================== */}
-      <header className="mb-16 md:ml-[10%]">
+      <header className="mb-12 md:ml-[10%]">
         <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-4">
           Blog<span className="text-primary">.</span>
         </h1>
@@ -58,15 +146,60 @@ export function BlogPage() {
       </header>
 
       {/* ==============================================================
+          FILTER BAR — categories (primary) + popular tags (secondary)
+          ============================================================== */}
+      {(categories.length > 0 || popularTags.length > 0) && (
+        <section className="mb-12 space-y-6">
+          {/* Category tabs */}
+          {categories.length > 0 && (
+            <div className="flex flex-wrap items-center gap-3">
+              <CategoryTab
+                label="All Topics"
+                isActive={activeCategory === null && activeTag === null}
+                onClick={() => handleSelectCategory(null)}
+              />
+              {categories.map((cat) => (
+                <CategoryTab
+                  key={cat.id}
+                  label={cat.name}
+                  isActive={activeCategory === cat.slug}
+                  onClick={() => handleSelectCategory(cat.slug)}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Popular tag chips */}
+          {popularTags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-label text-[10px] uppercase tracking-widest text-outline mr-2">
+                Quick filter:
+              </span>
+              {popularTags.map((tag) => (
+                <TagChip
+                  key={tag.id}
+                  label={tag.name}
+                  isActive={activeTag === tag.slug}
+                  onClick={() => handleSelectTag(tag.slug)}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* ==============================================================
           POST LIST
           ============================================================== */}
       {loading && <LoadingSpinner message="Loading posts..." />}
-      {error && <ErrorDisplay message={error} onRetry={() => fetchPage(0)} />}
+      {error && <ErrorDisplay message={error} onRetry={() => setRetryNonce((n) => n + 1)} />}
       {!loading && !error && (
         <>
           {posts.length === 0 ? (
             <p className="text-on-surface-variant text-center py-16 text-lg">
-              No posts published yet.
+              {hasActiveFilter
+                ? 'No posts match this filter.'
+                : 'No posts published yet.'}
             </p>
           ) : (
             <div className="flex flex-col gap-6">
@@ -76,14 +209,13 @@ export function BlogPage() {
             </div>
           )}
 
-          {/* ==============================================================
-              PAGINATION
-              ============================================================== */}
-          {totalPages > 1 && (
+          {/* Pagination only when we're in unfiltered mode */}
+          {!hasActiveFilter && totalPages > 1 && (
             <Pagination
               currentPage={page}
               totalPages={totalPages}
               onPageChange={handlePageChange}
+              ariaLabel="Blog pagination"
             />
           )}
         </>
@@ -92,65 +224,3 @@ export function BlogPage() {
   );
 }
 
-// ============================================================================
-// Pagination — inline for now. Extract to components/ui if reused elsewhere.
-// ============================================================================
-
-interface PaginationProps {
-  currentPage: number;     // zero-indexed (matches backend)
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}
-
-function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-  const pages = Array.from({ length: totalPages }, (_, i) => i);
-  const prevDisabled = currentPage === 0;
-  const nextDisabled = currentPage >= totalPages - 1;
-
-  const baseBtn =
-    'min-w-[40px] h-10 px-3 rounded-md font-label text-sm font-semibold transition-all flex items-center justify-center';
-  const inactive =
-    'bg-surface-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest';
-  const active = 'bg-primary text-on-primary';
-  const disabled = 'opacity-40 cursor-not-allowed';
-
-  return (
-    <nav
-      aria-label="Blog pagination"
-      className="mt-16 flex items-center justify-center gap-2 flex-wrap"
-    >
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={prevDisabled}
-        className={`${baseBtn} ${inactive} ${prevDisabled ? disabled : ''}`}
-        aria-label="Previous page"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
-
-      {pages.map((p) => (
-        <button
-          key={p}
-          onClick={() => onPageChange(p)}
-          aria-current={p === currentPage ? 'page' : undefined}
-          className={`${baseBtn} ${p === currentPage ? active : inactive}`}
-        >
-          {p + 1}
-        </button>
-      ))}
-
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={nextDisabled}
-        className={`${baseBtn} ${inactive} ${nextDisabled ? disabled : ''}`}
-        aria-label="Next page"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-      </button>
-    </nav>
-  );
-}
