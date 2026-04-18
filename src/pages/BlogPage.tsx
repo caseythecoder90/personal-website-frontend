@@ -19,6 +19,55 @@ import type {
 const PAGE_SIZE = 5;
 const SEARCH_DEBOUNCE_MS = 300;
 
+// Normalized shape we pass to the page regardless of which endpoint was hit.
+// List endpoints (search/category/tag) return no pagination info, so
+// totalPages/pageNumber are 0 — the page hides the pager in those modes.
+interface BlogFetchResult {
+  content: BlogPostResponse[];
+  totalPages: number;
+  pageNumber: number;
+}
+
+interface BlogFetchParams {
+  search: string;
+  category: string | null;
+  tag: string | null;
+  page: number;
+}
+
+function wrapList(list: BlogPostResponse[]): BlogFetchResult {
+  return { content: list, totalPages: 0, pageNumber: 0 };
+}
+
+/**
+ * Picks the right blog endpoint based on active filter state.
+ * Priority: search > category > tag > paginated (default). Mutual exclusion
+ * is enforced by the page's click handlers, so at most one is non-empty.
+ */
+function fetchBlogPosts({
+  search,
+  category,
+  tag,
+  page,
+}: BlogFetchParams): Promise<BlogFetchResult> {
+  if (search) {
+    return blogApi.posts.search(search).then(wrapList);
+  }
+  if (category) {
+    return blogApi.posts.getByCategory(category).then(wrapList);
+  }
+  if (tag) {
+    return blogApi.posts.getByTag(tag).then(wrapList);
+  }
+  return blogApi.posts
+    .getPublishedPaginated({ page, size: PAGE_SIZE, sort: 'publishedAt,desc' })
+    .then((pageData) => ({
+      content: pageData.content,
+      totalPages: pageData.page.totalPages,
+      pageNumber: pageData.page.number,
+    }));
+}
+
 export function BlogPage() {
   usePageTitle('Blog');
 
@@ -83,40 +132,12 @@ export function BlogPage() {
     setLoading(true);
     setError(null);
 
-    // Branch priority: search > category > tag > paginated (default).
-    // Mutual exclusion is enforced in the click handlers, so at most one of
-    // debouncedSearch / activeCategory / activeTag is non-empty.
-    const request = debouncedSearch
-      ? blogApi.posts.search(debouncedSearch).then((list) => ({
-          content: list,
-          totalPages: 0,
-          pageNumber: 0,
-        }))
-      : activeCategory
-      ? blogApi.posts.getByCategory(activeCategory).then((list) => ({
-          content: list,
-          totalPages: 0,
-          pageNumber: 0,
-        }))
-      : activeTag
-      ? blogApi.posts.getByTag(activeTag).then((list) => ({
-          content: list,
-          totalPages: 0,
-          pageNumber: 0,
-        }))
-      : blogApi.posts
-          .getPublishedPaginated({
-            page,
-            size: PAGE_SIZE,
-            sort: 'publishedAt,desc',
-          })
-          .then((pageData) => ({
-            content: pageData.content,
-            totalPages: pageData.page.totalPages,
-            pageNumber: pageData.page.number,
-          }));
-
-    request
+    fetchBlogPosts({
+      search: debouncedSearch,
+      category: activeCategory,
+      tag: activeTag,
+      page,
+    })
       .then((result) => {
         if (cancelled) return;
         setPosts(result.content);
