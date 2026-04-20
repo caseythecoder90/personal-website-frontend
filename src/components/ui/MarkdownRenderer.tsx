@@ -111,3 +111,116 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
     </div>
   );
 }
+
+/*
+ * ============================================================================
+ * COMPONENT: MarkdownRenderer
+ * ============================================================================
+ *
+ * PURPOSE:
+ *   Renders a markdown string as styled React elements, matching the dark
+ *   editorial design system. Wraps react-markdown with GitHub-Flavored
+ *   Markdown support and a map of component overrides so every tag is
+ *   styled consistently.
+ *
+ * HOW react-markdown WORKS (under the hood):
+ *   1. Parses the markdown string into a syntax tree (AST) of nodes like
+ *      "heading level 2", "paragraph", "code block".
+ *   2. Walks the tree and renders each node as a React element.
+ *   3. For each node, if `components[tagName]` is defined, uses OUR
+ *      component; otherwise falls back to the default HTML tag.
+ *
+ * THE `components` OBJECT — a lookup table of overrides:
+ *
+ *   const components: Components = {
+ *     h1: ({ children }) => <h1 className="...">{children}</h1>,
+ *     p:  ({ children }) => <p className="...">{children}</p>,
+ *     // ... one entry per HTML tag we want to style
+ *   };
+ *
+ *   Keys are HTML tag names; values are React components (functions that
+ *   take props, return JSX). The `: Components` is a TypeScript type from
+ *   react-markdown that enforces valid tag names and prop shapes.
+ *
+ *   Java analogue: Strategy pattern. Think Map<String, Renderer> where
+ *   the key is the element type and the value is the renderer strategy
+ *   for that element. react-markdown walks the AST and for each node
+ *   does components.get(nodeType).render(props) — or falls back to the
+ *   default.
+ *
+ *   The ({ children }) on the left of => is DESTRUCTURING — pulling the
+ *   `children` field out of the props object. Equivalent to:
+ *     h1: (props) => <h1>{props.children}</h1>
+ *
+ * THE `code` OVERRIDE — inline vs block detection:
+ *
+ *   Both inline `foo` and fenced ```java ... ``` parse to <code> nodes.
+ *   The ONLY difference: fenced blocks get className="language-xxx"
+ *   attached by remark; inline code has no className.
+ *
+ *     code: ({ className, children, ...rest }) => {
+ *       const match = /language-([\w-]+)/.exec(className ?? '');
+ *       const isBlock = Boolean(match);
+ *       if (isBlock) return <CodeBlock language={match![1]}>...</CodeBlock>;
+ *       return <code className="...">{children}</code>;
+ *     }
+ *
+ *   - className ?? '' → default to empty string if className is undefined
+ *     so the regex doesn't crash.
+ *   - match is null (inline) or an array like ['language-java', 'java']
+ *     (capture group 1 is the language name).
+ *   - match![1] — the ! is a TypeScript non-null assertion: "I promise
+ *     match isn't null here, I just checked."
+ *
+ *   Block path → CodeBlock component (header strip + syntax highlighting).
+ *   Inline path → simple styled <code> pill.
+ *
+ * WHY `pre` RETURNS A FRAGMENT:
+ *
+ *   Fenced code in the AST is actually <pre><code class="language-x">...
+ *   So when our `code` override returns a <CodeBlock> (with its own <div>
+ *   wrapper), the default <pre> would still wrap it, giving:
+ *     <pre>                        ← react-markdown's default
+ *       <div class="my-8 ...">...  ← our CodeBlock wrapper
+ *     </pre>
+ *
+ *   That extra <pre> adds default styling and breaks our layout. So we
+ *   override pre → <>{children}</> (a React FRAGMENT). Fragments render
+ *   their children with NO wrapping DOM node — they disappear in the
+ *   output. Result: CodeBlock renders clean, no extra <pre>.
+ *
+ *   Java analogue: returning a List<Element> instead of a wrapping parent
+ *   — you get the children without the container.
+ *
+ * WHAT `remarkGfm` DOES:
+ *
+ *   remark is the markdown parser react-markdown uses internally. By
+ *   default it only understands CommonMark — the minimal markdown spec.
+ *
+ *   GFM (GitHub-Flavored Markdown) is a SUPERSET that adds:
+ *     - Tables (| col1 | col2 | syntax)
+ *     - Strikethrough (~~text~~)
+ *     - Task lists (- [ ] and - [x])
+ *     - Autolink literals (bare URLs become <a>)
+ *     - Footnotes ([^1])
+ *
+ *   Without the plugin, a markdown table renders as raw `| col | col |`
+ *   text. Pass plugins as an array so you can stack them:
+ *     remarkPlugins={[remarkGfm, remarkToc, remarkMath]}
+ *
+ *   Java analogue: a parser extension / dialect. Base SQL doesn't know
+ *   JSON operators; the postgresql driver adds them. Same idea — the
+ *   plugin teaches the parser new syntax.
+ *
+ * THE MAIN MarkdownRenderer FUNCTION:
+ *
+ *   A thin wrapper that hands markdown + plugins + components to
+ *   <ReactMarkdown>. Note that `{content}` between the tags is JSX
+ *   children — which IS a prop named `children`. These are equivalent:
+ *     <ReactMarkdown>{content}</ReactMarkdown>
+ *     <ReactMarkdown children={content} />
+ *
+ *   react-markdown expects the markdown string as its `children` prop.
+ *
+ * ============================================================================
+ */

@@ -309,3 +309,91 @@ export function BlogPage() {
   );
 }
 
+/*
+ * ============================================================================
+ * PAGE: BlogPage
+ * ============================================================================
+ *
+ * PURPOSE:
+ *   Blog listing at /blog. Shows paginated posts with three mutually
+ *   exclusive filter modes: keyword search, category tab, or tag chip.
+ *   One-filter-at-a-time is enforced by the click handlers — selecting one
+ *   clears the others.
+ *
+ * STATE OVERVIEW:
+ *   Filter state:     activeCategory, activeTag, searchInput, debouncedSearch
+ *   Pagination:       page, totalPages
+ *   Data:             posts
+ *   Async lifecycle:  loading, error, retryNonce
+ *   Filter-bar data:  categories, popularTags
+ *
+ * REACT PATTERNS:
+ *
+ *   1. DEBOUNCED SEARCH
+ *      Two state vars: searchInput (live, drives the UI) and debouncedSearch
+ *      (lagged by 300ms, drives the fetch). The debounce useEffect schedules
+ *      a setTimeout on every keystroke and clears it on the next — so only
+ *      the LAST keystroke in a burst actually fires the API call.
+ *
+ *      Java analogue: like a ScheduledExecutorService where each typing
+ *      event cancels the previous pending task.
+ *
+ *   2. STALE-RESPONSE GUARD (the `cancelled` flag)
+ *      useEffect's cleanup function runs in three situations:
+ *        - Before the effect re-runs (a dep in the deps array changed)
+ *        - When the component unmounts
+ *        - In React.StrictMode dev-only: mount → cleanup → remount
+ *
+ *      Each effect invocation creates its own `cancelled` variable (a
+ *      closure, scoped to that invocation). The fetch handlers capture a
+ *      reference to THAT specific variable. If the user clicks filter B
+ *      while filter A's request is still in-flight:
+ *        1. Cleanup fires, flips the OLD invocation's cancelled = true
+ *        2. New effect runs, creates a fresh cancelled = false
+ *        3. Old fetch eventually resolves → handler sees cancelled = true
+ *           → bails out silently (no stale state write)
+ *        4. New fetch resolves → handler sees cancelled = false → updates
+ *
+ *      Without this, a slow request for filter A could overwrite state
+ *      that a fast request for filter B already set.
+ *
+ *      Java analogue: like giving each worker thread its own volatile
+ *      boolean and telling the old one "your results don't matter anymore."
+ *
+ *   3. RETRY VIA NONCE BUMP
+ *      retryNonce is a counter the retry button increments. Because it's
+ *      in the effect's deps array, bumping it re-runs the effect. This
+ *      lets us retry WITHOUT touching filter/page state — so the retry
+ *      preserves exactly what the user was viewing.
+ *
+ *   4. PARALLEL FETCH ON MOUNT (Promise.all)
+ *      Categories and popular tags are independent API calls, so we fire
+ *      both in parallel with Promise.all and destructure the array result:
+ *
+ *        const [cats, tags] = await Promise.all([...])
+ *
+ *      Java analogue: like CompletableFuture.allOf(f1, f2).thenApply(...).
+ *      The .catch(() => {}) is intentional — if the filter bar fails to
+ *      load, the page still shows posts, it just hides the filters.
+ *
+ *   5. CONDITIONAL RENDERING
+ *        {loading && <LoadingSpinner />}       // render only when truthy
+ *        {error && <ErrorDisplay ... />}
+ *        {condition ? <A /> : <B />}           // ternary for either/or
+ *
+ *      Short-circuit evaluation: the left side is falsy → nothing renders.
+ *      Same behavior as Java's `cond && callSomething()` — just used for
+ *      rendering instead of side effects.
+ *
+ *   6. FUNCTIONAL UPDATER FORM
+ *        setRetryNonce((n) => n + 1)
+ *        setActiveTag((current) => (current === slug ? null : slug))
+ *
+ *      When the new state depends on the previous state, pass a function
+ *      instead of a value. React guarantees you see the latest state even
+ *      if multiple updates are batched. Passing `retryNonce + 1` can read
+ *      stale state in rare cases.
+ *
+ * ============================================================================
+ */
+

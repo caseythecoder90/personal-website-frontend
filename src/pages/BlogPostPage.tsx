@@ -237,3 +237,105 @@ export function BlogPostPage() {
     </main>
   );
 }
+
+/*
+ * ============================================================================
+ * PAGE: BlogPostPage
+ * ============================================================================
+ *
+ * PURPOSE:
+ *   Individual blog post at /blog/:slug. Fetches the post by slug (the
+ *   backend increments the view count on this GET), renders markdown
+ *   with syntax-highlighted code blocks, and loads related posts from
+ *   the same category in the sidebar.
+ *
+ * URL PARAMETER EXTRACTION:
+ *   const { slug } = useParams<{ slug: string }>();
+ *   The generic <{ slug: string }> tells TypeScript what params this route
+ *   declares. useParams returns an object matching the :slug in the route
+ *   definition (see App.tsx → "/blog/:slug").
+ *
+ *   Java analogue: like @PathVariable String slug in a Spring controller.
+ *
+ * FOUR UI STATES:
+ *   The component has four mutually exclusive states, handled by early
+ *   returns so the main JSX only ever runs when we have a real post:
+ *
+ *     1. loading              → <LoadingSpinner />
+ *     2. error                → <ErrorDisplay /> with retry button
+ *     3. 404 (notFound)       → custom 404 markup with back link
+ *     4. success (post set)   → the full article layout
+ *
+ *   Each early return is a React idiom for "short-circuit the render."
+ *   Unlike a Spring controller (one return path), React renders whatever
+ *   JSX you return, so multiple returns on different branches are normal.
+ *
+ * REACT / TYPESCRIPT PATTERNS:
+ *
+ *   1. STALE-RESPONSE GUARD (same pattern as BlogPage)
+ *      let cancelled = false;
+ *      ...fetch.then(data => { if (cancelled) return; setPost(data); })
+ *      return () => { cancelled = true; };
+ *
+ *      The cleanup runs:
+ *        - Before the effect re-runs (slug or retryNonce changed)
+ *        - On unmount
+ *        - Twice in dev with React.StrictMode
+ *
+ *      Each effect invocation has its own `cancelled` closure. Flipping
+ *      the old invocation's flag in cleanup prevents a slow fetch for
+ *      slug A from overwriting state after the user has navigated to
+ *      slug B.
+ *
+ *   2. FIRE-AND-FORGET NESTED FETCH
+ *      Inside the success handler, we kick off the related-posts call
+ *      WITHOUT awaiting it and WITHOUT blocking the main post render:
+ *
+ *        blogApi.posts.getByCategory(...)
+ *          .then(posts => { if (cancelled) return; setRelated(...) })
+ *          .catch(() => {});   // swallow errors — sidebar just stays empty
+ *
+ *      The main post renders immediately; the sidebar populates when
+ *      (and if) related loads. If it fails, the UI degrades silently.
+ *
+ *   3. TYPESCRIPT ERROR SHAPE ANNOTATION
+ *      .catch((err: { response?: { status?: number } }) => { ... })
+ *
+ *      This is NOT destructuring — it's a TypeScript TYPE ANNOTATION
+ *      on the parameter. The shape says "err has an optional `response`
+ *      field, which has an optional `status` field." This matches
+ *      axios's error shape: HTTP errors have err.response.status (404,
+ *      500, etc.), but network errors (offline, DNS fail) don't.
+ *
+ *      Java analogue: declaring a parameter as a specific type
+ *      (ErrorResponse err) vs a general Object. We're giving the
+ *      compiler structure info so downstream field accesses are typed.
+ *
+ *   4. OPTIONAL CHAINING (?.)
+ *      err?.response?.status === 404
+ *
+ *      The ?. operator short-circuits to `undefined` if any link in the
+ *      chain is null or undefined, instead of throwing a TypeError.
+ *      Here we distinguish "server said 404" from all other failures.
+ *
+ *      Java analogue: Optional.ofNullable(err).map(e -> e.response)
+ *      .map(r -> r.status).orElse(null) — just one line.
+ *
+ *   5. DERIVED DATA AFTER EARLY RETURNS
+ *      const images = post.images ?? [];
+ *      const heroImage = images.find((img) => img.isPrimary) ?? images[0];
+ *
+ *      Computed from state on every render. We don't store these in
+ *      useState — that would be a derived-state anti-pattern. If it can
+ *      be computed from existing state, compute it; don't duplicate it.
+ *
+ *   6. NULL-COALESCING (??) vs OR (||)
+ *      post.images ?? []   // falls back ONLY on null/undefined
+ *      post.images || []   // falls back on ANY falsy value (0, "", false too)
+ *
+ *      We want ?? almost always when the field is "object or missing."
+ *      Using || here would be fine (arrays are always truthy), but ??
+ *      is the safer habit for fields that could legitimately be 0 or "".
+ *
+ * ============================================================================
+ */
