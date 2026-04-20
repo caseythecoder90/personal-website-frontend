@@ -16,8 +16,8 @@ import type {
   BlogTagResponse,
 } from '@/types';
 
-const PAGE_SIZE = 5;
-const SEARCH_DEBOUNCE_MS = 300;
+const PAGE_SIZE: number = 5;
+const SEARCH_DEBOUNCE_MS: number = 300;
 
 // Normalized shape we pass to the page regardless of which endpoint was hit.
 // List endpoints (search/category/tag) return no pagination info, so
@@ -44,28 +44,31 @@ function wrapList(list: BlogPostResponse[]): BlogFetchResult {
  * Priority: search > category > tag > paginated (default). Mutual exclusion
  * is enforced by the page's click handlers, so at most one is non-empty.
  */
-function fetchBlogPosts({
+async function fetchBlogPosts({
   search,
   category,
   tag,
   page,
 }: BlogFetchParams): Promise<BlogFetchResult> {
   if (search) {
-    return blogApi.posts.search(search).then(wrapList);
+    return wrapList(await blogApi.posts.search(search));
   }
   if (category) {
-    return blogApi.posts.getByCategory(category).then(wrapList);
+    return wrapList(await blogApi.posts.getByCategory(category));
   }
   if (tag) {
-    return blogApi.posts.getByTag(tag).then(wrapList);
+    return wrapList(await blogApi.posts.getByTag(tag));
   }
-  return blogApi.posts
-    .getPublishedPaginated({ page, size: PAGE_SIZE, sort: 'publishedAt,desc' })
-    .then((pageData) => ({
-      content: pageData.content,
-      totalPages: pageData.page.totalPages,
-      pageNumber: pageData.page.number,
-    }));
+  const pageData = await blogApi.posts.getPublishedPaginated({
+    page,
+    size: PAGE_SIZE,
+    sort: 'publishedAt,desc',
+  });
+  return {
+    content: pageData.content,
+    totalPages: pageData.page.totalPages,
+    pageNumber: pageData.page.number,
+  };
 }
 
 export function BlogPage() {
