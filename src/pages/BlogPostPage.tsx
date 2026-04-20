@@ -7,7 +7,6 @@ import {
   ErrorDisplay,
   MarkdownRenderer,
   RelatedPosts,
-  NewsletterCard,
 } from '@/components/ui';
 import type { BlogPostResponse } from '@/types';
 
@@ -158,80 +157,79 @@ export function BlogPostPage() {
       )}
 
       <article
-        className={`max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative z-10 ${
+        className={`max-w-4xl mx-auto px-6 relative z-10 ${
           heroImage ? '-mt-24 md:-mt-32' : 'mt-8'
         }`}
       >
-        <div className="lg:col-span-8">
-          <div className="bg-surface-container-low p-6 md:p-10 lg:p-12 rounded-xl">
-            <header className="mb-10">
-              {primaryCategory && (
-                <span className="inline-block px-3 py-1 bg-surface-container-highest text-tertiary rounded-full text-xs font-bold tracking-widest mb-4 uppercase">
-                  {primaryCategory.name}
-                </span>
-              )}
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-headline font-bold text-on-background leading-tight tracking-tighter mb-8">
-                {post.title}
-              </h1>
-              <div className="flex flex-wrap items-center gap-y-4 gap-x-8 text-on-surface-variant font-medium text-sm py-6 border-y border-outline-variant/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-primary-dim flex items-center justify-center text-[10px] text-on-primary font-bold">
-                    CQ
-                  </div>
-                  <span>Casey Quinn</span>
+        <div className="bg-surface-container-low p-6 md:p-10 lg:p-12 rounded-xl">
+          <header className="mb-10">
+            {primaryCategory && (
+              <span className="inline-block px-3 py-1 bg-surface-container-highest text-tertiary rounded-full text-xs font-bold tracking-widest mb-4 uppercase">
+                {primaryCategory.name}
+              </span>
+            )}
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-headline font-bold text-on-background leading-tight tracking-tighter mb-8">
+              {post.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-y-4 gap-x-8 text-on-surface-variant font-medium text-sm py-6 border-y border-outline-variant/10">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-primary-dim flex items-center justify-center text-[10px] text-on-primary font-bold">
+                  CQ
                 </div>
-                {publishDate && (
-                  <div className="flex items-center gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                      <line x1="16" y1="2" x2="16" y2="6" />
-                      <line x1="8" y1="2" x2="8" y2="6" />
-                      <line x1="3" y1="10" x2="21" y2="10" />
-                    </svg>
-                    <span>{publishDate}</span>
-                  </div>
-                )}
-                {post.readTimeMinutes != null && (
-                  <div className="flex items-center gap-2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    <span>{post.readTimeMinutes} min read</span>
-                  </div>
-                )}
+                <span>Casey Quinn</span>
+              </div>
+              {publishDate && (
                 <div className="flex items-center gap-2">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
                   </svg>
-                  <span>{post.viewCount.toLocaleString()} views</span>
+                  <span>{publishDate}</span>
                 </div>
+              )}
+              {post.readTimeMinutes != null && (
+                <div className="flex items-center gap-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span>{post.readTimeMinutes} min read</span>
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span>{post.viewCount.toLocaleString()} views</span>
               </div>
-            </header>
+            </div>
+          </header>
 
-            <MarkdownRenderer content={post.content} />
+          <MarkdownRenderer content={post.content} />
 
-            {tags.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-outline-variant/10 flex flex-wrap gap-3">
-                {tags.map((tag) => (
-                  <span
-                    key={tag.id}
-                    className="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-xs font-mono"
-                  >
-                    #{tag.name}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
+          {tags.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-outline-variant/10 flex flex-wrap gap-3">
+              {tags.map((tag) => (
+                <span
+                  key={tag.id}
+                  className="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-xs font-mono"
+                >
+                  #{tag.name}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
-
-        <aside className="lg:col-span-4 space-y-10">
-          <RelatedPosts posts={related} />
-          <NewsletterCard />
-        </aside>
       </article>
+
+      {related.length > 0 && (
+        <section className="max-w-7xl mx-auto px-6 mt-24">
+          <RelatedPosts posts={related} />
+        </section>
+      )}
 
       <div className="h-24" />
     </main>
