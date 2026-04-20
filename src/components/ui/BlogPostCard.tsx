@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import type { BlogPostResponse } from '@/types';
 import { TechPill } from './TechPill';
 
@@ -54,7 +55,12 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
 
         {/* Title */}
         <h2 className="font-headline text-2xl md:text-3xl font-bold text-on-surface mb-4 group-hover:text-primary transition-colors tracking-tight">
-          <a href={`/blog/${post.slug}`}>{post.title}</a>
+          <Link
+            to={`/blog/${post.slug}`}
+            className="before:absolute before:inset-0 before:content-['']"
+          >
+            {post.title}
+          </Link>
         </h2>
 
         {/* Excerpt */}
