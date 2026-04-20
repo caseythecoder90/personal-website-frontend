@@ -25,3 +25,6 @@ design/stitch.zip
 *.njsproj
 *.sln
 *.sw?
+
+# Claude Code local config
+.claude/

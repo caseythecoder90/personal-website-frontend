@@ -12,3 +12,7 @@ export { ProjectLinks } from './ProjectLinks';
 export { ProjectGallery } from './ProjectGallery';
 export { LoadingSpinner } from './LoadingSpinner';
 export { ErrorDisplay } from './ErrorDisplay';
+export { Pagination } from './Pagination';
+export { CategoryTab } from './CategoryTab';
+export { TagChip } from './TagChip';
+export { SearchInput } from './SearchInput';
