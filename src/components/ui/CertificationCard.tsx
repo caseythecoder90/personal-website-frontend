@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { CertificationResponse } from '@/types';
 import { TechPill } from './TechPill';
 import { CertificationStatusBadge } from './CertificationStatusBadge';
@@ -8,6 +9,14 @@ interface CertificationCardProps {
 }
 
 export function CertificationCard({ certification, featured = false }: CertificationCardProps) {
+  // Tracks whether the badgeUrl image failed to load (404, CORS, network, or
+  // a stale/placeholder URL). When true, we fall back to the star SVG so the
+  // featured card never renders a broken-image glyph. Reset naturally on
+  // remount — the parent keys each card by cert.id, so swapping certs
+  // creates a fresh instance with badgeFailed=false.
+  const [badgeFailed, setBadgeFailed] = useState(false);
+  const showBadgeImage = featured && certification.badgeUrl && !badgeFailed;
+
   const issueDate = certification.issueDate
     ? new Date(certification.issueDate + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
     : null;
@@ -33,10 +42,11 @@ export function CertificationCard({ certification, featured = false }: Certifica
               star icon when badgeUrl is null. Opacity stays low so it reads
               as atmosphere, not branding. */}
           <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
-            {certification.badgeUrl ? (
+            {showBadgeImage ? (
               <img
-                src={certification.badgeUrl}
+                src={certification.badgeUrl!}
                 alt=""
+                onError={() => setBadgeFailed(true)}
                 className="w-32 h-32 object-contain"
               />
             ) : (
