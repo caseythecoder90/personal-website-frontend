@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Design Review — Certifications, Contact, Resume</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface": "#0e0e0e",
+          "background": "#0e0e0e",
+          "surface-container-highest": "#262626",
+          "surface-container-high": "#201f1f",
+          "surface-container": "#1a1919",
+          "surface-container-low": "#131313",
+          "surface-container-lowest": "#000000",
+          "surface-variant": "#262626",
+          "on-surface": "#ffffff",
+          "on-surface-variant": "#adaaaa",
+          "on-primary": "#0f00a4",
+          "primary": "#a3a6ff",
+          "primary-dim": "#6063ee",
+          "secondary": "#a28efc",
+          "tertiary": "#ffa5d9",
+          "error": "#ff6e84",
+          "outline": "#777575",
+          "outline-variant": "#494847",
+        },
+        fontFamily: {
+          "headline": ["Space Grotesk"],
+          "body": ["Inter"],
+          "label": ["Inter"],
+          "mono": ["JetBrains Mono"],
+        },
+        borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+      }
+    }
+  }
+</script>
+<style>
+  body { background: #0a0a0a; color: #fff; font-family: 'Inter', sans-serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #6063ee;
+  }
+  .callout {
+    position: relative;
+    border-left: 2px solid #a3a6ff;
+    background: linear-gradient(90deg, rgba(163,166,255,0.05), transparent 60%);
+  }
+  .annotation-dot {
+    position: absolute;
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    background: #a3a6ff;
+    color: #0f00a4;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 4px rgba(163,166,255,0.18), 0 0 20px rgba(163,166,255,0.5);
+    z-index: 20;
+  }
+  .ghost-border { border: 1px solid rgba(73, 72, 71, 0.25); }
+  .primary-gradient { background: linear-gradient(135deg, #a3a6ff 0%, #6063ee 100%); }
+  .mock-frame {
+    background: #0e0e0e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
+  }
+  .mock-chrome {
+    background: rgba(23, 23, 23, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+
+  /* Faux code sample */
+  .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    background: #000;
+    border-radius: 8px;
+    padding: 16px 20px;
+    color: #d4d4d4;
+    overflow-x: auto;
+  }
+  .code .k { color: #a28efc; }
+  .code .s { color: #ffa5d9; }
+  .code .c { color: #6b7280; }
+  .code .p { color: #a3a6ff; }
+  .code .n { color: #adaaaa; }
+
+  /* Image placeholder */
+  .imgph {
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 12px, rgba(255,255,255,0.04) 12px 24px),
+      #131313;
+    display: flex; align-items: center; justify-content: center;
+    color: #6b7280;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* Status badges used in mocks */
+  .badge-earned { background: rgba(16,185,129,0.1); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+  .badge-progress { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+  .badge-expired { background: rgba(115,115,115,0.1); color: #a3a3a3; border: 1px solid rgba(115,115,115,0.25); }
+
+  /* Tech pill */
+  .techpill { background: #262626; color: #adaaaa; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; font-weight: 600; }
+</style>
+</head>
+<body class="bg-[#0a0a0a] text-on-surface">
+
+<!-- ===== Doc header ===== -->
+<header class="max-w-[1200px] mx-auto px-10 pt-20 pb-12">
+  <p class="section-num mb-3">CQ / DESIGN REVIEW · APR 2026</p>
+  <h1 class="font-headline text-6xl md:text-7xl font-bold tracking-tighter leading-none">
+    Certifications, Contact<span class="text-primary">,</span><br/>
+    &amp; the Resume question.
+  </h1>
+  <p class="mt-6 text-on-surface-variant text-lg max-w-2xl leading-relaxed">
+    A walkthrough of the two Stitch pages against the current build, plus proposed
+    upgrades and a recommended direction for the Resume flow. Each section has a
+    verdict, concrete changes, and a visual mock you can cherry-pick from.
+  </p>
+
+  <nav class="mt-10 flex flex-wrap gap-2 text-xs font-mono tracking-widest uppercase">
+    <a href="#certs" class="px-4 py-2 rounded-full bg-surface-container-highest hover:bg-primary/20 hover:text-primary transition">01 · Certifications</a>
+    <a href="#contact" class="px-4 py-2 rounded-full bg-surface-container-highest hover:bg-primary/20 hover:text-primary transition">02 · Contact</a>
+    <a href="#resume" class="px-4 py-2 rounded-full bg-surface-container-highest hover:bg-primary/20 hover:text-primary transition">03 · Resume</a>
+    <a href="#summary" class="px-4 py-2 rounded-full bg-surface-container-highest hover:bg-primary/20 hover:text-primary transition">04 · Summary</a>
+  </nav>
+</header>
+
+<hr class="border-outline-variant/10 max-w-[1200px] mx-auto"/>
+
+<!-- ================================================================== -->
+<!-- 01 · CERTIFICATIONS                                                 -->
+<!-- ================================================================== -->
+<section id="certs" class="max-w-[1200px] mx-auto px-10 py-20">
+  <div class="flex items-baseline justify-between mb-10 flex-wrap gap-4">
+    <div>
+      <p class="section-num mb-2">01 · CERTIFICATIONS</p>
+      <h2 class="font-headline text-5xl font-bold tracking-tighter">What's working, what to push.</h2>
+    </div>
+    <div class="text-right">
+      <p class="text-xs font-mono uppercase tracking-widest text-outline mb-1">Verdict</p>
+      <p class="font-headline text-2xl font-bold text-primary">Solid base · 5 upgrades</p>
+    </div>
+  </div>
+
+  <!-- Current state snapshot -->
+  <div class="mock-frame mb-14">
+    <div class="mock-chrome px-6 py-3 flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="ml-4 text-xs text-outline font-mono">/certifications · current build</span>
+    </div>
+    <div class="relative p-10">
+      <!-- Hero -->
+      <div class="mb-10">
+        <h3 class="font-headline text-5xl font-bold tracking-tighter mb-3">Certifications<span class="text-primary">.</span></h3>
+        <p class="text-on-surface-variant">Validating technical expertise and continuous learning.</p>
+      </div>
+      <!-- Filter row -->
+      <div class="flex flex-wrap items-center gap-3 mb-8">
+        <span class="text-xs font-mono uppercase tracking-widest text-outline mr-2">Status:</span>
+        <button class="px-5 py-1.5 rounded-full bg-primary text-on-primary text-sm font-semibold">All</button>
+        <button class="px-5 py-1.5 rounded-full bg-surface-variant text-on-surface-variant text-sm font-semibold">Earned</button>
+        <button class="px-5 py-1.5 rounded-full bg-surface-variant text-on-surface-variant text-sm font-semibold">In Progress</button>
+      </div>
+      <!-- Grid -->
+      <div class="grid grid-cols-3 gap-6">
+        <div class="col-span-2 relative bg-surface-container-low p-8 rounded-xl border border-primary/20 overflow-hidden">
+          <div class="absolute top-4 right-4 opacity-10 text-primary">
+            <svg width="96" height="96" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.39 4.84 5.34.78-3.86 3.77.91 5.32L12 14.19l-4.78 2.52.91-5.32L4.27 7.62l5.34-.78L12 2z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 mb-6">
+            <span class="badge-earned px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Earned</span>
+            <span class="text-on-surface-variant text-xs">Issued: Oct 2023</span>
+          </div>
+          <h4 class="font-headline text-2xl font-bold mb-2">AWS Certified Solutions Architect</h4>
+          <p class="text-on-surface-variant text-xs mb-3">Amazon Web Services</p>
+          <p class="text-on-surface-variant text-sm max-w-md mb-6">Validation of technical expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS.</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="techpill">Cloud</span><span class="techpill">Infra</span><span class="techpill">Security</span><span class="techpill">AWS</span>
+          </div>
+        </div>
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="badge-progress px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">In Progress</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">Google Cloud Data Engineer</h4>
+          <p class="text-on-surface-variant text-xs mb-3">Google Cloud</p>
+          <p class="text-on-surface-variant text-xs mb-6">Expected Q2 2026. Focusing on ML and big data pipelines.</p>
+          <div class="flex flex-wrap gap-2"><span class="techpill">Big Data</span><span class="techpill">ML</span></div>
+        </div>
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="badge-earned px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Earned</span>
+            <span class="text-on-surface-variant text-xs">Jan 2023</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">Oracle Java SE 17 Professional</h4>
+          <p class="text-on-surface-variant text-xs mb-3">Oracle</p>
+          <div class="flex flex-wrap gap-2 mt-6"><span class="techpill">Backend</span><span class="techpill">Java</span></div>
+        </div>
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="badge-expired px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Expired</span>
+            <span class="text-on-surface-variant text-xs">2021</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">Azure Fundamentals</h4>
+          <p class="text-on-surface-variant text-xs mb-3">Microsoft</p>
+          <div class="flex flex-wrap gap-2 mt-6"><span class="techpill">Cloud</span></div>
+        </div>
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="badge-earned px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Earned</span>
+            <span class="text-on-surface-variant text-xs">Nov 2023</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">Terraform Associate</h4>
+          <p class="text-on-surface-variant text-xs mb-3">HashiCorp</p>
+          <div class="flex flex-wrap gap-2 mt-6"><span class="techpill">IaC</span><span class="techpill">DevOps</span></div>
+        </div>
+      </div>
+
+      <!-- Annotation dots -->
+      <div class="annotation-dot" style="top: 120px; left: -14px;">1</div>
+      <div class="annotation-dot" style="top: 230px; left: 330px;">2</div>
+      <div class="annotation-dot" style="top: 380px; right: 140px;">3</div>
+      <div class="annotation-dot" style="bottom: 60px; left: 35%;">4</div>
+      <div class="annotation-dot" style="bottom: 200px; right: -14px;">5</div>
+    </div>
+  </div>
+
+  <!-- Observations grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">1</span>
+        <h4 class="font-headline text-lg font-bold">Hero feels short next to other pages</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        Projects/Blog heroes have depth (tagline + meta + accent). Certifications has
+        title + one subtitle and then drops straight into filters. It reads as "stub"
+        compared to the rest of the site.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · Add a small stat strip: <span class="text-on-surface">"12 EARNED · 3 IN PROGRESS · 4 ORGS"</span> directly below the subtitle. Keeps hero rhythm consistent with Projects.</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">2</span>
+        <h4 class="font-headline text-lg font-bold">Featured card is quiet</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        The star-shaped watermark is a generic "featured" signal and doesn't relate to
+        the cert itself. On AWS, a viewer expects AWS iconography or the actual badge.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · Use <span class="text-on-surface">badgeUrl</span> from the API as the watermark (or an organization mark). Falls back to the star if missing. Much richer for free — your backend already has the field.</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">3</span>
+        <h4 class="font-headline text-lg font-bold">Cards are dead-ends</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        Nothing is clickable. Viewers interested in a credential (hiring managers are!)
+        can't verify it. You already have <span class="font-mono text-primary">credentialUrl</span> and
+        <span class="font-mono text-primary">slug</span> in the response.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · Two actions per card — <span class="text-on-surface">View details</span> (internal, if you build the detail route) and <span class="text-on-surface">Verify ↗</span> (opens credentialUrl). Link is the biggest quality-of-life bump here.</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">4</span>
+        <h4 class="font-headline text-lg font-bold">No sense of time or progress</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        Issue dates are buried as inline text. A recruiter scanning wants "this is fresh"
+        signal. Also, "In Progress" cards have nothing showing <em>how</em> in progress.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · For earned: show year prominently (right-aligned, monospace). For in-progress: a small "Target Q2 '26" chip. Subtle, no bars.</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg md:col-span-2">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">5</span>
+        <h4 class="font-headline text-lg font-bold">Expired is hidden behind a filter that doesn't exist</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        Your backend supports EXPIRED status, the badge is styled for it, but the filter
+        tabs only offer All / Earned / In Progress. Expired certs render in "All" but
+        there's no way to see <em>just</em> the historical set. Minor but inconsistent.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · Either add an "Expired" tab for completeness, or hide expired from "All" by default and remove EXPIRED from the filter array to tighten the promise. I'd vote for <span class="text-on-surface">hide from All + separate "Archive" tab</span> — it keeps the main grid feeling current.</p>
+    </div>
+
+  </div>
+
+  <!-- Backend: detail view question -->
+  <div class="bg-surface-container-low p-8 rounded-xl mb-14 ghost-border">
+    <p class="section-num mb-3">YOUR QUESTION · BACKEND</p>
+    <h3 class="font-headline text-2xl font-bold mb-4">Should you build a certification detail API?</h3>
+    <p class="text-on-surface-variant leading-relaxed mb-5">
+      Short answer: <span class="text-primary font-semibold">not for its own sake</span>. You
+      already return the full <span class="font-mono text-primary">CertificationResponse</span>
+      from <span class="font-mono">GET /certifications/slug/&#123;slug&#125;</span> — everything needed for
+      a detail page is already there. The question is whether a detail page adds value.
+    </p>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <h4 class="font-headline text-base font-bold mb-2 text-emerald-400">Build it if you will add…</h4>
+        <ul class="text-sm text-on-surface-variant space-y-1.5 list-disc list-inside">
+          <li>A long-form "what I learned" write-up per cert</li>
+          <li>A gallery — study notes, lab screenshots, project links</li>
+          <li>Related blog posts (filtered by shared tech tags)</li>
+          <li>Embedded verification widget / downloadable PDF cert</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-headline text-base font-bold mb-2 text-amber-400">Skip it if…</h4>
+        <ul class="text-sm text-on-surface-variant space-y-1.5 list-disc list-inside">
+          <li>You'd just be expanding the description</li>
+          <li>No plan for supporting content beyond what the card shows</li>
+          <li>The credentialUrl ↗ is the real "more info" destination</li>
+        </ul>
+      </div>
+    </div>
+    <p class="mt-6 text-sm text-primary font-mono">MY TAKE · Skip a dedicated detail page for now. Add the <span class="text-on-surface">Verify ↗</span> external link (which you already have data for) and a "Learnings" paragraph that expands inline on card click. Saves you a page build and reduces the depth of the nav tree.</p>
+  </div>
+
+  <!-- Proposed mock -->
+  <h3 class="font-headline text-2xl font-bold tracking-tight mb-3">Proposed refresh</h3>
+  <p class="text-on-surface-variant mb-8 max-w-2xl">All 5 upgrades applied. Same grid system, same tokens — just tighter information density and one new interaction pattern.</p>
+  <div class="mock-frame">
+    <div class="mock-chrome px-6 py-3 flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="ml-4 text-xs text-outline font-mono">/certifications · proposed</span>
+    </div>
+    <div class="p-10">
+      <!-- Hero with stat strip -->
+      <div class="mb-10 flex items-end justify-between flex-wrap gap-6">
+        <div>
+          <p class="section-num mb-2">04 · CREDENTIALS</p>
+          <h3 class="font-headline text-5xl font-bold tracking-tighter mb-3">Certifications<span class="text-primary">.</span></h3>
+          <p class="text-on-surface-variant max-w-md">Validating technical expertise and continuous learning.</p>
+        </div>
+        <div class="flex gap-8 font-mono text-xs uppercase tracking-widest text-outline">
+          <div><span class="block text-3xl font-headline font-bold text-on-surface normal-case tracking-tight">12</span>Earned</div>
+          <div><span class="block text-3xl font-headline font-bold text-primary normal-case tracking-tight">3</span>In progress</div>
+          <div><span class="block text-3xl font-headline font-bold text-on-surface-variant normal-case tracking-tight">4</span>Orgs</div>
+        </div>
+      </div>
+      <!-- Filters with count pills -->
+      <div class="flex flex-wrap items-center gap-3 mb-8">
+        <span class="text-xs font-mono uppercase tracking-widest text-outline mr-2">Status:</span>
+        <button class="px-5 py-1.5 rounded-full bg-primary text-on-primary text-sm font-semibold">All <span class="opacity-60 ml-1">15</span></button>
+        <button class="px-5 py-1.5 rounded-full bg-surface-variant text-on-surface-variant text-sm font-semibold">Earned <span class="opacity-60 ml-1">12</span></button>
+        <button class="px-5 py-1.5 rounded-full bg-surface-variant text-on-surface-variant text-sm font-semibold">In Progress <span class="opacity-60 ml-1">3</span></button>
+        <button class="px-5 py-1.5 rounded-full bg-surface-variant text-on-surface-variant text-sm font-semibold opacity-50">Archive <span class="opacity-80 ml-1">2</span></button>
+      </div>
+      <!-- Grid proposed -->
+      <div class="grid grid-cols-3 gap-6">
+        <!-- Featured card with badge art -->
+        <div class="col-span-2 relative bg-surface-container-low p-8 rounded-xl border border-primary/20 overflow-hidden">
+          <div class="absolute top-6 right-6 w-32 h-32 imgph rounded-lg flex items-center justify-center opacity-90">
+            <div class="text-center">
+              <div class="font-headline text-2xl font-bold text-primary">AWS</div>
+              <div class="text-[9px] text-outline mt-1">BADGE ART</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 mb-6">
+            <span class="badge-earned px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Earned</span>
+            <span class="text-on-surface-variant text-xs font-mono">2023</span>
+            <span class="text-outline text-xs">·</span>
+            <span class="text-on-surface-variant text-xs">Amazon Web Services</span>
+          </div>
+          <h4 class="font-headline text-2xl font-bold mb-3 max-w-md">AWS Certified Solutions Architect — Associate</h4>
+          <p class="text-on-surface-variant text-sm max-w-md mb-6 leading-relaxed">Validation of technical expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS.</p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="techpill">Cloud</span><span class="techpill">Infrastructure</span><span class="techpill">Security</span><span class="techpill">AWS</span>
+          </div>
+          <div class="flex items-center gap-2 pt-5 border-t border-outline-variant/15">
+            <button class="text-xs font-mono uppercase tracking-widest text-on-surface-variant hover:text-primary transition flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">unfold_more</span> Learnings
+            </button>
+            <span class="text-outline">·</span>
+            <a class="text-xs font-mono uppercase tracking-widest text-primary hover:text-on-surface transition flex items-center gap-1.5" href="#">
+              Verify <span class="material-symbols-outlined text-sm">north_east</span>
+            </a>
+          </div>
+        </div>
+        <!-- In progress with target chip -->
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center justify-between mb-6">
+            <span class="badge-progress px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">In Progress</span>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-primary">TARGET Q2'26</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">Google Cloud Professional Data Engineer</h4>
+          <p class="text-on-surface-variant text-xs mb-4">Google Cloud</p>
+          <p class="text-on-surface-variant text-xs mb-6 leading-relaxed">Focusing on ML pipelines and big data infrastructure on GCP.</p>
+          <div class="flex flex-wrap gap-2"><span class="techpill">Big Data</span><span class="techpill">ML</span></div>
+        </div>
+        <!-- Earned compact -->
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center justify-between mb-6">
+            <span class="badge-earned px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Earned</span>
+            <span class="text-[10px] font-mono text-on-surface-variant">JAN '23</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">Oracle Java SE 17 Professional</h4>
+          <p class="text-on-surface-variant text-xs mb-4">Oracle</p>
+          <div class="flex flex-wrap gap-2 mb-5"><span class="techpill">Backend</span><span class="techpill">Java</span></div>
+          <a class="text-[11px] font-mono uppercase tracking-widest text-primary hover:text-on-surface transition flex items-center gap-1" href="#">Verify <span class="material-symbols-outlined text-xs">north_east</span></a>
+        </div>
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center justify-between mb-6">
+            <span class="badge-earned px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Earned</span>
+            <span class="text-[10px] font-mono text-on-surface-variant">NOV '23</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">HashiCorp Terraform Associate</h4>
+          <p class="text-on-surface-variant text-xs mb-4">HashiCorp</p>
+          <div class="flex flex-wrap gap-2 mb-5"><span class="techpill">IaC</span><span class="techpill">DevOps</span></div>
+          <a class="text-[11px] font-mono uppercase tracking-widest text-primary hover:text-on-surface transition flex items-center gap-1" href="#">Verify <span class="material-symbols-outlined text-xs">north_east</span></a>
+        </div>
+        <div class="bg-surface-container-low p-8 rounded-xl">
+          <div class="flex items-center justify-between mb-6">
+            <span class="badge-earned px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-bold">Earned</span>
+            <span class="text-[10px] font-mono text-on-surface-variant">MAR '24</span>
+          </div>
+          <h4 class="font-headline text-lg font-bold mb-2">Spring Certified Professional</h4>
+          <p class="text-on-surface-variant text-xs mb-4">VMware</p>
+          <div class="flex flex-wrap gap-2 mb-5"><span class="techpill">Spring</span><span class="techpill">Java</span></div>
+          <a class="text-[11px] font-mono uppercase tracking-widest text-primary hover:text-on-surface transition flex items-center gap-1" href="#">Verify <span class="material-symbols-outlined text-xs">north_east</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="border-outline-variant/10 max-w-[1200px] mx-auto"/>
+
+<!-- ================================================================== -->
+<!-- 02 · CONTACT                                                        -->
+<!-- ================================================================== -->
+<section id="contact" class="max-w-[1200px] mx-auto px-10 py-20">
+  <div class="flex items-baseline justify-between mb-10 flex-wrap gap-4">
+    <div>
+      <p class="section-num mb-2">02 · CONTACT</p>
+      <h2 class="font-headline text-5xl font-bold tracking-tighter">A contact form is a trust exercise.</h2>
+    </div>
+    <div class="text-right">
+      <p class="text-xs font-mono uppercase tracking-widest text-outline mb-1">Verdict</p>
+      <p class="font-headline text-2xl font-bold text-primary">Page isn't built yet · ship the mock</p>
+    </div>
+  </div>
+
+  <div class="callout p-6 rounded-r-lg mb-12">
+    <p class="text-on-surface-variant text-sm leading-relaxed">
+      <span class="text-primary font-semibold">Heads up:</span> the current
+      <span class="font-mono text-primary">ContactPage.tsx</span> is a placeholder ("Contact form
+      coming in Issue #10"). So the review below is really about what to build, using the
+      Stitch design as starting point. The Stitch is good but thin on feedback states,
+      validation, and anti-spam — all the un-sexy stuff that makes a contact form actually work.
+    </p>
+  </div>
+
+  <!-- Stitch recap -->
+  <div class="mock-frame mb-14">
+    <div class="mock-chrome px-6 py-3 flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="ml-4 text-xs text-outline font-mono">/contact · Stitch design as-is</span>
+    </div>
+    <div class="relative p-10 grid grid-cols-12 gap-10">
+      <!-- Left -->
+      <div class="col-span-5">
+        <h3 class="font-headline text-5xl font-bold tracking-tighter leading-tight mb-5">Get In <span class="text-primary italic">Touch</span></h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed mb-8 max-w-sm">I am currently open to new collaborations, freelance opportunities, and interesting technical challenges…</p>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center"><span class="material-symbols-outlined text-primary text-lg">mail</span></div><span class="text-on-surface-variant text-sm">Email</span></div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center"><span class="material-symbols-outlined text-primary text-lg">code</span></div><span class="text-on-surface-variant text-sm">GitHub</span></div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center"><span class="material-symbols-outlined text-primary text-lg">link</span></div><span class="text-on-surface-variant text-sm">LinkedIn</span></div>
+        </div>
+        <div class="mt-8 aspect-video imgph rounded-xl">OFFICE PHOTO</div>
+      </div>
+      <!-- Right form -->
+      <div class="col-span-7">
+        <div class="bg-surface-container-low p-8 rounded-xl ghost-border space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div><label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-2">Full Name</label><div class="bg-surface-container-lowest rounded-md p-3 text-sm text-outline">John Doe</div></div>
+            <div><label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-2">Email Address</label><div class="bg-surface-container-lowest rounded-md p-3 text-sm text-outline"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bed4d1d6d0fedbc6dfd3ced2db90ddd1d3">[email&#160;protected]</a></div></div>
+          </div>
+          <div><label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-2">Subject Line</label><div class="bg-surface-container-lowest rounded-md p-3 text-sm text-outline">What is this about?</div></div>
+          <div><label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-2">Inquiry Type</label><div class="bg-surface-container-lowest rounded-md p-3 text-sm flex justify-between"><span>General Inquiry</span><span class="material-symbols-outlined text-sm">expand_more</span></div></div>
+          <div><label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-2">Message</label><div class="bg-surface-container-lowest rounded-md p-3 text-sm text-outline h-24">Tell me more about your project…</div></div>
+          <div class="flex items-center gap-4 pt-2">
+            <button class="primary-gradient text-on-primary font-bold px-8 py-3 rounded-md font-headline text-sm">Send Message</button>
+            <p class="text-on-surface-variant text-xs italic">I usually respond within 24-48 hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Annotation dots -->
+      <div class="annotation-dot" style="top: 50px; right: 25%;">A</div>
+      <div class="annotation-dot" style="top: 290px; right: 60px;">B</div>
+      <div class="annotation-dot" style="bottom: 110px; right: 40%;">C</div>
+      <div class="annotation-dot" style="bottom: 180px; left: 25%;">D</div>
+    </div>
+  </div>
+
+  <!-- Critical gaps -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">A</span>
+        <h4 class="font-headline text-lg font-bold">Missing: inline validation + field states</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        Backend rules: email is required + valid format, message min 20 / max 2000,
+        name + subject max 255. The user needs to see these before hitting submit —
+        a 400 from the server on submit feels broken.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · Live validation on blur. Show min/max characters for the message. Error styling for error state (<span class="text-on-surface">border-error</span>, tiny helper text).</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">B</span>
+        <h4 class="font-headline text-lg font-bold">Missing: submission states</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        Design shows only the resting state. You need loading ("Sending…" + disable the
+        button), success ("Got it — I'll reply within 48h"), and error ("Something broke,
+        try again or email directly").
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · Replace the whole form card with a success panel on 200, with a reset CTA. Mock included below.</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">C</span>
+        <h4 class="font-headline text-lg font-bold">Missing: spam floor</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        Backend has IP rate-limiting which is a start, but a public POST endpoint
+        without a honeypot or challenge will eat bot submissions. Cheap fix: hidden
+        honeypot field that bots auto-fill.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · <span class="text-on-surface">&lt;input name="website" class="sr-only" tabindex="-1"&gt;</span> + reject server-side if non-empty. Adds zero UX friction.</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">D</span>
+        <h4 class="font-headline text-lg font-bold">The stock office photo undercuts the brand</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-3">
+        The rest of the site is editorial and considered. A desaturated generic workspace
+        photo in the contact page feels like placeholder content that shipped.
+      </p>
+      <p class="text-xs text-primary font-mono">FIX · Either a real photo of <em>you</em>, or kill the image and replace with a timezone/availability panel: <span class="text-on-surface">"Based in [City] · UTC-5 · Currently accepting work"</span>. The second option is stronger.</p>
+    </div>
+
+    <div class="callout p-6 rounded-r-lg md:col-span-2">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm font-mono font-bold">E</span>
+        <h4 class="font-headline text-lg font-bold">Minor: social links should show the actual handle</h4>
+      </div>
+      <p class="text-on-surface-variant text-sm leading-relaxed">
+        "Email / GitHub / LinkedIn" with nothing after is a vague promise. Preview the
+        handle or address underneath the label — <span class="font-mono text-primary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3c0c2d0c6dae3d2d6cacdcd8dc7c6d5">[email&#160;protected]</a></span>,
+        <span class="font-mono text-primary">github.com/caseyquinn</span>. Reduces a click to copy or confirm
+        and signals that you actually own the accounts (not just decorative icons).
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Proposed contact mock with states -->
+  <h3 class="font-headline text-2xl font-bold tracking-tight mb-3">Proposed: three states side-by-side</h3>
+  <p class="text-on-surface-variant mb-8 max-w-2xl">Same layout, same tokens — proper feedback loops, an availability panel replacing the stock photo, and a visible success state.</p>
+
+  <div class="grid grid-cols-3 gap-4 mb-14">
+
+    <!-- State 1: resting with validation hints -->
+    <div class="mock-frame">
+      <div class="mock-chrome px-4 py-2 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="ml-2 text-[10px] text-outline font-mono">resting</span>
+      </div>
+      <div class="p-5 text-xs">
+        <h4 class="font-headline text-2xl font-bold tracking-tighter leading-tight mb-3">Get in <span class="text-primary italic">touch</span></h4>
+        <p class="text-on-surface-variant text-[11px] leading-relaxed mb-5">Open to collaborations, freelance, and interesting technical challenges.</p>
+        <div class="mb-5 bg-surface-container-low rounded-lg p-3">
+          <p class="text-[9px] font-mono uppercase tracking-widest text-primary mb-1">● Available</p>
+          <p class="text-[10px] text-on-surface-variant">Based in Raleigh, NC · UTC-5<br/>Response window: 24–48h</p>
+        </div>
+        <div class="space-y-2 mb-5">
+          <a class="flex items-center gap-2 group" href="#">
+            <span class="material-symbols-outlined text-primary text-sm">mail</span>
+            <span class="flex-1">
+              <span class="block text-[9px] font-mono uppercase tracking-widest text-outline">Email</span>
+              <span class="text-[11px] text-on-surface-variant group-hover:text-primary"><span class="__cf_email__" data-cfemail="d2b1b3a1b7ab92b1b3a1b7aba3a7bbbcbcfcb6b7a4">[email&#160;protected]</span></span>
+            </span>
+          </a>
+          <a class="flex items-center gap-2 group" href="#">
+            <span class="material-symbols-outlined text-primary text-sm">code</span>
+            <span class="flex-1">
+              <span class="block text-[9px] font-mono uppercase tracking-widest text-outline">GitHub</span>
+              <span class="text-[11px] text-on-surface-variant group-hover:text-primary">github.com/caseyquinn</span>
+            </span>
+          </a>
+        </div>
+        <div class="bg-surface-container-low p-4 rounded-lg ghost-border space-y-3">
+          <div>
+            <label class="block text-[9px] font-mono uppercase tracking-widest text-on-surface-variant mb-1">Name</label>
+            <div class="bg-surface-container-lowest rounded p-2 text-[10px] text-outline">Casey</div>
+          </div>
+          <div>
+            <label class="flex justify-between text-[9px] font-mono uppercase tracking-widest text-on-surface-variant mb-1"><span>Message</span><span class="text-outline">0 / 2000 · min 20</span></label>
+            <div class="bg-surface-container-lowest rounded p-2 text-[10px] text-outline h-16"></div>
+          </div>
+          <button class="w-full primary-gradient text-on-primary font-bold py-2 rounded font-headline text-[11px]">Send message</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 2: loading/error -->
+    <div class="mock-frame">
+      <div class="mock-chrome px-4 py-2 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="ml-2 text-[10px] text-outline font-mono">error state</span>
+      </div>
+      <div class="p-5 text-xs">
+        <h4 class="font-headline text-2xl font-bold tracking-tighter leading-tight mb-3">Get in <span class="text-primary italic">touch</span></h4>
+        <p class="text-on-surface-variant text-[11px] leading-relaxed mb-5">Open to collaborations, freelance, and interesting technical challenges.</p>
+        <div class="mb-5 bg-surface-container-low rounded-lg p-3">
+          <p class="text-[9px] font-mono uppercase tracking-widest text-primary mb-1">● Available</p>
+          <p class="text-[10px] text-on-surface-variant">Based in Raleigh, NC · UTC-5<br/>Response window: 24–48h</p>
+        </div>
+        <div class="space-y-2 mb-5 opacity-60">
+          <div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">mail</span><span class="text-[11px] text-on-surface-variant"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="54373527312d14373527312d25213d3a3a7a303122">[email&#160;protected]</a></span></div>
+          <div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-sm">code</span><span class="text-[11px] text-on-surface-variant">github.com/caseyquinn</span></div>
+        </div>
+        <div class="bg-surface-container-low p-4 rounded-lg ghost-border space-y-3">
+          <div>
+            <label class="block text-[9px] font-mono uppercase tracking-widest text-error mb-1">Email · required</label>
+            <div class="bg-surface-container-lowest rounded p-2 text-[10px] text-on-surface border border-error/50">casey@brokenmail</div>
+            <p class="text-[9px] text-error mt-1">Enter a valid email address</p>
+          </div>
+          <div>
+            <label class="flex justify-between text-[9px] font-mono uppercase tracking-widest text-error mb-1"><span>Message</span><span>12 / 2000</span></label>
+            <div class="bg-surface-container-lowest rounded p-2 text-[10px] text-on-surface h-16 border border-error/50">Hey there</div>
+            <p class="text-[9px] text-error mt-1">At least 20 characters</p>
+          </div>
+          <button class="w-full bg-surface-variant text-outline font-bold py-2 rounded font-headline text-[11px] cursor-not-allowed">Fix errors first</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 3: success -->
+    <div class="mock-frame">
+      <div class="mock-chrome px-4 py-2 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="w-2 h-2 rounded-full bg-[#2a2a2a]"></span>
+        <span class="ml-2 text-[10px] text-outline font-mono">success</span>
+      </div>
+      <div class="p-5 text-xs">
+        <h4 class="font-headline text-2xl font-bold tracking-tighter leading-tight mb-3">Message <span class="text-primary italic">sent</span>.</h4>
+        <div class="bg-surface-container-low p-5 rounded-lg ghost-border mb-4" style="border-left: 2px solid #34d399;">
+          <span class="material-symbols-outlined text-emerald-400 text-2xl mb-2 block">check_circle</span>
+          <p class="text-[11px] text-on-surface mb-2 font-semibold">Got it, Casey will read it.</p>
+          <p class="text-[10px] text-on-surface-variant leading-relaxed">A confirmation is in your inbox at <span class="font-mono text-primary">casey@…</span> Response window is 24–48 hours.</p>
+        </div>
+        <div class="flex gap-2 mb-6">
+          <button class="flex-1 bg-surface-variant text-on-surface text-[11px] font-headline font-bold py-2 rounded">Send another</button>
+          <a class="flex-1 bg-surface-variant text-on-surface text-[11px] font-headline font-bold py-2 rounded text-center" href="#">See work</a>
+        </div>
+        <p class="text-[10px] font-mono uppercase tracking-widest text-outline mb-2">While you wait…</p>
+        <div class="space-y-2">
+          <a class="block bg-surface-container-low p-3 rounded text-[11px]" href="#">→ Latest blog post</a>
+          <a class="block bg-surface-container-low p-3 rounded text-[11px]" href="#">→ Featured project</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="border-outline-variant/10 max-w-[1200px] mx-auto"/>
+
+<!-- ================================================================== -->
+<!-- 03 · RESUME                                                         -->
+<!-- ================================================================== -->
+<section id="resume" class="max-w-[1200px] mx-auto px-10 py-20">
+  <div class="flex items-baseline justify-between mb-10 flex-wrap gap-4">
+    <div>
+      <p class="section-num mb-2">03 · RESUME</p>
+      <h2 class="font-headline text-5xl font-bold tracking-tighter">One button vs. a whole page.</h2>
+    </div>
+    <div class="text-right">
+      <p class="text-xs font-mono uppercase tracking-widest text-outline mb-1">Recommendation</p>
+      <p class="font-headline text-2xl font-bold text-primary">Build the page. Make nav work both ways.</p>
+    </div>
+  </div>
+
+  <!-- The question -->
+  <div class="bg-surface-container-low p-8 rounded-xl mb-12 ghost-border">
+    <p class="section-num mb-3">YOUR QUESTION</p>
+    <p class="text-on-surface text-lg leading-relaxed mb-4">
+      <em>"In the design there is just a resume button which should download my resume.
+      Should I also have a resume page where they can view a resume in my design style
+      and then also download a PDF?"</em>
+    </p>
+    <p class="text-primary font-headline text-xl font-bold">Yes — and here's why the page is actually the higher-leverage choice.</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-5 mb-14">
+    <div class="bg-surface-container-low p-6 rounded-xl">
+      <p class="section-num mb-2">ARGUMENT</p>
+      <h4 class="font-headline text-lg font-bold mb-3">The PDF is the "I already decided" artifact</h4>
+      <p class="text-on-surface-variant text-sm leading-relaxed">
+        A recruiter who wants a PDF wants it because their ATS demands it. They're not
+        comparing you to other candidates at this moment — they're filing you. Good,
+        serve it fast.
+      </p>
+    </div>
+    <div class="bg-surface-container-low p-6 rounded-xl">
+      <p class="section-num mb-2">ARGUMENT</p>
+      <h4 class="font-headline text-lg font-bold mb-3">The page is where discovery happens</h4>
+      <p class="text-on-surface-variant text-sm leading-relaxed">
+        A hiring manager browsing your site is in <em>evaluation</em> mode. A beautifully
+        typeset resume page that matches your visual language signals "this person cares
+        about craft" in a way a PDF literally cannot — PDFs always look like a PDF.
+      </p>
+    </div>
+    <div class="bg-surface-container-low p-6 rounded-xl">
+      <p class="section-num mb-2">ARGUMENT</p>
+      <h4 class="font-headline text-lg font-bold mb-3">Resumes go stale; pages don't</h4>
+      <p class="text-on-surface-variant text-sm leading-relaxed">
+        Your site is already data-driven. A resume page reuses project + certification +
+        technology data you already publish. Update once, it reflects everywhere. PDF
+        becomes the snapshot export, not the source of truth.
+      </p>
+    </div>
+  </div>
+
+  <!-- Nav pattern -->
+  <div class="callout p-6 rounded-r-lg mb-14">
+    <h4 class="font-headline text-lg font-bold mb-3">The navbar Resume button: split it.</h4>
+    <p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+      Right now you have one button doing one thing. Replace it with a split-action control:
+    </p>
+    <div class="flex items-center gap-0 mb-4">
+      <a class="primary-gradient text-on-primary font-headline font-bold text-sm px-5 py-2 rounded-l-md">Resume</a>
+      <a class="bg-primary-dim/80 text-on-primary font-headline font-bold text-sm px-3 py-2 rounded-r-md border-l border-primary/30 flex items-center"><span class="material-symbols-outlined text-base">download</span></a>
+    </div>
+    <p class="text-xs text-primary font-mono">
+      PATTERN · <span class="text-on-surface">"Resume"</span> → /resume page · <span class="text-on-surface">↓ icon</span> → GET /resume/download directly · tooltip on download icon: "Download PDF".
+    </p>
+    <p class="text-on-surface-variant text-sm mt-3 leading-relaxed">
+      Both audiences served in the same footprint. The default (big label) is the more
+      interesting click for browsing users; the small icon is the power-user shortcut for
+      anyone who knows what they want.
+    </p>
+  </div>
+
+  <!-- Resume page mock -->
+  <h3 class="font-headline text-2xl font-bold tracking-tight mb-3">Proposed: /resume page</h3>
+  <p class="text-on-surface-variant mb-8 max-w-2xl">
+    Editorial layout. Two columns on desktop: narrow-left identity rail, wide-right content.
+    Same type + color system as the rest of the site. Sticky download button. Prints clean
+    if anyone actually hits Cmd-P.
+  </p>
+
+  <div class="mock-frame">
+    <div class="mock-chrome px-6 py-3 flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></span>
+      <span class="ml-4 text-xs text-outline font-mono">/resume · proposed</span>
+    </div>
+
+    <div class="p-12">
+      <!-- Top bar: meta + download -->
+      <div class="flex items-end justify-between mb-12 pb-8 border-b border-outline-variant/15">
+        <div>
+          <p class="section-num mb-2">03 · RESUME</p>
+          <h3 class="font-headline text-6xl font-bold tracking-tighter leading-none mb-3">Casey Quinn<span class="text-primary">.</span></h3>
+          <p class="text-on-surface-variant">Software Engineer · Java / Spring / Cloud · Raleigh, NC</p>
+        </div>
+        <div class="flex flex-col items-end gap-2">
+          <a class="primary-gradient text-on-primary font-headline font-bold px-6 py-3 rounded-md text-sm flex items-center gap-2" href="#">
+            <span class="material-symbols-outlined text-base">download</span> Download PDF
+          </a>
+          <p class="text-[10px] font-mono uppercase tracking-widest text-outline">Last updated · Apr 2026 · 182 KB</p>
+        </div>
+      </div>
+
+      <!-- 2-col layout -->
+      <div class="grid grid-cols-12 gap-12">
+        <!-- Left rail -->
+        <aside class="col-span-4 space-y-10 text-sm">
+          <div>
+            <p class="section-num mb-3">CONTACT</p>
+            <div class="space-y-1.5">
+              <p class="text-on-surface"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="57343624322e17343624322e26223e393979333221">[email&#160;protected]</a></p>
+              <p class="text-on-surface-variant">github.com/caseyquinn</p>
+              <p class="text-on-surface-variant">linkedin.com/in/caseyquinn</p>
+              <p class="text-on-surface-variant">caseyquinn.dev</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="section-num mb-3">CORE STACK</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="techpill">Java 21</span><span class="techpill">Spring Boot</span>
+              <span class="techpill">PostgreSQL</span><span class="techpill">Redis</span>
+              <span class="techpill">React</span><span class="techpill">TypeScript</span>
+              <span class="techpill">Docker</span><span class="techpill">AWS</span>
+              <span class="techpill">Terraform</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="section-num mb-3">CERTIFICATIONS</p>
+            <ul class="space-y-2.5 text-sm">
+              <li class="flex items-start gap-2">
+                <span class="badge-earned px-2 py-0.5 rounded-full text-[9px] uppercase tracking-widest font-bold shrink-0 mt-0.5">✓</span>
+                <span>
+                  <span class="block text-on-surface">AWS Solutions Architect</span>
+                  <span class="text-[10px] font-mono text-outline">2023</span>
+                </span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="badge-earned px-2 py-0.5 rounded-full text-[9px] uppercase tracking-widest font-bold shrink-0 mt-0.5">✓</span>
+                <span>
+                  <span class="block text-on-surface">Oracle Java SE 17</span>
+                  <span class="text-[10px] font-mono text-outline">2023</span>
+                </span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="badge-earned px-2 py-0.5 rounded-full text-[9px] uppercase tracking-widest font-bold shrink-0 mt-0.5">✓</span>
+                <span>
+                  <span class="block text-on-surface">Terraform Associate</span>
+                  <span class="text-[10px] font-mono text-outline">2023</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="section-num mb-3">EDUCATION</p>
+            <p class="text-on-surface">BS, Computer Science</p>
+            <p class="text-on-surface-variant text-xs">[University] · 2019</p>
+          </div>
+        </aside>
+
+        <!-- Right content -->
+        <div class="col-span-8 space-y-12">
+
+          <!-- About -->
+          <div>
+            <p class="section-num mb-3">ABOUT</p>
+            <p class="text-on-surface text-lg leading-relaxed max-w-2xl">
+              Backend-leaning full-stack engineer who cares about maintainable systems
+              and the handoff between API and UI. Spend most of my days in Spring Boot
+              and React, most of my evenings in Terraform.
+            </p>
+          </div>
+
+          <!-- Experience -->
+          <div>
+            <p class="section-num mb-4">EXPERIENCE</p>
+            <div class="space-y-8">
+              <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-3">
+                  <p class="font-mono text-xs uppercase tracking-widest text-primary">2024 — NOW</p>
+                  <p class="text-on-surface-variant text-xs mt-1">Full-time</p>
+                </div>
+                <div class="col-span-9">
+                  <h4 class="font-headline text-xl font-bold">Senior Software Engineer</h4>
+                  <p class="text-on-surface-variant text-sm mb-3">[Company] · Remote</p>
+                  <ul class="text-sm text-on-surface-variant space-y-1.5 list-disc list-outside ml-4 leading-relaxed">
+                    <li>Led the migration of [service] from monolith to event-driven microservices, cutting p95 latency 42%</li>
+                    <li>Shipped the v2 public API consumed by [n] internal and external clients</li>
+                    <li>Mentored [n] engineers through Spring Boot 3 upgrade</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-3">
+                  <p class="font-mono text-xs uppercase tracking-widest text-primary">2021 — 2024</p>
+                  <p class="text-on-surface-variant text-xs mt-1">Full-time</p>
+                </div>
+                <div class="col-span-9">
+                  <h4 class="font-headline text-xl font-bold">Software Engineer II</h4>
+                  <p class="text-on-surface-variant text-sm mb-3">[Company] · Raleigh, NC</p>
+                  <ul class="text-sm text-on-surface-variant space-y-1.5 list-disc list-outside ml-4 leading-relaxed">
+                    <li>Built [thing]; used by [n] users; reduced [metric] by [%]</li>
+                    <li>Co-authored the team's PR + code review playbook</li>
+                    <li>Owned the on-call rotation cleanup — reduced P1 pages 60% quarter-over-quarter</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-3">
+                  <p class="font-mono text-xs uppercase tracking-widest text-primary">2019 — 2021</p>
+                  <p class="text-on-surface-variant text-xs mt-1">Full-time</p>
+                </div>
+                <div class="col-span-9">
+                  <h4 class="font-headline text-xl font-bold">Software Engineer</h4>
+                  <p class="text-on-surface-variant text-sm mb-3">[Company] · Raleigh, NC</p>
+                  <ul class="text-sm text-on-surface-variant space-y-1.5 list-disc list-outside ml-4 leading-relaxed">
+                    <li>First production touch — shipped [n] features on the [thing] team</li>
+                    <li>Internal tools: built the first version of [tool] still in use today</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Selected work -->
+          <div>
+            <p class="section-num mb-4">SELECTED WORK</p>
+            <div class="grid grid-cols-2 gap-4">
+              <a href="#" class="block bg-surface-container-low p-5 rounded-xl group">
+                <p class="text-[10px] font-mono uppercase tracking-widest text-primary mb-2">CASE STUDY</p>
+                <h5 class="font-headline text-base font-bold mb-1 group-hover:text-primary transition">This portfolio</h5>
+                <p class="text-on-surface-variant text-xs">Spring Boot 3 + React + editorial design system</p>
+              </a>
+              <a href="#" class="block bg-surface-container-low p-5 rounded-xl group">
+                <p class="text-[10px] font-mono uppercase tracking-widest text-primary mb-2">CASE STUDY</p>
+                <h5 class="font-headline text-base font-bold mb-1 group-hover:text-primary transition">[Project name]</h5>
+                <p class="text-on-surface-variant text-xs">One-line description of the project</p>
+              </a>
+            </div>
+            <a class="mt-4 inline-block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant hover:text-primary" href="#">See full work archive →</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backend notes -->
+  <div class="mt-14 grid md:grid-cols-2 gap-5">
+    <div class="bg-surface-container-low p-6 rounded-xl">
+      <p class="section-num mb-3">BACKEND · WHAT YOU HAVE</p>
+      <div class="code">
+<span class="c">// Already exposed</span><br/>
+<span class="k">GET</span> <span class="s">/api/v1/resume</span>           <span class="c">→ metadata</span><br/>
+<span class="k">GET</span> <span class="s">/api/v1/resume/download</span>  <span class="c">→ 302 to PDF</span>
+      </div>
+      <p class="text-xs text-on-surface-variant mt-3 leading-relaxed">
+        <span class="text-primary">ResumeResponse</span> already returns filename, size, uploadedAt.
+        Use <span class="font-mono text-primary">uploadedAt</span> as the "Last updated" stamp
+        in the UI — it's a trust signal.
+      </p>
+    </div>
+    <div class="bg-surface-container-low p-6 rounded-xl">
+      <p class="section-num mb-3">BACKEND · WHAT TO ADD</p>
+      <p class="text-xs text-on-surface-variant leading-relaxed mb-3">
+        The /resume page is just <em>composition</em> of existing endpoints. You don't need
+        a new API for it:
+      </p>
+      <ul class="text-xs text-on-surface-variant space-y-1 list-disc list-inside">
+        <li><span class="font-mono text-primary">/resume</span> for metadata</li>
+        <li><span class="font-mono text-primary">/certifications/published</span></li>
+        <li><span class="font-mono text-primary">/projects/featured</span></li>
+        <li><span class="font-mono text-primary">/technologies/featured</span></li>
+      </ul>
+      <p class="text-xs text-primary font-mono mt-3">The "experience" / "about" / "education" blocks are the only net-new content. Store as JSON in a config file, or add a small <span class="text-on-surface">/profile</span> endpoint later if you want admin editing.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="border-outline-variant/10 max-w-[1200px] mx-auto"/>
+
+<!-- ================================================================== -->
+<!-- 04 · SUMMARY                                                        -->
+<!-- ================================================================== -->
+<section id="summary" class="max-w-[1200px] mx-auto px-10 py-24">
+  <p class="section-num mb-2">04 · SUMMARY</p>
+  <h2 class="font-headline text-5xl font-bold tracking-tighter mb-10">If I had one sprint.</h2>
+
+  <div class="grid md:grid-cols-2 gap-5">
+
+    <div class="bg-surface-container-low p-7 rounded-xl">
+      <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">🟢 QUICK WINS</p>
+      <ul class="space-y-2.5 text-sm text-on-surface-variant leading-relaxed">
+        <li><span class="text-on-surface font-semibold">Add Verify ↗ link to cert cards.</span> You already have credentialUrl. One afternoon.</li>
+        <li><span class="text-on-surface font-semibold">Swap stock photo for availability panel.</span> Remove one element, gain real info.</li>
+        <li><span class="text-on-surface font-semibold">Show handles on social links.</span> casey@…, github.com/…, 30 min fix.</li>
+        <li><span class="text-on-surface font-semibold">Split the Resume nav button.</span> Label → page, icon → direct PDF.</li>
+        <li><span class="text-on-surface font-semibold">Hero stat strip on /certifications.</span> 12 earned · 3 in progress · 4 orgs.</li>
+      </ul>
+    </div>
+
+    <div class="bg-surface-container-low p-7 rounded-xl">
+      <p class="text-xs font-mono uppercase tracking-widest text-amber-400 mb-2">🟡 WORTH A FEATURE BRANCH</p>
+      <ul class="space-y-2.5 text-sm text-on-surface-variant leading-relaxed">
+        <li><span class="text-on-surface font-semibold">Build the Contact form properly.</span> Validation + three submission states + honeypot.</li>
+        <li><span class="text-on-surface font-semibold">Use badgeUrl for featured cert watermark.</span> Data-driven, zero design lift.</li>
+        <li><span class="text-on-surface font-semibold">Inline-expand "Learnings" on cert cards.</span> Avoids building a detail page.</li>
+        <li><span class="text-on-surface font-semibold">Add count pills to filter tabs.</span> Works on /blog too. Small pattern investment.</li>
+      </ul>
+    </div>
+
+    <div class="bg-surface-container-low p-7 rounded-xl md:col-span-2 border border-primary/20">
+      <p class="text-xs font-mono uppercase tracking-widest text-primary mb-2">🟣 THE BIG ONE</p>
+      <h4 class="font-headline text-xl font-bold mb-2">Build /resume as a first-class page.</h4>
+      <p class="text-sm text-on-surface-variant leading-relaxed max-w-3xl">
+        It's the single highest-leverage add. It composes data you already have, reinforces
+        your brand precisely where it matters most (someone evaluating you as a candidate),
+        gives power-users the PDF shortcut they want, and gives browsers a rich artifact
+        they can actually read on-screen. A PDF alone is half the story.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="mt-16 text-center">
+    <p class="font-mono text-xs uppercase tracking-widest text-outline mb-4">END OF REVIEW</p>
+    <p class="font-headline text-2xl text-on-surface-variant">Pick any of this. Leave the rest.</p>
+  </div>
+
+</section>
+
+<footer class="py-10 border-t border-outline-variant/10">
+  <div class="max-w-[1200px] mx-auto px-10 flex justify-between items-center text-xs text-outline font-mono uppercase tracking-widest">
+    <span>Casey Quinn. · Design Review</span>
+    <span>Apr 2026</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>

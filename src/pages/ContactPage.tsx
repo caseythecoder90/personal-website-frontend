@@ -1,9 +1,9 @@
+import * as React from 'react';
 import { useState } from 'react';
-import type { FormEvent } from 'react';
 import { usePageTitle } from '@/hooks';
 import { contactApi } from '@/api/contact';
 import type { ApiError } from '@/api/client';
-import { ContactInfoLink } from '@/components/ui';
+import { ContactInfoLink, MailIcon, GithubIcon, LinkedinIcon } from '@/components/ui';
 import type { InquiryType } from '@/types';
 
 // ----------------------------------------------------------------------------
@@ -82,32 +82,27 @@ function validate(form: FormState): FieldErrors {
 }
 
 // ----------------------------------------------------------------------------
-// Icons (inline SVGs — no icon dep)
+// Error mapping
 // ----------------------------------------------------------------------------
 
-function MailIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-      <polyline points="22,6 12,13 2,6" />
-    </svg>
-  );
-}
+/**
+ * Maps an unknown error from contactApi.submit() to a user-facing message.
+ * Keeps the submit handler's catch block to a single line and puts all the
+ * status-code branching in one named, testable place.
+ */
+function messageForSubmitError(err: unknown): string {
+  const apiError = err as Partial<ApiError>;
 
-function GithubIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.27-5.24-5.67 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.12 3.04.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.26 5.66.41.35.78 1.05.78 2.12v3.14c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z" />
-    </svg>
-  );
-}
-
-function LinkedinIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z" />
-    </svg>
-  );
+  switch (apiError?.status) {
+    case 429:
+      return "You're sending a lot — please wait a minute and try again.";
+    case 400:
+      return apiError.message || 'Some fields look invalid. Please review and try again.';
+    case 0:
+      return 'Could not reach the server. Check your connection and try again.';
+    default:
+      return 'Something went wrong sending your message. Please try again.';
+  }
 }
 
 // ----------------------------------------------------------------------------
@@ -133,7 +128,7 @@ export function ContactPage() {
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const handleSubmit: React.SubmitEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     if (submit.kind === 'submitting') return; // debounce double-clicks
 
@@ -159,18 +154,9 @@ export function ContactPage() {
       setSubmit({ kind: 'success' });
       setForm(EMPTY_FORM);
     } catch (err) {
-      const apiError = err as ApiError;
-      const message =
-        apiError.status === 429
-          ? "You're sending a lot — please wait a minute and try again."
-          : apiError.status === 400
-            ? apiError.message || 'Some fields look invalid. Please review and try again.'
-            : apiError.status === 0
-              ? 'Could not reach the server. Check your connection and try again.'
-              : 'Something went wrong sending your message. Please try again.';
-      setSubmit({ kind: 'error', message });
+      setSubmit({ kind: 'error', message: messageForSubmitError(err) });
     }
-  }
+  };
 
   function resetForm() {
     setForm(EMPTY_FORM);

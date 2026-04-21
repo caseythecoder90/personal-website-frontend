@@ -21,3 +21,6 @@ export { MarkdownRenderer } from './MarkdownRenderer';
 export { RelatedPosts } from './RelatedPosts';
 export { NewsletterCard } from './NewsletterCard';
 export { ContactInfoLink } from './ContactInfoLink';
+export { MailIcon } from './MailIcon';
+export { GithubIcon } from './GithubIcon';
+export { LinkedinIcon } from './LinkedinIcon';
