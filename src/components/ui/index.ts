@@ -20,3 +20,4 @@ export { CodeBlock } from './CodeBlock';
 export { MarkdownRenderer } from './MarkdownRenderer';
 export { RelatedPosts } from './RelatedPosts';
 export { NewsletterCard } from './NewsletterCard';
+export { ContactInfoLink } from './ContactInfoLink';
