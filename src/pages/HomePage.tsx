@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { usePageTitle } from '@/hooks';
+import { usePageTitle, useResume } from '@/hooks';
 import { projectApi } from '@/api/projects';
 import { technologyApi } from '@/api/technologies';
 import { SectionHeader, ProjectCard, TechnologyShowcase, LoadingSpinner, ErrorDisplay, Button } from '@/components/ui';
@@ -9,6 +9,7 @@ import heroImage from '@/assets/hero.png';
 
 export function HomePage() {
   usePageTitle('');
+  const resume = useResume();
 
   // ---- State for featured projects ----
   const [projects, setProjects] = useState<ProjectResponse[]>([]);
@@ -74,14 +75,22 @@ export function HomePage() {
           </p>
           <div className="flex flex-wrap gap-4 pt-4">
             <Button href="/projects" size="lg">View Projects</Button>
-            <Button variant="secondary" href="#" size="lg">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              Download Resume
-            </Button>
+            {resume.available && (
+              <Button
+                variant="secondary"
+                href={resume.downloadUrl}
+                size="lg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download Resume
+              </Button>
+            )}
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { useResume } from '@/hooks';
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -11,6 +12,7 @@ const navLinks = [
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const resume = useResume();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-low/70 backdrop-blur-[16px] border-b border-outline-variant/15">
@@ -40,12 +42,16 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <a
-            href="#"
-            className="hidden rounded-md bg-gradient-to-br from-primary to-primary-dim px-5 py-2 font-headline text-sm font-bold tracking-wide text-on-primary shadow-[0_0_15px_rgba(163,166,255,0.3)] transition-transform hover:brightness-110 active:scale-95 sm:inline-block"
-          >
-            Resume
-          </a>
+          {resume.available && (
+            <a
+              href={resume.downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden rounded-md bg-gradient-to-br from-primary to-primary-dim px-5 py-2 font-headline text-sm font-bold tracking-wide text-on-primary shadow-[0_0_15px_rgba(163,166,255,0.3)] transition-transform hover:brightness-110 active:scale-95 sm:inline-block"
+            >
+              Resume
+            </a>
+          )}
 
           {/* Mobile hamburger button */}
           <button
@@ -92,12 +98,17 @@ export function Navbar() {
                 {link.label}
               </NavLink>
             ))}
-            <a
-              href="#"
-              className="mt-2 rounded-md bg-gradient-to-br from-primary to-primary-dim px-4 py-3 text-center font-headline text-sm font-bold tracking-wide text-on-primary sm:hidden"
-            >
-              Resume
-            </a>
+            {resume.available && (
+              <a
+                href={resume.downloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-2 rounded-md bg-gradient-to-br from-primary to-primary-dim px-4 py-3 text-center font-headline text-sm font-bold tracking-wide text-on-primary sm:hidden"
+              >
+                Resume
+              </a>
+            )}
           </div>
         </div>
       )}
