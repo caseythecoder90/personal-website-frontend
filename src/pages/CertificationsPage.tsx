@@ -9,6 +9,7 @@ const STATUS_FILTERS: { label: string; value: CertificationStatus | null }[] = [
   { label: 'All',         value: null },
   { label: 'Earned',      value: 'EARNED' },
   { label: 'In Progress', value: 'IN_PROGRESS' },
+  { label: 'Expired',     value: 'EXPIRED' },
 ];
 
 /**

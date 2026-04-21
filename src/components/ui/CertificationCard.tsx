@@ -28,12 +28,22 @@ export function CertificationCard({ certification, featured = false }: Certifica
     <div className={containerClasses}>
       {featured && (
         <>
-          {/* Decorative watermark — a large, low-opacity badge icon that
-              signals "this is the featured card" without pulling focus. */}
+          {/* Decorative watermark — prefer the cert's real badgeUrl (e.g. AWS
+              logo) so it feels tied to the credential; fall back to a generic
+              star icon when badgeUrl is null. Opacity stays low so it reads
+              as atmosphere, not branding. */}
           <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
-            <svg width="128" height="128" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
-              <path d="M12 2l2.39 4.84 5.34.78-3.86 3.77.91 5.32L12 14.19l-4.78 2.52.91-5.32L4.27 7.62l5.34-.78L12 2z" />
-            </svg>
+            {certification.badgeUrl ? (
+              <img
+                src={certification.badgeUrl}
+                alt=""
+                className="w-32 h-32 object-contain"
+              />
+            ) : (
+              <svg width="128" height="128" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
+                <path d="M12 2l2.39 4.84 5.34.78-3.86 3.77.91 5.32L12 14.19l-4.78 2.52.91-5.32L4.27 7.62l5.34-.78L12 2z" />
+              </svg>
+            )}
           </div>
         </>
       )}
@@ -80,6 +90,32 @@ export function CertificationCard({ certification, featured = false }: Certifica
             <TechPill key={tech.id} name={tech.name} />
           ))}
         </div>
+
+        {/* Verify row — external link to the credential + optional ID.
+            Renders only when credentialUrl is present. A thin divider
+            separates it from the tech pills above so the link reads as a
+            distinct action, not another pill. */}
+        {certification.credentialUrl && (
+          <div className="mt-4 pt-4 border-t border-outline-variant/15 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <a
+              href={certification.credentialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Verify ${certification.name} credential`}
+              className="inline-flex items-center gap-1.5 text-[11px] font-label uppercase tracking-widest text-primary hover:text-on-surface transition-colors"
+            >
+              Verify
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </a>
+            {certification.credentialId && (
+              <span className="text-[11px] font-label uppercase tracking-widest text-outline">
+                ID: {certification.credentialId}
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
