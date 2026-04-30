@@ -1,0 +1,54 @@
+# Trim the build context — anything not needed for `npm ci && vite build`
+# stays out of the image. Smaller context = faster builds and smaller
+# layers.
+
+# Build outputs
+dist
+dist-ssr
+.vite
+
+# Local environment files. Vite only inlines VITE_* prefixed vars, but
+# keep these out of the build context regardless so secrets in .env
+# (admin tokens, etc.) never ride along into the image filesystem
+# during the build, even transiently.
+.env
+.env.*
+!.env.example
+
+# Dependencies — installed fresh inside the build stage
+node_modules
+
+# Source control
+.git
+.gitignore
+.github
+
+# Editor / OS noise
+.vscode
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Logs
+*.log
+logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Local test/coverage output
+coverage
+*.lcov
+
+# Documentation, design assets, and learning notes — not needed at runtime
+docs
+design
+github_issues
+
+# Docker meta itself doesn't need to be in the context
+Dockerfile
+.dockerignore
