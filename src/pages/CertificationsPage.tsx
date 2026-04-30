@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { usePageTitle } from '@/hooks';
+import { useMeta } from '@/hooks';
 import { certificationApi } from '@/api/certifications';
 import { CertificationCard, LoadingSpinner, ErrorDisplay } from '@/components/ui';
 import type { CertificationResponse, CertificationStatus } from '@/types';
@@ -29,7 +29,11 @@ function sortForDisplay(list: CertificationResponse[]): CertificationResponse[] 
 }
 
 export function CertificationsPage() {
-  usePageTitle('Certifications');
+  useMeta({
+    title: 'Certifications',
+    description:
+      'Certifications I have earned and what I am currently studying for.',
+  });
 
   const [certifications, setCertifications] = useState<CertificationResponse[]>([]);
   const [loading, setLoading] = useState(true);

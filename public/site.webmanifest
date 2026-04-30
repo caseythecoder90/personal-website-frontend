@@ -1,0 +1,23 @@
+{
+  "name": "Casey Quinn",
+  "short_name": "Casey Quinn",
+  "description": "Casey Quinn — full-stack software engineer. Portfolio of projects, technical writing, and certifications.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e0e0e",
+  "theme_color": "#0e0e0e",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

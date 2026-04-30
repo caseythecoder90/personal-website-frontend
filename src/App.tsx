@@ -1,13 +1,19 @@
+import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from '@/components/layout';
-import { HomePage } from '@/pages/HomePage';
-import { ProjectsPage } from '@/pages/ProjectsPage';
-import { ProjectDetailPage } from '@/pages/ProjectDetailPage';
-import { BlogPage } from '@/pages/BlogPage';
-import { BlogPostPage } from '@/pages/BlogPostPage';
-import { CertificationsPage } from '@/pages/CertificationsPage';
-import { ContactPage } from '@/pages/ContactPage';
-import { NotFoundPage } from '@/pages/NotFoundPage';
+
+// Code-split each route into its own chunk. Vite emits a separate JS file
+// per lazy import, and the chunk only downloads when the user navigates
+// to that route. Pages use named exports, so we re-shape the module to
+// expose the page as `default` (which is what React.lazy expects).
+const HomePage = lazy(() => import('@/pages/HomePage').then((m) => ({ default: m.HomePage })));
+const ProjectsPage = lazy(() => import('@/pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage })));
+const ProjectDetailPage = lazy(() => import('@/pages/ProjectDetailPage').then((m) => ({ default: m.ProjectDetailPage })));
+const BlogPage = lazy(() => import('@/pages/BlogPage').then((m) => ({ default: m.BlogPage })));
+const BlogPostPage = lazy(() => import('@/pages/BlogPostPage').then((m) => ({ default: m.BlogPostPage })));
+const CertificationsPage = lazy(() => import('@/pages/CertificationsPage').then((m) => ({ default: m.CertificationsPage })));
+const ContactPage = lazy(() => import('@/pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
 
 function App() {
   return (

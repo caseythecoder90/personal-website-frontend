@@ -2,12 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e0e0e" />
+
+    <!-- Icons: SVG is served to modern browsers; PNG/ICO fall back for older/mobile. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>Casey Quinn | Portfolio</title>
+
+    <!-- Defaults. Per-page values are overridden at runtime by the useMeta hook.
+         These defaults are what link-preview bots that don't run JS see. -->
+    <meta name="description" content="Casey Quinn — full-stack software engineer. Portfolio of projects, technical writing, and certifications." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Casey Quinn" />
+    <meta property="og:title" content="Casey Quinn | Portfolio" />
+    <meta property="og:description" content="Casey Quinn — full-stack software engineer. Portfolio of projects, technical writing, and certifications." />
+    <meta property="og:url" content="https://caseyrquinn.com/" />
+    <meta property="og:image" content="https://caseyrquinn.com/og-default.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Casey Quinn | Portfolio" />
+    <meta name="twitter:description" content="Casey Quinn — full-stack software engineer. Portfolio of projects, technical writing, and certifications." />
+    <meta name="twitter:image" content="https://caseyrquinn.com/og-default.png" />
   </head>
   <body>
     <div id="root"></div>

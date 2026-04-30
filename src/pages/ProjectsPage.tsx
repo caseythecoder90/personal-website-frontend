@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { usePageTitle } from '@/hooks';
+import { useMeta } from '@/hooks';
 import { projectApi } from '@/api/projects';
 import { ProjectCard, LoadingSpinner, ErrorDisplay } from '@/components/ui';
 import type { ProjectResponse, TechnologyResponse, TechnologyCategory } from '@/types';
@@ -17,7 +17,11 @@ const CATEGORY_FILTERS: { label: string; value: TechnologyCategory | null }[] = 
 const PAGE_SIZE = 6;
 
 export function ProjectsPage() {
-  usePageTitle('Projects');
+  useMeta({
+    title: 'Projects',
+    description:
+      'Projects I have built — backend services, full-stack apps, and side experiments in Java, Spring Boot, and React.',
+  });
 
   // ---- Data state ----
   const [projects, setProjects] = useState<ProjectResponse[]>([]);

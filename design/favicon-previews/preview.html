@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Favicon previews — Casey Quinn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: #0e0e0e;
+        color: #fff;
+        font-family: 'Inter', system-ui, sans-serif;
+        padding: 48px 32px 96px;
+        min-height: 100vh;
+      }
+      h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 32px;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+      .lede {
+        color: #adaaaa;
+        margin-bottom: 48px;
+        max-width: 680px;
+        line-height: 1.6;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+      .card {
+        background: #1a1919;
+        border-radius: 16px;
+        padding: 32px;
+      }
+      .card h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .card p {
+        color: #adaaaa;
+        font-size: 14px;
+        margin-bottom: 24px;
+      }
+      .sizes {
+        display: flex;
+        align-items: flex-end;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+      .size {
+        text-align: center;
+      }
+      .size img {
+        display: block;
+        image-rendering: auto;
+      }
+      .size .label {
+        margin-top: 12px;
+        color: #adaaaa;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      /* Simulated browser tab */
+      .tab-row {
+        margin-top: 32px;
+        padding: 16px;
+        background: #131313;
+        border-radius: 12px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .tab {
+        background: #262626;
+        padding: 8px 14px;
+        border-radius: 8px 8px 0 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #fff;
+      }
+      .tab img { width: 16px; height: 16px; display: block; }
+    </style>
+  </head>
+  <body>
+    <h1>Favicon previews</h1>
+    <p class="lede">
+      Three directions, rendered at the sizes they'll actually show up at:
+      16px (browser tab), 32px (retina tab), 180px (iOS home screen),
+      and 512px (Android install splash).
+    </p>
+
+    <div class="grid">
+      <section class="card">
+        <h2>V1 — "C." wordmark echo</h2>
+        <p>Single bold "C" with an indigo period. Mirrors the "Casey Quinn." navbar wordmark. Most readable at 16px. Minimal, most brand-coherent.</p>
+        <div class="sizes">
+          <div class="size"><img src="v1-c-dot.svg" width="16" height="16" alt=""><div class="label">16px tab</div></div>
+          <div class="size"><img src="v1-c-dot.svg" width="32" height="32" alt=""><div class="label">32px retina</div></div>
+          <div class="size"><img src="v1-c-dot.svg" width="64" height="64" alt=""><div class="label">64px</div></div>
+          <div class="size"><img src="v1-c-dot.svg" width="128" height="128" alt=""><div class="label">128px</div></div>
+          <div class="size"><img src="v1-c-dot.svg" width="180" height="180" alt=""><div class="label">180px iOS</div></div>
+        </div>
+        <div class="tab-row">
+          <div class="tab"><img src="v1-c-dot.svg" alt="">Casey Quinn | Portfolio</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>V2 — CQ monogram (two-tone)</h2>
+        <p>White "C" + indigo "Q" side by side. Classic monogram, more "personal brand" than minimal. Reads as initials at 32px+; may smush at 16px.</p>
+        <div class="sizes">
+          <div class="size"><img src="v2-cq-monogram.svg" width="16" height="16" alt=""><div class="label">16px tab</div></div>
+          <div class="size"><img src="v2-cq-monogram.svg" width="32" height="32" alt=""><div class="label">32px retina</div></div>
+          <div class="size"><img src="v2-cq-monogram.svg" width="64" height="64" alt=""><div class="label">64px</div></div>
+          <div class="size"><img src="v2-cq-monogram.svg" width="128" height="128" alt=""><div class="label">128px</div></div>
+          <div class="size"><img src="v2-cq-monogram.svg" width="180" height="180" alt=""><div class="label">180px iOS</div></div>
+        </div>
+        <div class="tab-row">
+          <div class="tab"><img src="v2-cq-monogram.svg" alt="">Casey Quinn | Portfolio</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>V3 — Gradient chip (app-icon style)</h2>
+        <p>Indigo gradient tile, dark "CQ" set in. Feels like an iOS app. Strongest at large sizes (home-screen install), busiest at 16px.</p>
+        <div class="sizes">
+          <div class="size"><img src="v3-gradient-chip.svg" width="16" height="16" alt=""><div class="label">16px tab</div></div>
+          <div class="size"><img src="v3-gradient-chip.svg" width="32" height="32" alt=""><div class="label">32px retina</div></div>
+          <div class="size"><img src="v3-gradient-chip.svg" width="64" height="64" alt=""><div class="label">64px</div></div>
+          <div class="size"><img src="v3-gradient-chip.svg" width="128" height="128" alt=""><div class="label">128px</div></div>
+          <div class="size"><img src="v3-gradient-chip.svg" width="180" height="180" alt=""><div class="label">180px iOS</div></div>
+        </div>
+        <div class="tab-row">
+          <div class="tab"><img src="v3-gradient-chip.svg" alt="">Casey Quinn | Portfolio</div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

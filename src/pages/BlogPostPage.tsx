@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { usePageTitle } from '@/hooks';
+import { useMeta } from '@/hooks';
 import { blogApi } from '@/api/blog';
 import {
   LoadingSpinner,
   ErrorDisplay,
-  MarkdownRenderer,
   RelatedPosts,
 } from '@/components/ui';
+// Direct file import (bypasses the barrel) so the heavy markdown +
+// syntax-highlighter libs only land in this page's lazy chunk.
+import { MarkdownRenderer } from '@/components/ui/MarkdownRenderer';
 import type { BlogPostResponse } from '@/types';
 
 const MAX_RELATED_POSTS = 3;
@@ -31,7 +33,13 @@ export function BlogPostPage() {
   const [notFound, setNotFound] = useState<boolean>(false);
   const [retryNonce, setRetryNonce] = useState<number>(0);
 
-  usePageTitle(post?.title ?? 'Blog Post');
+  useMeta({
+    title: post?.title ?? 'Blog Post',
+    description:
+      post?.excerpt ?? 'A post from the Casey Quinn blog.',
+    image: post?.images?.find((img) => img.isPrimary)?.url ?? post?.images?.[0]?.url,
+    type: 'article',
+  });
 
   useEffect(() => {
     if (!slug) return;
@@ -150,6 +158,8 @@ export function BlogPostPage() {
           <img
             src={heroImage.url}
             alt={heroImage.altText ?? post.title}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover grayscale opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />

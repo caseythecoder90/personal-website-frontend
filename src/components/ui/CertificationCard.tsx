@@ -47,6 +47,8 @@ export function CertificationCard({ certification, featured = false }: Certifica
                 src={certification.badgeUrl!}
                 alt=""
                 onError={() => setBadgeFailed(true)}
+                loading="lazy"
+                decoding="async"
                 className="w-32 h-32 object-contain"
               />
             ) : (
