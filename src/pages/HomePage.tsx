@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { usePageTitle, useResume } from '@/hooks';
+import { useMeta, useResume } from '@/hooks';
 import { projectApi } from '@/api/projects';
 import { technologyApi } from '@/api/technologies';
 import { SectionHeader, ProjectCard, TechnologyShowcase, LoadingSpinner, ErrorDisplay, Button } from '@/components/ui';
@@ -8,7 +8,11 @@ import type { ProjectResponse, TechnologyResponse } from '@/types';
 import heroImage from '@/assets/hero.png';
 
 export function HomePage() {
-  usePageTitle('');
+  useMeta({
+    title: '',
+    description:
+      'Casey Quinn — full-stack software engineer. Portfolio of projects, technical writing, and certifications.',
+  });
   const resume = useResume();
 
   // ---- State for featured projects ----
@@ -101,6 +105,8 @@ export function HomePage() {
               <img
                 src={heroImage}
                 alt="Casey Quinn"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover rounded-full"
               />
             </div>

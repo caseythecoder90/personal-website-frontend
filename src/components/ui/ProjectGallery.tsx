@@ -33,6 +33,8 @@ export function ProjectGallery({ images }: ProjectGalleryProps) {
               <img
                 src={images[0].url}
                 alt={images[0].altText ?? 'Project screenshot'}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
               />
               {images[0].caption && (
@@ -64,6 +66,8 @@ export function ProjectGallery({ images }: ProjectGalleryProps) {
               <img
                 src={img.url}
                 alt={img.altText ?? 'Project screenshot'}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
               />
               {img.caption && (
@@ -89,6 +93,8 @@ function GalleryImage({ image }: { image: ProjectImageResponse }) {
       <img
         src={image.url}
         alt={image.altText ?? 'Project screenshot'}
+        loading="lazy"
+        decoding="async"
         className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
       />
       {image.caption && (

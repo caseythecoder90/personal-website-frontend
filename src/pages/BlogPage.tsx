@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { usePageTitle } from '@/hooks';
+import { useMeta } from '@/hooks';
 import { blogApi } from '@/api/blog';
 import {
   BlogPostCard,
@@ -72,7 +72,11 @@ async function fetchBlogPosts({
 }
 
 export function BlogPage() {
-  usePageTitle('Blog');
+  useMeta({
+    title: 'Blog',
+    description:
+      'Posts on backend architecture, Spring Boot, React, and whatever else I am working through.',
+  });
 
   // ---- Filter state ----
   // At most one of category/tag/search is "active" at a time (one-filter rule).

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { usePageTitle } from '@/hooks';
+import { useMeta } from '@/hooks';
 import { projectApi } from '@/api/projects';
 import { TechPill, StatusBadge, ProjectLinks, ProjectGallery, LoadingSpinner, ErrorDisplay } from '@/components/ui';
 import { formatDate } from '@/utils';
@@ -24,7 +24,13 @@ export function ProjectDetailPage() {
   const [notFound, setNotFound] = useState<boolean>(false);
   const viewCounted = useRef(false);
 
-  usePageTitle(project?.name ?? 'Project');
+  useMeta({
+    title: project?.name ?? 'Project',
+    description:
+      project?.shortDescription ??
+      'Project detail — technologies, overview, and links.',
+    image: project?.images?.find((img) => img.isPrimary)?.url ?? project?.images?.[0]?.url,
+  });
 
   useEffect(() => {
     if (!slug) return;
@@ -139,6 +145,8 @@ export function ProjectDetailPage() {
           <img
             src={primaryImage.url}
             alt={primaryImage.altText ?? project.name}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background" />

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { usePageTitle } from '@/hooks';
+import { useMeta } from '@/hooks';
 import { contactApi } from '@/api/contact';
 import type { ApiError } from '@/api/client';
 import { ContactInfoLink, MailIcon, GithubIcon, LinkedinIcon } from '@/components/ui';
@@ -110,7 +110,11 @@ function messageForSubmitError(err: unknown): string {
 // ----------------------------------------------------------------------------
 
 export function ContactPage() {
-  usePageTitle('Contact');
+  useMeta({
+    title: 'Contact',
+    description:
+      'Get in touch — open to hiring conversations, collaboration, or project inquiries.',
+  });
 
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [errors, setErrors] = useState<FieldErrors>({});

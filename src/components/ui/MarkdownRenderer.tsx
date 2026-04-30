@@ -73,6 +73,8 @@ const components: Components = {
     <img
       src={src}
       alt={alt ?? ''}
+      loading="lazy"
+      decoding="async"
       className="my-8 w-full rounded-lg bg-surface-container"
     />
   ),

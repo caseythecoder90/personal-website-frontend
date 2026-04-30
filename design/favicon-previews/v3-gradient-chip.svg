@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a3a6ff"/>
+      <stop offset="1" stop-color="#6063ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#grad)"/>
+  <text x="32" y="33"
+        font-family="'Space Grotesk', 'Inter', system-ui, sans-serif"
+        font-weight="700"
+        font-size="32"
+        fill="#0f00a4"
+        text-anchor="middle"
+        dominant-baseline="central"
+        letter-spacing="-0.05em">CQ</text>
+</svg>

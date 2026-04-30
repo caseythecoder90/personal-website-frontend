@@ -1,8 +1,11 @@
-import { usePageTitle } from '@/hooks';
+import { useMeta } from '@/hooks';
 import { Button } from '@/components/ui';
 
 export function NotFoundPage() {
-  usePageTitle('404');
+  useMeta({
+    title: '404',
+    description: 'Page not found.',
+  });
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col items-center justify-center px-6 py-32 text-center">

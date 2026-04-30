@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { LoadingSpinner } from '@/components/ui';
 import { useScrollToTop } from '@/hooks';
 
 export function Layout() {
@@ -9,8 +11,21 @@ export function Layout() {
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <Navbar />
+      {/* Suspense boundary catches the lazy-loaded route chunk while it
+          downloads. Placing it here (rather than wrapping <Routes /> in
+          App.tsx) keeps the Navbar and Footer mounted across navigations,
+          so the shell doesn't flash — only the content area shows the
+          spinner. */}
       <main className="flex-1 pt-16">
-        <Outlet />
+        <Suspense
+          fallback={
+            <div className="flex min-h-[60vh] items-center justify-center">
+              <LoadingSpinner />
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>
