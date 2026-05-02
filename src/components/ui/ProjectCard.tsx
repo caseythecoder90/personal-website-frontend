@@ -9,7 +9,13 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const images = project.images ?? [];
-  const primaryImage = images.find((img) => img.isPrimary) ?? images[0];
+  // Mirror ProjectDetailPage's hero selection: prefer an explicit
+  // isPrimary image, otherwise fall back to the first gallery-eligible
+  // one. Never promote an image flagged `displayInGallery: false` —
+  // those are meant for inline use in the project's markdown content.
+  const primaryImage =
+    images.find((img) => img.isPrimary) ??
+    images.find((img) => img.displayInGallery !== false);
 
   return (
     <article className="group bg-surface-container-low p-8 rounded-xl transition-all duration-300 hover:bg-surface-container-highest hover:shadow-[0_1px_0_0_rgba(163,166,255,0.4)_inset] relative overflow-hidden">
