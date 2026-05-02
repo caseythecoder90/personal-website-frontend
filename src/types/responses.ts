@@ -62,6 +62,9 @@ export interface ProjectImageResponse {
   imageType: ImageType;
   displayOrder: number;
   isPrimary: boolean;
+  // Optional because legacy/cached responses may not include it.
+  // Treat missing/undefined as `true` (image shown in gallery).
+  displayInGallery?: boolean;
   createdAt: string;
 }
 
