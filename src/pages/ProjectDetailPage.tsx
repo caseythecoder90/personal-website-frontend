@@ -116,7 +116,13 @@ export function ProjectDetailPage() {
 
   // ---- Derived data ----
   const images: ProjectImageResponse[] = project.images ?? [];
-  const primaryImage: ProjectImageResponse | undefined = images.find((img) => img.isPrimary) ?? images[0];
+  // Prefer an explicit isPrimary image. Otherwise fall back to the first
+  // gallery-eligible image — never an image flagged `displayInGallery: false`,
+  // since those are meant for inline use in the markdown content only and
+  // promoting one to hero would surface it in two places.
+  const primaryImage: ProjectImageResponse | undefined =
+    images.find((img) => img.isPrimary) ??
+    images.find((img) => img.displayInGallery !== false);
   // Exclude the primary image (already shown as the hero) and any image
   // explicitly flagged `displayInGallery: false` — those are inlined in
   // the markdown content via `![alt](url)` and shouldn't double up in the
