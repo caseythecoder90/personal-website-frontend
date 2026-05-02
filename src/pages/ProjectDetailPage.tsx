@@ -3,6 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import { useMeta } from '@/hooks';
 import { projectApi } from '@/api/projects';
 import { TechPill, StatusBadge, ProjectLinks, ProjectGallery, LoadingSpinner, ErrorDisplay } from '@/components/ui';
+// Direct file import (bypasses the barrel) so the heavy markdown +
+// syntax-highlighter libs only land in the chunks for routes that need
+// them. Vite hoists the libs into a shared chunk because BlogPostPage
+// also imports MarkdownRenderer this way.
+import { MarkdownRenderer } from '@/components/ui/MarkdownRenderer';
 import { formatDate } from '@/utils';
 import type { ProjectResponse, ProjectImageResponse } from '@/types';
 
@@ -230,11 +235,7 @@ export function ProjectDetailPage() {
               <h2 className="text-2xl font-bold text-on-surface border-l-2 border-primary pl-6 font-headline">
                 Mission Overview
               </h2>
-              <div className="font-body text-lg leading-relaxed text-on-surface-variant space-y-6">
-                {project.fullDescription.split('\n\n').map((paragraph: string, i: number) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
-              </div>
+              <MarkdownRenderer content={project.fullDescription} />
             </div>
           )}
 
