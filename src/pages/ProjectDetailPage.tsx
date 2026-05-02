@@ -117,7 +117,14 @@ export function ProjectDetailPage() {
   // ---- Derived data ----
   const images: ProjectImageResponse[] = project.images ?? [];
   const primaryImage: ProjectImageResponse | undefined = images.find((img) => img.isPrimary) ?? images[0];
-  const galleryImages: ProjectImageResponse[] = images.filter((img) => img !== primaryImage);
+  // Exclude the primary image (already shown as the hero) and any image
+  // explicitly flagged `displayInGallery: false` — those are inlined in
+  // the markdown content via `![alt](url)` and shouldn't double up in the
+  // gallery. `!== false` (rather than truthy) so legacy responses without
+  // the field still render in the gallery.
+  const galleryImages: ProjectImageResponse[] = images.filter(
+    (img) => img !== primaryImage && img.displayInGallery !== false,
+  );
   const technologies = project.technologies ?? [];
   const links = project.links ?? [];
 
