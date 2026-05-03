@@ -62,15 +62,17 @@ export function HomePage() {
       <section className="mx-auto max-w-7xl px-6 py-24 md:py-32 grid md:grid-cols-12 gap-12 items-center">
         <div className="md:col-span-7 space-y-8 md:ml-[10%]">
           <div className="space-y-4">
-            <h2 className="text-primary font-headline font-medium tracking-widest text-sm uppercase">
-              Senior Associate Software Engineer @ JPMorganChase
-            </h2>
             <h1 className="text-6xl md:text-7xl font-headline font-bold text-on-surface tracking-tighter leading-[0.9]">
               Casey Quinn
             </h1>
-            <p className="text-2xl text-secondary-dim font-headline font-light tracking-tight">
-              Full-Stack Software Engineer
-            </p>
+            <div className="space-y-3">
+              <p className="text-2xl text-secondary-dim font-headline font-light tracking-tight">
+                Senior Associate Software Engineer
+              </p>
+              <p className="text-xs md:text-sm text-primary font-headline font-semibold tracking-[0.25em] uppercase">
+                @ JPMorganChase
+              </p>
+            </div>
           </div>
           <p className="text-on-surface-variant text-lg max-w-xl leading-relaxed">
             Architect at heart, full-stack by practice. Building secure,
