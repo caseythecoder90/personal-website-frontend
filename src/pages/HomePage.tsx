@@ -63,7 +63,7 @@ export function HomePage() {
         <div className="md:col-span-7 space-y-8 md:ml-[10%]">
           <div className="space-y-4">
             <h2 className="text-primary font-headline font-medium tracking-widest text-sm uppercase">
-              Available for work
+              Senior Associate Software Engineer @ JPMorganChase
             </h2>
             <h1 className="text-6xl md:text-7xl font-headline font-bold text-on-surface tracking-tighter leading-[0.9]">
               Casey Quinn
@@ -175,7 +175,7 @@ export function HomePage() {
             Ready to build the next generation?
           </h2>
           <p className="text-on-surface-variant text-xl">
-            Let's talk about your system architecture and how I can help bring precision to your code.
+            Always up for a conversation about distributed systems, engineering craft, or anything you've been building.
           </p>
           <div className="pt-8">
             <Link

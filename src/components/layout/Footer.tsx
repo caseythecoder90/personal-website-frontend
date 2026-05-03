@@ -16,6 +16,9 @@ export function Footer() {
           <div className="mt-1 text-sm text-on-surface-variant/60">
             &copy; {new Date().getFullYear()} Casey Quinn. Crafted with precision.
           </div>
+          <div className="mt-1 text-xs text-on-surface-variant/40">
+            Personal site. Views and projects shown are my own and do not represent any employer.
+          </div>
         </div>
 
         <div className="flex items-center gap-8">
