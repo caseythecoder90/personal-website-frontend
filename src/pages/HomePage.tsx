@@ -67,7 +67,7 @@ export function HomePage() {
             </h1>
             <div className="space-y-3">
               <p className="text-2xl text-secondary-dim font-headline font-light tracking-tight">
-                Senior Associate Software Engineer
+                Senior Associate SWE
               </p>
               <p className="text-xs md:text-sm text-primary font-headline font-semibold tracking-[0.25em] uppercase">
                 @ JPMorganChase
