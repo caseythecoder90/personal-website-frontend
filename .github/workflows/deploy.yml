@@ -49,19 +49,40 @@ jobs:
           build-args: |
             VITE_API_BASE_URL=${{ env.VITE_API_BASE_URL }}
 
+  # Rolls out to the Hetzner Kubernetes cluster (k8s-cluster-hetzner repo).
+  # KUBE_CONFIG is a base64 kubeconfig for the least-privilege `ci-deployer`
+  # ServiceAccount in the personal-website namespace — same secret value as the
+  # backend repo uses, since both Deployments live in that namespace.
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
 
     steps:
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v1
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            cd /opt/personal-website
-            docker compose -f docker-compose.prod.yml pull frontend
-            docker compose -f docker-compose.prod.yml up -d frontend
-            docker image prune -f
+          version: v1.33.13          # matches the cluster
+
+      - name: Configure cluster access
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Roll out the new image
+        run: |
+          # short SHA matches docker/metadata-action's `type=sha,prefix=` tag
+          TAG=${GITHUB_SHA::7}
+          kubectl -n personal-website set image deploy/frontend \
+            frontend=ghcr.io/caseythecoder90/personal-website-frontend:$TAG
+          kubectl -n personal-website rollout status deploy/frontend --timeout=300s
+
+      - name: Show pod state if the rollout failed
+        if: failure()
+        run: |
+          kubectl -n personal-website get pods -l app=frontend
+          kubectl -n personal-website logs -l app=frontend --tail=50 --all-containers || true
