@@ -5,7 +5,7 @@ import { projectApi } from '@/api/projects';
 import { technologyApi } from '@/api/technologies';
 import { SectionHeader, ProjectCard, TechnologyShowcase, LoadingSpinner, ErrorDisplay, Button } from '@/components/ui';
 import type { ProjectResponse, TechnologyResponse } from '@/types';
-import heroImage from '@/assets/hero.png';
+import profileImage from '@/assets/profile.jpg';
 
 export function HomePage() {
   useMeta({
@@ -105,11 +105,13 @@ export function HomePage() {
             <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full" />
             <div className="relative w-72 h-72 md:w-80 md:h-80 rounded-full p-1 bg-gradient-to-tr from-primary/50 to-transparent">
               <img
-                src={heroImage}
+                src={profileImage}
                 alt="Casey Quinn"
+                width={640}
+                height={640}
                 fetchPriority="high"
                 decoding="async"
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-cover object-center rounded-full"
               />
             </div>
           </div>
